@@ -1,0 +1,186 @@
+//
+// Typography Variables
+//
+$font-size-base: 1rem;
+$line-height-base: 1.618; // Golden ratio
+$headings-font-weight: bold;
+$headings-margin: 0.5rem 0;
+
+//
+// Add Font Face
+//
+@font-face {
+    font-family: 'Open Sans', sans-serif;
+    src: url('https://fonts.googleapis.com/css?family=Muli:200,400,400i,600,600i,700,700i,900,900i');
+}
+
+// @font-face {
+//     font-family: 'Montserrat', sans-serif;
+//     src: url('https://fonts.googleapis.com/css?family=Raleway:400,700');
+// }
+
+//
+// CSS3 @font-face Mixins
+//
+@mixin heading-font($size: $font-size-base, $line-height: $line-height-base) {
+    font-family: 'Muli', sans-serif;
+    font-weight: 400;
+    font-size: $size;
+    line-height: $line-height;
+}
+
+@mixin primary-font($size: $font-size-base, $line-height: $line-height-base) {
+    font-family: 'Muli', sans-serif;
+    font-weight: 300;
+    font-size: $size;
+    line-height: $line-height;
+}
+
+@mixin title-text($size: $font-size-base, $line-height: $line-height-base) {
+    font-family: 'Muli', sans-serif;
+    font-weight: 700;
+    font-size: $size;
+    line-height: $line-height;
+}
+
+//
+// Universal colours for links, unless overridden
+//
+a:link,
+a:visited {
+    // position: relative;
+}
+
+a:focus,
+a:hover,
+a:active {
+    text-decoration: underline;
+    outline: none !important;
+}
+
+@media print {
+    a[href]:after {
+        content: " (" attr(href) ") ";
+    }
+}
+
+p {
+    font-size: inherit;
+    line-height: inherit;
+    &:last-child {
+        margin-bottom: 0 !important;
+    }
+}
+
+//
+// Headings
+//
+%h {
+    line-height: 1;
+    text-rendering: optimizeLegibility;
+    font-weight: $headings-font-weight;
+    margin: $headings-margin;
+}
+
+h1 {
+    @extend %h;
+    padding-bottom: 10px;
+    // border-bottom: 1px dotted #f1f1f1;
+}
+
+h2 {
+    @extend %h;
+}
+
+h3 {
+    @extend %h;
+}
+
+h4 {
+    @extend %h;
+    text-transform: uppercase;
+}
+
+h5 {
+    @extend %h;
+}
+
+h6 {
+    @extend %h;
+}
+
+ol li,
+ul li {
+    padding-bottom: 0.5rem;
+    &:last-child {
+        padding-bottom: 0;
+    }
+}
+
+//
+// Accessories
+//
+b,
+dt,
+optgroup,
+strong {
+    font-weight: 400;
+}
+
+hr {
+    margin-bottom: 1rem !important;
+}
+
+pre {
+    color: $pre-color;
+    display: block;
+    font-size: 1rem;
+    line-height: 1.42857;
+    margin: 0 0 10px;
+    padding: 1rem;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+blockquote,
+blockquote.blockquote {
+    border-left: 5px solid #eee;
+    font-style: italic;
+    font-size: 1rem;
+    padding: 1em 2em;
+}
+
+blockquote>blockquote {
+    margin-left: 0;
+}
+
+blockquote p {
+    margin-bottom: 35px;
+}
+
+//
+// Hyphens
+// http://meyerweb.com/eric/thoughts/2012/12/17/where-to-avoid-css-hyphenation
+// Accepted values: [ none | manual | auto ]
+//
+input,
+abbr,
+acronym,
+blockquote,
+code,
+kbd,
+q,
+samp,
+var {
+    hyphens: none;
+}
+
+//
+// Tables
+// Overriding Bootstrap
+//
+table.table {
+    tr th {
+        @include heading-font;
+    }
+}

@@ -1,0 +1,28 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Claims > Update{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>CLAIM</h2>
+                        <p>Update the specified claim.</p>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" action="" novalidate enctype="multipart/form-data">
+                            {% include 'payroll/claim/request/form.html' %}
+
+                            <div class='form-group w-100'>
+                                <button type="submit" class="btn btn-main">Submit</button>
+                                <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:claim_list' %}">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ salary_form.salary_group.id_for_label }}">{{ salary_form.salary_group.label }}<span>*</span></label>
+            <select name="{{ salary_form.salary_group.name }}" class="form-control{% if salary_form.salary_group.errors %} is-invalid{% endif %}" id="{{ salary_form.salary_group.id_for_label }}">
+                {% for salary_group in salary_form.salary_group %}
+                {{ salary_group }}
+                {% endfor %}
+            </select>
+            {% if salary_form.salary_group.errors %}
+            {% for error in salary_form.salary_group.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group input-group calendar" id="">
+            <label for="{{ salary_form.from_date.id_for_label }}">{{ salary_form.from_date.label }}<span>*</span></label>
+            <input type="date" name="{{ salary_form.from_date.name }}" class="form-control{% if salary_form.from_date.errors %} is-invalid{% endif %}" id="{{ salary_form.from_date.id_for_label }}" value="{% if salary_form.from_date.value|get_date_type == 'str' %}{{ salary_form.from_date.value }}{% else %}{{ salary_form.from_date.value|date:'Y-m-d' }}{% endif %}">
+            <span class="">
+                <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            </span>
+            {% if salary_form.from_date.errors %}
+            {% for error in salary_form.from_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group input-group calendar" id="">
+            <label for="{{ salary_form.to_date.id_for_label }}">{{ salary_form.to_date.label }}</label>
+            <input type="date" name="{{ salary_form.to_date.name }}" class="form-control{% if salary_form.to_date.errors %} is-invalid{% endif %}" id="{{ salary_form.to_date.id_for_label }}" value="{% if salary_form.to_date.value|get_date_type == 'str' %}{{ salary_form.to_date.value }}{% else %}{{ salary_form.to_date.value|date:'Y-m-d' }}{% endif %}">
+            <span class="">
+                <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            </span>
+            {% if salary_form.to_date.errors %}
+            {% for error in salary_form.to_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12 component">
+        <div class="card-header secondary border-0">
+            <h2>Current Salary Sturcture</h2>
+        </div>
+        {% include 'employees/master/salary/salary_component_list.html' %}
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ salary_form.reason_of_salary_modification.id_for_label }}">{{ salary_form.reason_of_salary_modification.label }}</label>
+            <input type="text" name="{{ salary_form.reason_of_salary_modification.name }}" class="form-control{% if salary_form.reason_of_salary_modification.errors %} is-invalid{% endif %}" id="{{ salary_form.reason_of_salary_modification.id_for_label }}" {% if salary_form.reason_of_salary_modification.value != None %}value="{{ salary_form.reason_of_salary_modification.value }}" {% endif %}>
+            {% if salary_form.reason_of_salary_modification.errors %}
+            {% for error in salary_form.reason_of_salary_modification.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card-header secondary border-0">
+            <h2>Bonus</h2>
+        </div>
+        <div class="form-group">
+            <label for="{{ salary_form.bonus_group.id_for_label }}">{{ salary_form.bonus_group.label }}</label>
+            <select name="{{ salary_form.bonus_group.name }}" class="form-control{% if salary_form.bonus_group.errors %} is-invalid{% endif %}" id="{{ salary_form.bonus_group.id_for_label }}">
+                {% for bonus_group in salary_form.bonus_group %}
+                {{ bonus_group }}
+                {% endfor %}
+            </select>
+            {% if salary_form.bonus_group.errors %}
+            {% for error in salary_form.bonus_group.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

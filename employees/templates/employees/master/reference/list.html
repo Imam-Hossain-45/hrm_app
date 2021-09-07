@@ -1,0 +1,120 @@
+{% extends "layouts/master.html" %}
+{% load index %}
+{% block title %}Employee Reference > List{% endblock %}
+
+{% block content %}
+    {% include 'employees/master/layouts/sidebar.html' %}
+    {% include 'layouts/event.html' %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                {% if request.user.is_superuser or 'add_reference' in permissions %}
+                    <div class="text-right">
+                        <a href="{% url 'employees:employee_reference_create' pk %}" class="btn btn-main m-0">+
+                            Add</a>
+                    </div>
+                {% endif %}
+
+                <div class="card">
+                    <div class="card-header secondary card-box">
+                        <div class="card-title">
+                            <h2>All Reference List</h2>
+                        </div>
+                    </div>
+
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="datatable">
+                                        <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Designation</th>
+                                            <th scope="col">Email Address (Official)</th>
+                                            <th scope="col">Cell Number (Official)</th>
+                                            <th scope="col">Address</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for obj in reference_list %}
+                                            <tr>
+                                                <td>{{ obj.ref_person_name }}</td>
+                                                <td>{{ obj.designation }}</td>
+                                                <td>{{ obj.official_email }}</td>
+                                                <td>{{ obj.official_cell_number|split:':::' }}</td>
+                                                <td>{{ obj.address_line }}</td>
+                                                <td>
+                                                    {% if request.user.is_superuser or 'change_reference' in permissions %}
+                                                        <a href="{% url 'employees:employee_reference_update' pk obj.id %}" title="Edit">
+                                                            <i class="la la-edit"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                    {% if request.user.is_superuser or 'delete_reference' in permissions %}
+                                                        <div class="modal fade" id="confirmDeleteModal{{ obj.id }}" tabindex="-1" role="dialog"
+                                                             aria-labelledby="confirmDeleteModalLabel"
+                                                             aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <form action="{% url 'employees:employee_reference_delete' employee_pk=pk pk=obj.id %}" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body confirm-delete">
+                                                                            Are you sure you want to delete "{{ obj.ref_person_name }}"?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                                                Cancel
+                                                                            </button>
+                                                                            <input type="submit" class="btn btn-danger" value="Delete" name="delete">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <a href="javascript:void(0)"
+                                                           class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal{{ obj.id }}"
+                                                           id="deleteButton{{ obj.id }}">
+                                                            <i class="la la-times-circle-o"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if reference_list.paginator.num_pages > 1 %}
+                        <nav aria-label="navigation" class="margin-lg margin-md">
+                                <ul class="pagination d-flex justify-content-center">
+                                    {% if reference_list.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ reference_list.previous_page_number }}">Previous</a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% for pg in page_range %}
+                                        <li class="page-item">
+                                            <a class="page-link {% if pg == reference_list.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ reference_list.current_page_number }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% if reference_list.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ reference_list.next_page_number }}">Next</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

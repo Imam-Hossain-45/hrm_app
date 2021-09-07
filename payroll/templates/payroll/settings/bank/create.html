@@ -1,0 +1,40 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Add Bank{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Bank Add Form</h2>
+                    <p>Bank add for employee info</p>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                            <input type="text" name="{{ form.name.name }}" maxlength="255" required="" class="form-control{% if form.name.errors %} is-invalid{% endif %}" placeholder="Ex: BRAC/Islami" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default_if_none:'' }}">
+
+                            {% if form.name.errors %}
+                            {% for error in form.name.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class='form-group w-100 text-right'>
+                            <button type="submit" class="btn btn-main">Submit</button>
+                            <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:bank_list' %}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

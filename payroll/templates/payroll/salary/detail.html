@@ -1,0 +1,64 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Salaries{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for breakdown in breakdowns %}
+                        <tr>
+                            <td>{{ breakdown.component }}</td>
+
+                            <td>{{ breakdown.amount }}</td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <b>Gross: {{ salary.gross }}</b>
+                <br/>
+                <br/>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                                Employee List
+                            </a>
+                        </div>
+                        <div id="collapseThree" class="collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    {% for em in employee %}
+                                        <tr>
+                                            <td>{{ em }}</td>
+                                        </tr>
+
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

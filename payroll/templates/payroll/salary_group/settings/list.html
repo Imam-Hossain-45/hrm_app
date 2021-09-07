@@ -1,0 +1,170 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Salary Group Settings{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Salary Group Settings</h2>
+                    </div>
+                    <div class="card-block d-flex">
+                        <ul class="nav flex-column nav-pills verticle-nav" role="tablist" style="float: left;">
+                            {% for component in components %}
+                                <li class="nav-item ">
+                                    <a href="{% url 'beehive_admin:payroll:salary_group_settings_update' salary_group.id component.id %}" class="nav-link">
+                                        {{ component }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            {% if list_view == 'selected' %}
+                            <div class="form-group w-100 text-center">
+                                <a class="btn btn-main b-none"
+                                   href="{% url 'beehive_admin:payroll:salary_group_list' %}">Back</a>
+                            </div>
+                            {% endif %}
+                        </ul>
+
+                        <div class="tab-content" style="width: 80%; padding-left: 1.5rem; float: left;">
+
+                            {% if update_component == 'Selected' %}
+                            <div class="card-header secondary">
+                                <p>{{ selected_component }} settings for {{ salary_group}} group</p>
+                            </div>
+
+                            <form method="POST" novalidate>
+                                {% csrf_token %}
+
+                                {% for choice in form.condition_type.field.choices %}
+                                    {% if choice.0 %}
+                                        <input style="" type="radio" name="options" value="{{ choice.0 }}"
+                                               id="id_{{ choice.0 }}"
+                                               {% if selected_item == choice.0 %}
+                                                checked
+                                               {% endif %}>
+                                        <label for="id_{{ choice.0 }}">{{ choice.1 }}</label><br>
+                                        {% if choice.0 == 'rule-based' %}
+                                            {{ rbforms.management_form }}
+                                            {% for rbform in rbforms %}
+                                                <input type="hidden" name="formulae-{{ forloop.counter0 }}-variable" value="{{ salary_group_component.variable.pk }}">
+                                                <input type="hidden" name="formulae-{{ forloop.counter0 }}-id"{% if rbform.id.value %} value="{{ rbform.id.value }}{% endif %}">
+
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="formulae-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}">
+                                                                {{ rbform.priority.label }}{% if rbform.priority.field.required %} *{% endif %}
+                                                            </label>
+                                                            <input type="number" name="formulae-{{ forloop.counter0 }}-{{ rbform.priority.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}"
+                                                                   class="form-control{% if rbform.priority.errors %} is-invalid{% endif %}"
+                                                                   value="{{ rbform.priority.value|default:1 }}" min="1" step="1">
+                                                            {% if rbform.priority.errors %}
+                                                            {% for error in rbform.priority.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="form-group">
+                                                            <label for="formulae-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}">
+                                                                {{ rbform.condition.label }}{% if rbform.condition.field.required %} *{% endif %}
+                                                            </label>
+                                                            <input type="text" name="formulae-{{ forloop.counter0 }}-{{ rbform.condition.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}"
+                                                                   class="form-control{% if rbform.condition.errors %} is-invalid{% endif %}"
+                                                                   value="{{ rbform.condition.value|default:'' }}" required>
+                                                            {% if rbform.condition.errors %}
+                                                            {% for error in rbform.condition.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="form-group">
+                                                            <label for="formulae-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}">
+                                                                {{ rbform.rule.label }}{% if rbform.rule.field.required %} *{% endif %}
+                                                            </label>
+                                                            <input type="text" name="formulae-{{ forloop.counter0 }}-{{ rbform.rule.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}"
+                                                                   class="form-control{% if rbform.rule.errors %} is-invalid{% endif %}"
+                                                                   value="{{ rbform.rule.value|default:'' }}" required>
+                                                            {% if rbform.rule.errors %}
+                                                            {% for error in rbform.rule.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <div class="form-check-inline">
+                                                                <input type="checkbox" name="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}"
+                                                                       class="form-check-input{% if rbform.DELETE.errors %} is-invalid{% endif %}">
+                                                                <label class="form-check-label" for="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}">
+                                                                  {{ rbform.DELETE.label }}{% if rbform.DELETE.field.required %} *{% endif %}
+                                                                </label>
+                                                            </div>
+                                                            {% if rbform.DELETE.errors %}
+                                                            {% for error in rbform.DELETE.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% if choice.0 == 'mapped' %}
+                                            <div class="form-group">
+                                                <label for="{{ form.mapping_policy.id_for_label }}">{{ form.mapping_policy.label }}</label>
+                                                <select name="{{ form.mapping_policy.name }}" id="{{ form.mapping_policy.id_for_label }}"
+                                                        class="form-control{% if form.mapping_policy.errors %} is-invalid{% endif %}"
+                                                        required>
+                                                    {% if selected_mapped_item %}
+                                                        {% for choice in form.mapping_policy.field.choices %}
+                                                            {% if selected_mapped_item == choice.0 %}
+                                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                            {% else %}
+                                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        {% for choice in form.mapping_policy.field.choices %}
+                                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </select>
+
+                                                {% if form.mapping_policy.errors %}
+                                                    {% for error in form.mapping_policy.errors %}
+                                                        <div class="invalid-feedback">{{ error }}</div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <input type="hidden" name="next" value="{{ request.path }}">
+
+                                <div class="form-group w-100 text-right">
+                                    <a class="btn btn-main b-none"
+                                       href="{% url 'beehive_admin:payroll:salary_group_list' %}">Cancel</a>
+                                    <button type="submit" class="btn btn-main">Save</button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

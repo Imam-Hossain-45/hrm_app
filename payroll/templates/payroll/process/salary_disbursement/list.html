@@ -1,0 +1,140 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Disbursement{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <p>Payroll > Operation</p>
+                        <h2>Payroll Disbursement</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+            <h2>Filter Employees</h2>
+            <form method="GET" novalidate class="mw-initial mb-5">
+                {% include 'leave/process/layout/search.html' %}
+                <div class="col-md-12">
+                    <div class="form-group text-right mt-3">
+                        <button type="submit" class="btn btn-main">Search Employee</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+        {% if object_list %}
+        <div class="col-md-12">
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header secondary card-box">
+                        <div class="card-title d-flex justify-content-between">
+                            <h2>Salary from {{ request.GET.from_date }} to {{ request.GET.to_date }}</h2>
+                            <button class="btn btn-main">
+                                Disburse
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="datatable">
+                                        <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Payable Salary (BDT)</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if objects %}
+                                            {% for obj in disbursement_list %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input"
+                                                               id="emp_salary_{{ obj.id }}" name="employee_salary_id" value="{{ obj.id }}" multiple>
+                                                        <label class="form-check-label" for="emp_salary_{{ obj.id }}">
+                                                            {{ obj.employee }}
+                                                            {{ obj.employee.employee_job_information.last.designation|default_if_none:'' }}
+                                                            {% for method in obj.salary_payment_method.all %}
+                                                                <small>{{ method.get_payment_mode_display }}</small>
+                                                            {% empty %}
+                                                                <small>
+                                                                    {{ obj.employee.employee_payment.last.get_payment_mode_display }}
+                                                                </small>
+                                                            {% endfor %}
+                                                        </label>
+                                                    </div>
+
+                                                </td>
+                                                <td>{{ obj.net_earning }}</td>
+                                                <td>{{ obj.get_status_display }}</td>
+                                                <td>
+                                                    {% if obj.status == 'disbursed' %}
+                                                    <a href="{% url 'beehive_admin:payroll:salary_breakdown_details' obj.id %}"
+                                                       class="btn btn-main">
+                                                        Details
+                                                    </a>
+                                                    {% else %}
+                                                    <a href="{% url 'beehive_admin:payroll:salary_disbursement_details' obj.id %}"
+                                                       class="btn btn-main">
+                                                        Disburse
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="5">No data found.</td>
+                                            </tr>
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% if disbursement_list.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if disbursement_list.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ disbursement_list.previous_page_number }}&{{path}}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == disbursement_list.number %}active{% endif %}" href="?page={{ pg }}&{{path}}">{{ pg }} {{ disbursement_list.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if disbursement_list.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ disbursement_list.next_page_number }}&{{path}}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+                </div>
+
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Employee Salary Structure Edit{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Salary Structure</p>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                            {% include 'employees/master/salary/salary_form.html' %}
+                        <div class="form-group w-100">
+                            <button type="submit" class="btn btn-main pull-right" name="form2">Update</button>
+                            <a class="btn btn-main" href="{% url 'employees:employee_salary_list' employee_id %}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("[name='salary_group']").on('change', function () {
+                var salary_group = $(this).val();
+                $.ajax({
+                    url: ".",
+                    data: {'salary_group': salary_group},
+                    success: function (result) {
+                        $('.component').html(result);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

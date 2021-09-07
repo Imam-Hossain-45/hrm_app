@@ -1,0 +1,124 @@
+<div class="form-group row">
+    <div class="col-md-12">
+        {% if workflow_cu_type == 'create' %}
+        <h2>Create new Variation</h2>
+        {% endif %}
+        {% if workflow_cu_type == 'update' %}
+        <h2>Create new Variation</h2>
+        {% endif %}
+        <label for="{{ form.initiator.id_for_label }}">{{ form.initiator.label }}</label>
+        <select name="{{ form.initiator.name }}" id="{{ form.initiator.id_for_label }}" class="form-control label ui selection fluid dropdown{% if form.initiator.errors %}is-invalid{% endif %}" multiple="">
+            <option value="" selected disabled hidden>Select Initiator</option>
+            {% for option in form.initiator.field.choices %}
+            {% if option.0 in selected_initials %}
+
+            <option value="{{ option.0 }}" selected>{{ option.1 }}</option>
+            {% else %}
+            <option value="{{ option.0 }}">{{ option.1 }}</option>
+            {% endif %}
+
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+<div class="row form-one" style="position: relative;">
+    <div class="col-md-12 form-two">
+        {{ formset.management_form }}
+        {{ formset.non_form_errors }}
+        {% for child_form in formset.forms %}
+        <h2>Level <span>{{ forloop.counter }}</span>:</h2>
+        <hr>
+        <input type="hidden" name="{{ child_form.level.html_name }}" value="{{ child_form.level.value|default:0 }}">
+        <div class="row">
+            <div class="col-md-6 p-3 workflow">
+                <div class="workflow-wrap">
+                    <div class="form-group row ">
+                        {% if child_form.nested %}
+                        {{ child_form.nested.management_form }}
+                        {{ child_form.nested.non_form_errors }}
+
+                        {% for nested_form in child_form.nested.forms %}
+                        <div class="col-md-4">
+                            <label for="{{ nested_form.approved_by.id_for_label }}">{{ nested_form.approved_by.label }}</label>
+                            <select name="{{ nested_form.approved_by.html_name }}" id="{{ nested_form.approved_by.id_for_label }}" class="form-control {% if nested_form.approved_by.errors %}is-invalid{% endif %}">
+                                {% for option in nested_form.approved_by.field.choices %}
+                                <option value="{{ option.0 }}" {% if option.0 == nested_form.approved_by.value %}selected{% endif %}>{{ option.1 }}</option>
+                                {% endfor %}
+                            </select>
+
+                            {% if nested_form.approved_by.errors %}
+                            {% for error in nested_form.approved_by.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4 input-wrap">
+                            <label for="{{ nested_form.next_approval_operator.id_for_label }}" style="visibility: hidden; white-space: nowrap;">{{ nested_form.next_approval_operator.label }}</label>
+                            <select name="{{ nested_form.next_approval_operator.html_name }}" id="{{ nested_form.next_approval_operator.id_for_label }}" class="workflow-option form-control {% if nested_form.next_approval_operator.errors %}is-invalid{% endif %}">
+                                {% for option in nested_form.next_approval_operator.field.choices %}
+                                <option value="{{ option.0 }}" {% if option.0 == nested_form.next_approval_operator.value %}selected{% endif %}>{{ option.1 }}</option>
+                                {% endfor %}
+                            </select>
+
+                            {% if nested_form.next_approval_operator.errors %}
+                            {% for error in nested_form.next_approval_operator.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-3 d-flex align-items-end">
+                            <input type="checkbox" class="m-checkbox" name="{{ nested_form.DELETE.html_name }}" id="{{ nested_form.DELETE.id_for_label }}" {% if nested_form.DELETE.value %}checked{% endif %}>
+                            <label for="{{ nested_form.DELETE.id_for_label }}">{{ nested_form.DELETE.label }}</label>
+                            <input type="hidden" name="{{ nested_form.id.html_name }}" id="{{ nested_form.id.id_for_label }}" class="formset-field form-control {% if nested_form.id.errors %} is-invalid{% endif %}" value="{{ nested_form.id.value|default:'' }}">
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6 p-3 workflow">
+                <div class="workflow-wrap">
+                    {% if child_form.recipient %}
+                    {{ child_form.recipient.management_form }}
+                    {{ child_form.recipient.non_form_errors }}
+
+                    {% for recipient_form in child_form.recipient.forms %}
+                    <label for="{{ recipient_form.notification_recipient.id_for_label }}">{{ recipient_form.notification_recipient.label }}</label>
+                    <select name="{{ recipient_form.notification_recipient.html_name }}" id="{{ recipient_form.notification_recipient.id_for_label }}" class="form-control label ui selection fluid dropdown{% if recipient_form.notification_recipient.errors %}is-invalid{% endif %}" multiple="">
+                        <option value="" selected disabled hidden>Select Recipient</option>
+                        {% for option in recipient_form.notification_recipient.field.choices %}
+                        <option value="{{ option.0 }}" {% if option.0 in recipient_form.notification_recipient.value %}selected{% endif %}>{{ option.1 }}</option>
+                        {% endfor %}
+                    </select>
+
+                    {% if recipient_form.notification_recipient.errors %}
+                    {% for error in recipient_form.notification_recipient.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <input type="checkbox" class="m-checkbox" name="{{ child_form.DELETE.html_name }}" id="{{ child_form.DELETE.id_for_label }}" {% if child_form.DELETE.value %}checked{% endif %}><label for="{{ child_form.DELETE.id_for_label }}">{{ child_form.DELETE.label }}</label>
+            <input type="hidden" name="{{ child_form.id.html_name }}" id="{{ child_form.id.id_for_label }}" class="formset-field form-control {% if child_form.id.errors %} is-invalid{% endif %}" value="{{ child_form.id.value|default:'' }}">
+        </div>
+        {% endfor %}
+    </div>
+    <div class="new-row row pl-3" style="width: 100%;"></div>
+
+    <div class="clone-btn-wrapper" style="right: 40px; bottom: 0px;">
+        <div class="text-center">
+            <a href="javascript:;" class="clone-row clone-dt"></a>
+        </div>
+        <div class="text-center">
+            <a href="javascript:;" class="remove-row"></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,200 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Early out Deduction Component Settings{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Early out Deduction Component Settings</h2>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+
+                            <div class="form-group w-100">
+                                <label for="{{ form.early_out_allowed_time.id_for_label }}">{{ form.early_out_allowed_time.label }}</label>
+                                <input type="number" name="{{ form.early_out_allowed_time.name }}"
+                                       id="{{ form.early_out_allowed_time.id_for_label }}"
+                                       class="form-control{% if form.early_out_allowed_time.errors %} is-invalid{% endif %}"
+                                       placeholder="i.e., 1/2" value="{{ form.early_out_allowed_time.value|default_if_none:'' }}">
+
+                                {% if form.early_out_allowed_time.errors %}
+                                    {% for error in form.early_out_allowed_time.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group w-100">
+                                <label for="{{ form.early_out_allowed_time_unit.id_for_label }}">{{ form.early_out_allowed_time_unit.label }}</label>
+                                <select name="{{ form.early_out_allowed_time_unit.name }}" id="{{ form.early_out_allowed_time_unit.id_for_label }}"
+                                        class="form-control{% if form.early_out_allowed_time_unit.errors %} is-invalid{% endif %}"
+                                        required>
+                                    {% if form.early_out_allowed_time_unit.value %}
+                                        {% for choice in form.early_out_allowed_time_unit.field.choices %}
+                                            {% if form.early_out_allowed_time_unit.value == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in form.early_out_allowed_time_unit.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+
+                                {% if form.early_out_allowed_time_unit.errors %}
+                                    {% for error in form.early_out_allowed_time_unit.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="next" value="{{ request.path }}">
+
+                            <div class="form-group w-100">
+                                <button type="submit" class="btn btn-main">Save</button>
+                                <a class="btn btn-main b-none"
+                                   href="{% url 'beehive_admin:payroll:deduction_component_list' %}">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_earlyoutslab' in permissions %}
+                <div class="text-right">
+                    <a href="{% url 'beehive_admin:payroll:early_out_slab_create' component.id %}" class="btn btn-main m-0">+
+                        Add a new Slab
+                    </a>
+                </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>All Early out Slab</h2>
+                        <p>View all Early out slabs, edit or delete</p>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Early out Time</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for slab in slabs %}
+                                            <tr>
+                                                <td>{{ slab.time }} {{ slab.unit }}</td>
+                                                <td>{{ slab.status|title }}</td>
+                                                <td>
+                                                    {% if request.user.is_superuser or 'change_earlyoutslab' in permissions %}
+                                                    <a title="edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="{% url 'beehive_admin:payroll:early_out_slab_update' component.id slab.id %}">
+                                                        <i class="la la-edit"></i>
+                                                    </a>
+                                                    {% endif %}
+
+                                                    {% if request.user.is_superuser or 'delete_earlyoutslab' in permissions %}
+                                                    <div class="modal fade" id="confirmDeleteModal{{ slab.id }}"
+                                                         tabindex="-1" role="dialog"
+                                                         aria-labelledby="confirmDeleteModalLabel"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <form action="{% url 'beehive_admin:payroll:early_out_slab_delete' component.id slab.id %}" method="POST">
+                                                                {% csrf_token %}
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body confirm-delete">
+                                                                        Are you sure you want to delete {{ slab }}?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">
+                                                                            Cancel
+                                                                        </button>
+                                                                        <input type="submit" class="btn btn-danger"
+                                                                               value="Delete"
+                                                                               name="delete">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <a href="javascript:void(0)"
+                                                       title="delete"
+                                                       class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline"
+                                                       data-toggle="modal"
+                                                       data-target="#confirmDeleteModal{{ slab.id }}"
+                                                       id="deleteButton{{ slab.id }}">
+                                                        <i class="la la-times-circle-o"></i>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if slabs.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if slabs.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ slabs.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == slabs.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ slabs.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if slabs.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ slabs.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

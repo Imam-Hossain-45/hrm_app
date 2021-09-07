@@ -1,0 +1,27 @@
+.login {
+  padding: 2%;
+  margin-top: 10%;
+  position: relative;
+  text-align: center;
+
+  .img-wrapper {
+    z-index: 999;
+    background: #fff;
+    padding: .5rem 2rem;
+    display: inline-block;
+    margin: auto;
+    margin-bottom: -20px;
+  }
+
+  .form-div {
+    padding: 3rem;
+    border: 1px solid #ccc;
+    margin-top: -2rem;
+    z-index: 1;
+    text-align: left;
+  }
+
+  .form-control {
+    max-width: 100% !important;
+  }
+}

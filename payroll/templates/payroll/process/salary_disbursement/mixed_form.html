@@ -1,0 +1,20 @@
+<div class="col-md-12">
+    <div class="mixed_increase">
+        {% for disburse in disbursed_list %}
+            <div class="mixed_method">
+                <small>Disbursed Option <i>{{ forloop.counter }}</i></small>
+                {% include 'payroll/process/salary_disbursement/mixed_form_section.html' %}
+            </div>
+        {% empty %}
+            <div class="mixed_method">
+                <small>Disbursed Option <i>1</i></small>
+                {% include 'payroll/process/salary_disbursement/mixed_form_section.html' %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <input type="button" value="+" name="btn_increase" class="btn mixed_success">
+    </div>
+</div>

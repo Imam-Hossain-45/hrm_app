@@ -1,0 +1,21 @@
+.tab-wrapper {
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, .125);
+  margin-bottom: 1.5rem;
+
+  h2 {
+    font-weight: 600;
+  }
+
+  .tab-wrap {
+    display: flex;
+    flex-direction: column;
+    //max-height: 750px;
+    flex-wrap: wrap;
+    overflow: auto;
+  }
+
+  .tab-content-height {
+    max-height: 750px;
+  }
+}

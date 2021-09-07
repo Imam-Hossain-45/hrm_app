@@ -1,0 +1,68 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Edit Grade{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                <input type="text"
+                                       value="{{ form.name.value|default_if_none:'' }}"
+                                       class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+                                       placeholder="Ex: Lecturer 1, Lecturer 2"  name="{{ form.name.name }}"
+                                       maxlength="255" required="" id="{{ form.name.id_for_label }}">
+                                {% if form.name.errors %}
+                                    {% for error in form.name.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                                <textarea name="{{ form.description.name }}" cols="40" rows="5"
+                                          class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+                                          id="{{ form.description.id_for_label }}">{{ form.description.value|default_if_none:'' }}</textarea>
+                                {% if form.description.errors %}
+                                    {% for error in form.description.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                                <input type="checkbox" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}"
+                                       {% if form.status.value %}checked=""{% endif %}>
+                                {% if form.status.errors %}
+                                    {% for error in form.status.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <a class="float-right"
+                                   href="{% url 'beehive_admin:payroll:paygrade_list' %}">Cancel</a>
+                                <button type="submit" class="btn btn-main float-right">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

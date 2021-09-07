@@ -1,0 +1,121 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Add Employee Bank Account{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-10 col-md-offset-1">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Employee Bank Account Add Form</h2>
+                    <p>Employee Bank Account add for employee info</p>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }}</label>
+                                    <select name="{{ form.employee.name }}" class="form-control{% if form.employee.errors %} is-invalid{% endif %}" id="{{ form.employee.id_for_label }}">
+                                        {% if form.employee.value %}
+                                        {% for choice in form.employee.field.choices %}
+                                        {% if form.employee.value == choice.0|stringformat:"i" %}
+                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% else %}
+                                        {% for choice in form.employee.field.choices %}
+                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+
+                                    {% if form.employee.errors %}
+                                    {% for error in form.employee.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.bank.id_for_label }}">{{ form.bank.label }}</label>
+                                    <select name="{{ form.bank.name }}" class="form-control{% if form.bank.errors %} is-invalid{% endif %}" id="{{ form.bank.id_for_label }}">
+                                        {% if form.bank.value %}
+                                        {% for choice in form.bank.field.choices %}
+                                        {% if form.bank.value == choice.0|stringformat:"i" %}
+                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% else %}
+                                        {% for choice in form.bank.field.choices %}
+                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+
+                                    {% if form.bank.errors %}
+                                    {% for error in form.bank.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.account_name.id_for_label }}">{{ form.account_name.label }}</label>
+                                    <input type="text" name="{{ form.account_name.name }}" maxlength="255" required="" class="form-control{% if form.account_name.errors %} is-invalid{% endif %}" value="{{ form.account_name.value|default_if_none:'' }}" placeholder="Ex: Employee account_name/unit account_name" id="{{ form.account_name.id_for_label }}">
+
+                                    {% if form.account_name.errors %}
+                                    {% for error in form.account_name.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.account_no.id_for_label }}">{{ form.account_no.label }}</label>
+                                    <input type="number" step="0.01" name="{{ form.account_no.name }}" id="{{ form.account_no.id_for_label }}" class="form-control {% if form.account_no.errors %}is-invalid{% endif %}" value="{{ form.account_no.value|default_if_none:'' }}" placeholder="Ex: 12345678">
+
+                                    {% if form.account_no.errors %}
+                                    {% for error in form.account_no.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.remarks.id_for_label }}">{{ form.remarks.label }}</label>
+                                    <textarea name="{{ form.remarks.name }}" cols="40" rows="5" class="form-control{% if form.remarks.errors %} is-invalid{% endif %}" id="{{ form.remarks.id_for_label }}">{{ form.remarks.value|default_if_none:'' }}</textarea>
+
+                                    {% if form.remarks.errors %}
+                                    {% for error in form.remarks.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class='form-group w-100 text-right'>
+                                    <button type="submit" class="btn btn-main">Submit</button>
+                                    <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:employee_bank_account_list' %}">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

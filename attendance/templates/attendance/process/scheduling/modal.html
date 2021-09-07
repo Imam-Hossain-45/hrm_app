@@ -1,0 +1,107 @@
+<!-- Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="" novalidate method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="schedule_record_id">
+                    <div class="row p-5">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ action_scheduling_form.in_time.id_for_label }}" style="display: inherit; text-align: left">{{ action_scheduling_form.in_time.label }}:</label>
+                                <input type="text" class="datetimepicker form-control{% if action_scheduling_form.in_time.errors %} is-invalid{% endif %} mw-initial w-100" id="{{ action_scheduling_form.in_time.id_for_label }}" placeholder="In time" name="{{ action_scheduling_form.in_time.name }}">
+                            </div>
+                            {% if action_scheduling_form.in_time.errors %}
+                            {% for error in action_scheduling_form.in_time.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            <div class=""><small style="color: red">{{ error }}</small></div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ action_scheduling_form.out_time.id_for_label }}" class="" style="display: inherit; text-align: left">{{ action_scheduling_form.out_time.label }}:</label>
+                                <div class="d-flex">
+                                    <input type="text" class="datetimepicker form-control{% if action_scheduling_form.out_time.errors %} is-invalid{% endif %}" id="{{ action_scheduling_form.out_time.id_for_label }}" placeholder="Out time" name="{{ action_scheduling_form.out_time.name }}" style="max-width: initial; width: 90%;">
+                                    <div class="calendar" style="width: 10%;">
+                                        <span class="">
+                                            <input type="date" name="{{ action_scheduling_form.out_date.name }}" style="width: 35px; margin-top: 1px; height: 100%;">
+                                            <i class="m-menu__link-icon flaticon-calendar-1" style="left: 1px; top: 4px;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if action_scheduling_form.out_time.errors %}
+                            {% for error in action_scheduling_form.out_time.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            <div class=""><small style="color: red">{{ error }}</small></div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_break col-md-11">
+                            <div class="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_append_break">
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <input type="text" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_start.name }}" multiple class="datetimepicker form-control{% if scheduling_break_form.break_start.errors %} is-invalid{% endif %}" placeholder="Break start" style="max-width: initial; width: 90%;">
+                                            <div class="calendar" style="width: 10%;">
+                                                <span class="">
+                                                    <input type="date" multiple value="{{ obj.date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_start_date.name }}" style="width: 35px; margin-top: 1px; height: 100%;">
+                                                    <i class="m-menu__link-icon flaticon-calendar-1" style="left: 1px; top: 4px;"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {% if scheduling_break_form.break_start.errors %}
+                                        {% for error in scheduling_break_form.break_start.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        <div class=""><small style="color: red">{{ error }}</small></div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <input type="text" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_end.name }}" multiple class="datetimepicker form-control{% if scheduling_break_form.break_end.errors %} is-invalid{% endif %}" placeholder="Break start" style="max-width: initial; width: 90%;">
+                                            <div class="calendar" style="width: 10%;">
+                                                <span class="">
+                                                    <input type="date" multiple value="{{ obj.date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_end_date.name }}" style="width: 35px; margin-top: 1px; height: 100%;">
+                                                    <i class="m-menu__link-icon flaticon-calendar-1" style="left: 1px; top: 4px;"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {% if scheduling_break_form.break_end.errors %}
+                                        {% for error in scheduling_break_form.break_end.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        <div class=""><small style="color: red">{{ error }}</small></div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center" style="position: absolute; margin-top: 12px; right: -20px; width: 30px; text-align: center; flex-direction: column; z-index: 999;">
+                                        <input type="button" value="" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_btn_decrease" class="btn break_danger remove-row" style="display: block; background-color: transparent; width: 21px; height: 20px; padding: 0; border-radius: 100%; border: none;">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="incr-btn-wrapper d-flex flex-column align-items-center" style="margin-top: 25px;">
+                                <input type="button" value="" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_btn_increase" class="btn break_success clone-row" style="display: block; background-color: transparent; width: 20px; height: 20px; padding: 0; border-radius: 100%; border: none;">
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-main b-none" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-main" name="action_btn">Action for Selected All</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+{#{{ family_form }}#}
+<table class="table table-hover">
+    <thead class="text-center">
+        <tr>
+            <th>Language<span>*</span></th>
+            <th>Description</th>
+            <th>Read</th>
+            <th>Write</th>
+            <th>Speak</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="form-two">
+        {% for form_data in language_form %}
+        <tr class="item">
+            <td>
+                <input type="text" name="{{ form_data.language.html_name }}" id="{{ form_data.language.id_for_label }}" class="formset-field form-control {% if form_data.language.errors %} is-invalid{% endif %}" {% if form_data.language.value != None %}value="{{ form_data.language.value }}" {% endif %}>
+                {% if form_data.language.errors %}
+                {% for error in form_data.language.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.description.html_name }}" id="{{ form_data.description.id_for_label }}" class="formset-field form-control {% if form_data.description.errors %} is-invalid{% endif %}">
+                {% if form_data.description.value != None %}{{ form_data.description.value }}{% endif %}
+                {% if form_data.description.errors %}
+                {% for error in form_data.description.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <select name="{{ form_data.read.html_name }}" id="{{ form_data.read.id_for_label }}" class="formset-field form-control {% if form_data.read.errors %} is-invalid{% endif %}">
+                    {% for read in form_data.read %}
+                    {{ read }}
+                    {% endfor %}
+                </select>
+                {% if form_data.read.errors %}
+                {% for error in form_data.read.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+
+            <td>
+                <select name="{{ form_data.write.html_name }}" id="{{ form_data.write.id_for_label }}" class="formset-field form-control {% if form_data.write.errors %} is-invalid{% endif %}">
+                    {% for write in form_data.write %}
+                    {{ write }}
+                    {% endfor %}
+                </select>
+                {% if form_data.write.errors %}
+                {% for error in form_data.write.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+
+            <td>
+                <select name="{{ form_data.speak.html_name }}" id="{{ form_data.speak.id_for_label }}" class="formset-field form-control {% if form_data.speak.errors %} is-invalid{% endif %}">
+                    {% for speak in form_data.speak %}
+                    {{ speak }}
+                    {% endfor %}
+                </select>
+                {% if form_data.speak.errors %}
+                {% for error in form_data.speak.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="v-middle m-100">
+                <input type="checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="clone-btn-wrapper d-flex" style="position: initial;">
+    <div class="ml-auto">
+        <a href="javascript:;" class="clone-row emergency-contact-add"></a>
+    </div>
+
+    <div class="">
+        <a href="javascript:;" class="remove-row emergency-contact-rem"></a>
+    </div>
+</div>
+{{ language_form.management_form }}

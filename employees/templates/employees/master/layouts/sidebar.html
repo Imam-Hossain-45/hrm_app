@@ -1,0 +1,57 @@
+<div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
+    <div class="m-quick-sidebar__content m--hide">
+        <span id="m_quick_sidebar_close" class="m-quick-sidebar__close">
+            <i class="la la-close"></i>
+        </span>
+        <ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
+            <li class="nav-item m-tabs__item">
+                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_quick_sidebar_tabs_settings" role="tab">
+                    Settings
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active m-scrollable" id="m_quick_sidebar_tabs_settings" role="tabpanel">
+                <a class="dropdown-item" href="{% url 'employees:employee_identification_update' pk %}">
+                    Identification
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_job_create' pk %}">
+                    Job
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_salary_create' pk %}">
+                    Salary
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_personal_info' pk %}">
+                    Personal
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_contact_info' pk %}">
+                    Address & Contact
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_family_info' pk %}">
+                    Family
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_education_create' pk %}">
+                    Education
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_skill_info' pk %}">
+                    Skill, Training, Language
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employment_history' pk %}">
+                    Previous Employment
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_reference_create' pk %}">
+                    Reference
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_asset_create' pk %}">
+                    Asset
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_document' pk %}">
+                    Documents
+                </a>
+                <a class="dropdown-item" href="{% url 'employees:employee_attendance_leave' pk %}">
+                    Attendance and Leave
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

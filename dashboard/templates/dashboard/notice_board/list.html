@@ -1,0 +1,38 @@
+{% extends "layouts/master.html" %} {% block title %}Notice Board{% endblock %}
+
+{% load staticfiles %}
+
+{% block style %}
+    <link href="{% static 'component/css/simple-calendar.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard">
+        <div class='container'>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Notice Board</h3>
+                    <div class="card">
+                        <div class="card-body">
+                            <ul>
+                                {% for obj in object_list %}
+                                <li>
+                                    <p>
+                                        <i>{{ obj.notice }}</i>
+                                        {% if obj.start_date == obj.end_date %}
+                                            on {{ obj.start_date|date:"d M" }}
+                                        {% else %}
+                                            from {{ obj.start_date|date:"d M" }} to {{ obj.end_date|date:"d M" }}
+                                        {% endif %}
+                                    </p>
+                                    <p>{{ obj.published_datetime|date:"d M-l h:i A" }}</p>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

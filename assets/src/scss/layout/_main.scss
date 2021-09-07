@@ -1,0 +1,144 @@
+// Main
+//
+#main {
+  height: 100%;
+}
+
+.app-wrapper {}
+
+.m-content--skin-light2 .m-body {
+  background: #fff;
+  height: 100%;
+}
+
+.m-body .m-wrapper {
+  overflow: auto;
+}
+
+.hidden-md-up {
+  @include media(">lg") {
+    display: none !important;
+  }
+}
+
+.hidden-md-down {
+  @include media("<lg") {
+    display: none !important;
+  }
+}
+
+
+.section-wrap {
+  padding: 100px 0 0;
+  height: auto;
+
+  @include media("<lg") {
+    padding: 60px 0 0;
+  }
+
+  @include media("<md") {
+    padding: 30px 0 0;
+  }
+}
+
+.flex-stretch {
+  display: flex;
+  align-items: stretch;
+}
+
+.section-title {
+  padding: 0 0 40px !important;
+  text-align: center;
+
+  @include media("<md") {
+    padding: 0 0 20px !important;
+  }
+}
+
+.section-bottom-gap {
+  margin-bottom: 3rem !important;
+
+  @include media("<md") {
+    margin-bottom: 1rem !important;
+  }
+}
+
+.btn-top-padding {
+  padding-top: 50px !important;
+
+  @include media("<lg") {
+    padding-top: 30px !important;
+  }
+
+  @include media("<md") {
+    padding-top: 20px !important;
+  }
+}
+
+.mb-margin {
+
+  @include media("<md") {
+    margin-bottom: 120px !important;
+  }
+}
+
+// sidr menu
+.sidr {
+  z-index: 99 !important;
+}
+
+// Global margin for desktop & Mobile
+
+.margin-lg {
+  margin-bottom: 50px;
+}
+
+.margin-md {
+  @include media("<lg") {
+    padding-bottom: 100px;
+  }
+}
+
+.pagination .page-link {
+  color: $deep-green;
+  font-size: 13px;
+}
+
+@media (min-width: 1025px) {
+  .m-grid.m-grid--ver-desktop.m-grid--desktop {
+    // max-width: 1400px;
+    // margin: auto;
+  }
+}
+
+.v-middle {
+  vertical-align: middle !important;
+}
+
+.m-100 {
+  min-width: 100px;
+}
+
+
+.section-one,
+.section-two,
+.section-three,
+.section-four {
+  display: none;
+}
+
+.border-1 {
+  border: 1px solid rgba(0, 0, 0, .125) !important;
+}
+
+.border-top {
+  border-top: 1px solid rgba(0, 0, 0, .125);
+}
+
+.mw-initial {
+  max-width: initial !important;
+}
+
+.text-bold {
+  font-weight: 700;
+}

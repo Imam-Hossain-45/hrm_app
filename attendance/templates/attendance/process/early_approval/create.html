@@ -1,0 +1,74 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Attendance > Early Out Approval{% endblock %}
+
+{% block content %}
+    <h2>Attendance > Operation</h2>
+    <h2>Early Out Approval</h2>
+    <div class='container'>
+        {% include 'layouts/event.html' %}
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                <div class='card'>
+                    <div class="card-block border-1">
+                        {% if employee_info %}
+                            <div class="col-6" style="border-right: 1px solid #ccc;">
+                                <div class="employee-wrap p-4">
+                                    <h2>{{ employee_info.name }}</h2>
+                                    <p>{{ employee_info.designation }}</p>
+                                    <p>Employee ID: {{ employee_info.employee_id }}</p>
+                                    <p>Schedule Type: {{ employee_info.schedule_type }}</p>
+                                    <p>Company: {{ employee_info.company }}</p>
+                                    <p>Division: {{ employee_info.division }}</p>
+                                    <p>Department: {{ employee_info.department }}</p>
+                                    <p>Business Unit: {{ employee_info.business_unit }}</p>
+                                    <p>Project: {{ employee_info.project }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                <div class='card'>
+                    <div class="card-block">
+                        {% if early_info %}
+                            <div>
+                                <p>Entry Date : {{ early_info.out_date|date:'M d, Y' }}</p>
+                                <p>Entry Out Time : {{ early_info.out_time|date:'h:i A' }}</p>
+                                <p>Duration : {{ early_info.duration }} </p>
+                                <p>Application Date & Time : {{ early_info.created_at|date:'M d, Y' }}</p>
+                                <p>Reason of Early Out : {{ early_info.reason }}</p>
+                                {% if early_info.attachment %}
+                                    <p>Attachment : {{ early_info.attachment }} <a href="{{ early_info.attachment_url }}">View</a></p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            {% include 'attendance/process/early_approval/form.html' %}
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-main" name="save_comment">Save</button>
+                            </div>
+                        </form>
+                        {% if comment %}
+                            {% for obj in comment %}
+                                <h2>{{ obj.user }}, {{ obj.user.user_job_information.latest.designation }}, {{ obj.created_at }} </h2>
+                                <p>{{ obj.comment }}</p>
+                                <hr>
+                            {% endfor %}
+                        {% endif %}
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group w-100">
+                                <a class="btn btn-main" href="{% url 'beehive_admin:attendance:early_approval_list' %}">Cancel</a>
+                                <button type="submit" class="btn btn-main" name="decline">Decline</button>
+                                <button type="submit" class="btn btn-main" name="approve">Approve
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

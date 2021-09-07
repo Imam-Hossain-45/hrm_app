@@ -1,0 +1,141 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Add a new Holiday{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Attendance Master</p>
+                    <h2>Holiday Creation</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.name.id_for_label }}">Holiday {{ form.name.label }}<span>*</span></label>
+                                    <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" class="form-control{% if form.name.errors %} is-invalid{% endif %}" placeholder="Ex: Eid Holiday" value="{{ form.name.value|default_if_none:'' }}">
+
+                                    {% if form.name.errors %}
+                                    {% for error in form.name.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.short_code.id_for_label }}">{{ form.short_code.label }}<span>*</span></label>
+                                    <input type="text" name="{{ form.short_code.name }}" id="{{ form.short_code.id_for_label }}" class="form-control{% if form.short_code.errors %} is-invalid{% endif %}" placeholder="Ex: EH" value="{{ form.short_code.value|default_if_none:'' }}">
+
+                                    {% if form.short_code.errors %}
+                                    {% for error in form.short_code.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group calendar">
+                                    <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}<span>*</span></label>
+                                    <input type="date" name="{{ form.start_date.name }}" id="{{ form.start_date.id_for_label }}" class="form-control{% if form.start_date.errors %} is-invalid{% endif %}" value="{{ form.start_date.value|default_if_none:'' }}">
+                                    <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+                                    {% if form.start_date.errors %}
+                                    {% for error in form.start_date.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group calendar">
+                                    <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}<span>*</span></label>
+                                    <input type="date" name="{{ form.end_date.name }}" id="{{ form.end_date.id_for_label }}" class="form-control{% if form.end_date.errors %} is-invalid{% endif %}" value="{{ form.end_date.value|default_if_none:'' }}">
+                                    <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+                                    {% if form.end_date.errors %}
+                                    {% for error in form.end_date.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.type.id_for_label }}">{{ form.type.label }}</label>
+                                    <select name="{{ form.type.name }}" id="{{ form.type.id_for_label }}" class="form-control{% if form.type.errors %} is-invalid{% endif %}">
+                                        {% if form.type.value %}
+                                        {% for choice in form.type.field.choices %}
+                                        {% if form.type.value == choice.0 %}
+                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                        {% if form.type.value == choice.0|stringformat:"i" %}
+                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endif %}
+                                        {% endif %}
+
+                                        {% endfor %}
+                                        {% else %}
+                                        {% for choice in form.type.field.choices %}
+                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+
+                                    {% if form.type.errors %}
+                                    {% for error in form.type.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                                    <textarea type="text" cols="30" rows="5" name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="form-control{% if form.description.errors %} is-invalid{% endif %}" placeholder="Description about this holiday">{{ form.description.value|default_if_none:'' }}</textarea>
+
+                                    {% if form.description.errors %}
+                                    {% for error in form.description.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group switch">
+                                    <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                        <label for="{{ form.status.id_for_label }}">{{ form.status.label }}
+                                            <input type="checkbox" class="" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}" {% if form.status.value %}checked="" {% endif %}>
+                                            <span></span>
+                                        </label>
+
+                                        {% if form.status.errors %}
+                                        {% for error in form.status.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="next" value="{{ request.path }}">
+
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main b-none" href="{% url 'beehive_admin:attendance:holiday_master_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

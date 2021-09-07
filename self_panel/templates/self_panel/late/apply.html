@@ -1,0 +1,87 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Leave{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Self panel > Late</p>
+                    <h2>Late Apply</h2>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <form method="POST" novalidate enctype="multipart/form-data" class="mw-initial">
+                                {% csrf_token %}
+                                {% include 'attendance/process/late_entry/form.html' %}
+
+                                <div class="form-group w-100 text-right">
+                                    <a class="btn btn-main b-none" href="{% url 'self_panel:late_status' %}">Cancel</a>
+                                    <button type="submit" class="btn btn-main" name="apply">Apply</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        {% comment %}<div class="col-md-5">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Leave Type</th>
+                                            <th scope="col">Credit</th>
+                                            <th scope="col">Avail</th>
+                                            <th scope="col">Remaining</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for obj in leave_list %}
+                                        <tr>
+                                            <td>{{ obj.type }}</td>
+                                            <td>{{ obj.credit }}</td>
+                                            <td>{{ obj.avail }}</td>
+                                            <td>{{ obj.remaining }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>{% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        function get_time(query, date) {
+            $.ajax({
+                type: "GET",
+                url: "{% url 'beehive_admin:attendance:get_entry_time' %}",
+                dataType: "json",
+                data: {
+                    query: query,
+                    'date': date
+                },
+                success: function (result) {
+                    $("input[name='entry_time']").val(result.in_time);
+                    $("input[name='attendance']").val(result.attendance_id);
+                }
+            });
+        }
+
+        $("input[type='date']").on('change', function () {
+            get_time($("input[name='query_id']").val(), $(this).val());
+        });
+    });
+
+</script>
+{% endblock %}

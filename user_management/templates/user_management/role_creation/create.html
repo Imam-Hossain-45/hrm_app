@@ -1,0 +1,32 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Add a new Role{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Create a Role</h2>
+                    <p>Role creation</p>
+                </div>
+                <div class="card-block">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div>
+                            {% include 'user_management/role_creation/form.html' %}
+                        </div>
+
+                        <div class="form-group text-right">
+                            <a class="btn btn-main  b-none" href="{% url 'user_management:roles_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Create Role</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

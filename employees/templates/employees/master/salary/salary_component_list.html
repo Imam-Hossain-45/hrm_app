@@ -1,0 +1,58 @@
+{% if earning_component or deduction_component %}
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr class="selectable">
+                    <th scope="col">Earning Component</th>
+                    <th class="text-right" scope="col">Amount (BDT)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in earning_component %}
+                <tr>
+                    <td>{{ obj.name }}</td>
+                    <td class="text-right"><input type="number" name="{{ obj.html_name }}" class="form-control" value="{% if obj.value != '' %}{{ obj.value }}{% endif %}" {% if obj.condition_type != 'variable' %}readonly{% endif %}></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr class="selectable">
+                    <th scope="col">Deduction Component</th>
+                    <th class="text-right" scope="col">Amount (BDT)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in deduction_component %}
+                <tr>
+                    <td>{{ obj.name }}</td>
+                    <td class="text-right"><input type="number" name="{{ obj.html_name }}" class="form-control" value="{% if obj.value != '' %}{{ obj.value }}{% endif %}" {% if obj.condition_type != 'variable' %}readonly{% endif %}></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <tr>
+                <td style="width: 50%; padding:0; border: none;"></td>
+                <td style="width: 50%; padding:0; border: none;">
+                    <table class="table m-0">
+                        <tbody>
+                            <tr>
+                                <td style="border: none; border-right: 1px solid #ccc; text-align: right;">Net Earning</td>
+                                <td class="text-right" style="border: none;">30,000.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endif %}

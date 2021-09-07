@@ -1,0 +1,133 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Add a new business unit{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Business unit Description</h2>
+                    <p>Business unit name and address.</p>
+                </div>
+                <div class="card-block">
+                    <form class="m-form" method="post" enctype='multipart/form-data' novalidate>
+                        {% csrf_token %}
+                        <div class="card-header secondary">
+                            <h2>General</h2>
+                        </div>
+
+                        <div>
+                            {% include 'setting/business_unit/general_form.html' %}
+                        </div>
+
+                        <div class="card-header secondary mt-5">
+                            <h2>Address</h2>
+                        </div>
+
+                        <div class="tab-wrapper">
+                            <div>
+                                <ul class="nav nav-pills business-unit-tab mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="nav-physical-tab" href="#nav-physical" data-toggle="pill" role="tab" aria-controls="nav-physical" aria-selected="true">Physical Address</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="nav-virtual-tab" href="#nav-virtual" data-toggle="pill" role="tab" aria-controls="nav-virtual" aria-selected="true">Virtual Address</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" id="pills-tabContent">
+                                <div id="nav-physical" class="tab-pane fade active show" role="tabpanel" aria-labelledby="nav-physical-tab">
+                                    <hr>
+                                    <div class="tab-wrap">
+                                        <div class="col-12 pl-0 pb-3">
+                                            <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                <label for="{{ general_form.different_physical_address.id_for_label }}">{{ general_form.different_physical_address.label }}
+                                                    <input type="checkbox" class="form-control next-one" name="{{ general_form.different_physical_address.name }}" id="{{ general_form.different_physical_address.id_for_label }}" {% if general_form.different_physical_address.value %}checked="" {% endif %}>
+                                                    <span></span>
+                                                </label>
+                                            </span>
+
+                                            {% if general_form.different_physical_address.errors %}
+                                            {% for error in general_form.different_physical_address.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="section-one">
+                                            <div>
+                                                {% include 'setting/common/physical_address_form.html' %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="nav-virtual" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-virtual-tab">
+                                    <hr>
+                                    <div class="tab-wrap">
+                                        <div class="col-12 pl-0 pb-3">
+                                            <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                <label for="{{ general_form.different_virtual_address.id_for_label }}">{{ general_form.different_virtual_address.label }}
+                                                    <input type="checkbox" class="form-control next-two" name="{{ general_form.different_virtual_address.name }}" id="{{ general_form.different_virtual_address.id_for_label }}" {% if general_form.different_virtual_address.value %}checked="" {% endif %}>
+                                                    <span></span>
+                                                </label>
+                                            </span>
+
+                                            {% if general_form.different_virtual_address.errors %}
+                                            {% for error in general_form.different_virtual_address.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+
+
+                                        <div class="section-two">
+
+                                            <div class="tab-wrap">
+                                                {% include 'setting/common/virtual_address_form.html' %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-12 pl-0 pb-3">
+                            {#                                    <span class="m-switch m-switch--outline m-switch--icon m-switch--success">#}
+                            {#                                        <label for="a">Identification#}
+                            {#                                            <input type="checkbox" class="form-control" id="a">#}
+                            {#                                            <span></span>#}
+                            {#                                        </label>#}
+                            {#                                    </span>#}
+
+                            {% if general_form.new_identification.errors %}
+                            {% for error in general_form.new_identification.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="card-header secondary mt-5">
+                            <h2>Identification</h2>
+                        </div>
+
+                        <div class="tab-wrapper " style="border: none;">
+                            <div class="tab-content form-one new-id-form">
+                                {% include 'setting/common/identification_form.html' %}
+                            </div>
+                        </div>
+
+                        <div class="form-group w-100 text-right mt-5">
+                            <a class="btn btn-main  b-none" href="{% url 'beehive_admin:setting:business_unit_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Create Business Unit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

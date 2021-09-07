@@ -1,0 +1,852 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Edit Overtime{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header secondary card-box">
+                        <div class="card-title">
+                            <h2>Edit Overtime</h2>
+                            <p>Update an overtime rule</p>
+                        </div>
+                    </div>
+
+                    <div class="card-block">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.name.id_for_label }}">
+                                            {{ form0.name.label }}{% if form0.name.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="text" name="{{ form0.name.name }}" id="{{ form0.name.id_for_label }}"
+                                               class="form-control{% if form0.name.errors %} is-invalid{% endif %}"
+                                               value="{{ form0.name.value|default:'' }}" maxlength="200" required>
+                                        {% if form0.name.errors %}
+                                        {% for error in form0.name.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.code.id_for_label }}">
+                                            {{ form0.code.label }}{% if form0.code.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="text" name="{{ form0.code.name }}" id="{{ form0.code.id_for_label }}"
+                                               class="form-control{% if form0.code.errors %} is-invalid{% endif %}"
+                                               value="{{ form0.code.value|default:'' }}" maxlength="20" required>
+                                        {% if form0.code.errors %}
+                                        {% for error in form0.code.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.description.id_for_label }}">
+                                            {{ form0.description.label }}{% if form0.description.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="text" name="{{ form0.description.name }}" id="{{ form0.description.id_for_label }}"
+                                               class="form-control{% if form0.description.errors %} is-invalid{% endif %}"
+                                               value="{{ form0.description.value|default:'' }}" maxlength="250">
+                                        {% if form0.description.errors %}
+                                        {% for error in form0.description.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.default_calculation_unit.id_for_label }}">
+                                            {{ form0.default_calculation_unit.label }}{% if form0.default_calculation_unit.field.required %} *{% endif %}
+                                        </label>
+                                        <select name="{{ form0.default_calculation_unit.name }}" id="{{ form0.default_calculation_unit.id_for_label }}" class="form-control{% if form0.default_calculation_unit.errors %} is-invalid{% endif %}">
+                                            {% for choice in form0.default_calculation_unit.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if form0.default_calculation_unit.value == choice.0 %} selected{% endif %}>
+                                                {{ choice.1 }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if form0.default_calculation_unit.errors %}
+                                        {% for error in form0.default_calculation_unit.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>
+                                            {{ form0.segment.label }}{% if form0.segment.field.required %} *{% endif %}
+                                        </label>
+                                        <div>
+                                            <div class="form-check-inline">
+                                                <label class="form-check-label">
+                                                    {% for obj in form0.segment %}
+                                                    {{ obj }}
+                                                    {% endfor %}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {% if form0.segment.errors %}
+                                        {% for error in form0.segment.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.buffer_duration_pre.id_for_label }}">
+                                            {{ form0.buffer_duration_pre.label }}{% if form0.buffer_duration_pre.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="number" name="{{ form0.buffer_duration_pre.name }}" id="{{ form0.buffer_duration_pre.id_for_label }}" class="form-control{% if form0.buffer_duration_pre.errors %} is-invalid{% endif %}" value="{{ form0.buffer_duration_pre.value|default:0 }}" min="0" step="1">
+                                        {% if form0.buffer_duration_pre.errors %}
+                                        {% for error in form0.buffer_duration_pre.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.buffer_duration_unit_pre.id_for_label }}">
+                                            {{ form0.buffer_duration_unit_pre.label }}{% if form0.buffer_duration_unit_pre.field.required %} *{% endif %}
+                                        </label>
+                                        <select name="{{ form0.buffer_duration_unit_pre.name }}" id="{{ form0.buffer_duration_unit_pre.id_for_label }}" class="form-control{% if form0.buffer_duration_unit_pre.errors %} is-invalid{% endif %}">
+                                            {% for choice in form0.buffer_duration_unit_pre.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if form0.buffer_duration_unit_pre.value == choice.0 %} selected{% endif %}>
+                                                {{ choice.1 }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if form0.buffer_duration_unit_pre.errors %}
+                                        {% for error in form0.buffer_duration_unit_pre.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.minimum_working_duration_pre.id_for_label }}">
+                                            {{ form0.minimum_working_duration_pre.label }}{% if form0.minimum_working_duration_pre.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="number" name="{{ form0.minimum_working_duration_pre.name }}" id="{{ form0.minimum_working_duration_pre.id_for_label }}" class="form-control{% if form0.minimum_working_duration_pre.errors %} is-invalid{% endif %}" value="{{ form0.minimum_working_duration_pre.value|default:1 }}" min="0" step="1">
+                                        {% if form0.minimum_working_duration_pre.errors %}
+                                        {% for error in form0.minimum_working_duration_pre.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.minimum_working_duration_unit_pre.id_for_label }}">
+                                            {{ form0.minimum_working_duration_unit_pre.label }}{% if form0.minimum_working_duration_unit_pre.field.required %} *{% endif %}
+                                        </label>
+                                        <select name="{{ form0.minimum_working_duration_unit_pre.name }}" id="{{ form0.minimum_working_duration_unit_pre.id_for_label }}" class="form-control{% if form0.minimum_working_duration_unit_pre.errors %} is-invalid{% endif %}">
+                                            {% for choice in form0.minimum_working_duration_unit_pre.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if form0.minimum_working_duration_unit_pre.value == choice.0 %} selected{% endif %}>
+                                                {{ choice.1 }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if form0.minimum_working_duration_unit_pre.errors %}
+                                        {% for error in form0.minimum_working_duration_unit_pre.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="{{ form0.tolerance_time_pre.id_for_label }}">
+                                            {{ form0.tolerance_time_pre.label }}{% if form0.tolerance_time_pre.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="number" name="{{ form0.tolerance_time_pre.name }}" id="{{ form0.tolerance_time_pre.id_for_label }}" class="form-control{% if form0.tolerance_time_pre.errors %} is-invalid{% endif %}" value="{{ form0.tolerance_time_pre.value|default:1 }}" min="0" step="1">
+                                        {% if form0.tolerance_time_pre.errors %}
+                                        {% for error in form0.tolerance_time_pre.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.buffer_duration_post.id_for_label }}">
+                                            {{ form0.buffer_duration_post.label }}{% if form0.buffer_duration_post.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="number" name="{{ form0.buffer_duration_post.name }}" id="{{ form0.buffer_duration_post.id_for_label }}" class="form-control{% if form0.buffer_duration_post.errors %} is-invalid{% endif %}" value="{{ form0.buffer_duration_post.value|default:0 }}" min="0" step="1">
+                                        {% if form0.buffer_duration_post.errors %}
+                                        {% for error in form0.buffer_duration_post.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.buffer_duration_unit_post.id_for_label }}">
+                                            {{ form0.buffer_duration_unit_post.label }}{% if form0.buffer_duration_unit_post.field.required %} *{% endif %}
+                                        </label>
+                                        <select name="{{ form0.buffer_duration_unit_post.name }}" id="{{ form0.buffer_duration_unit_post.id_for_label }}" class="form-control{% if form0.buffer_duration_unit_post.errors %} is-invalid{% endif %}">
+                                            {% for choice in form0.buffer_duration_unit_post.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if form0.buffer_duration_unit_post.value == choice.0 %} selected{% endif %}>
+                                                {{ choice.1 }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if form0.buffer_duration_unit_post.errors %}
+                                        {% for error in form0.buffer_duration_unit_post.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.minimum_working_duration_post.id_for_label }}">
+                                            {{ form0.minimum_working_duration_post.label }}{% if form0.minimum_working_duration_post.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="number" name="{{ form0.minimum_working_duration_post.name }}" id="{{ form0.minimum_working_duration_post.id_for_label }}" class="form-control{% if form0.minimum_working_duration_post.errors %} is-invalid{% endif %}" value="{{ form0.minimum_working_duration_post.value|default:1 }}" min="0" step="1">
+                                        {% if form0.minimum_working_duration_post.errors %}
+                                        {% for error in form0.minimum_working_duration_post.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form0.minimum_working_duration_unit_post.id_for_label }}">
+                                            {{ form0.minimum_working_duration_unit_post.label }}{% if form0.minimum_working_duration_unit_post.field.required %} *{% endif %}
+                                        </label>
+                                        <select name="{{ form0.minimum_working_duration_unit_post.name }}" id="{{ form0.minimum_working_duration_unit_post.id_for_label }}" class="form-control{% if form0.minimum_working_duration_unit_post.errors %} is-invalid{% endif %}">
+                                            {% for choice in form0.minimum_working_duration_unit_post.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if form0.minimum_working_duration_unit_post.value == choice.0 %} selected{% endif %}>
+                                                {{ choice.1 }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if form0.minimum_working_duration_unit_post.errors %}
+                                        {% for error in form0.minimum_working_duration_unit_post.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="{{ form0.tolerance_time_post.id_for_label }}">
+                                            {{ form0.tolerance_time_post.label }}{% if form0.tolerance_time_post.field.required %} *{% endif %}
+                                        </label>
+                                        <input type="number" name="{{ form0.tolerance_time_post.name }}" id="{{ form0.tolerance_time_post.id_for_label }}" class="form-control{% if form0.tolerance_time_post.errors %} is-invalid{% endif %}" value="{{ form0.tolerance_time_post.value|default:1 }}" min="0" step="1">
+                                        {% if form0.tolerance_time_post.errors %}
+                                        {% for error in form0.tolerance_time_post.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="form-check-inline">
+                                        <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                            <label class="form-check-label" for="{{ form0.taxable.id_for_label }}">
+                                                {{ form0.taxable.label }}{% if form0.taxable.field.required %} *{% endif %}
+                                                <input type="checkbox" name="{{ form0.taxable.name }}" id="{{ form0.taxable.id_for_label }}" class="form-check-input{% if form0.taxable.errors %} is-invalid{% endif %}" {% if form0.taxable.value %}checked{% endif %}>
+                                                <span></span>
+                                            </label>
+                                        </span>
+
+                                        </div>
+                                        {% if form0.taxable.errors %}
+                                        {% for error in form0.taxable.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group text-right">
+                                        <button class="btn btn-main" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="card mt-5">
+                            <div class="card-header secondary card-box">
+                                <div class="card-title">
+                                    <h2>Maximum duration restrictions</h2>
+                                </div>
+                            </div>
+
+                            <div class="card-block">
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="drforms" value="yes">
+                                    {{ drforms.management_form }}
+
+                                    {% for drform in drforms %}
+
+                                    <input type="hidden" name="duration_restrictions-{{ forloop.counter0 }}-rule" value="{{ object.pk }}">
+                                    <input type="hidden" name="duration_restrictions-{{ forloop.counter0 }}-id" value="{{ drform.id.value }}">
+
+                                    <div class="row my-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    {{ drform.ot_segment.label }}{% if drform.ot_segment.field.required %} *{% endif %}
+                                                </label>
+                                                <div>
+                                                    <div class="form-check-inline">
+                                                        <label class="form-check-label">
+                                                            {% for obj in drform.ot_segment %}
+                                                            {{ obj }}
+                                                            {% endfor %}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                {% if drform.ot_segment.errors %}
+                                                {% for error in drform.ot_segment.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="duration_restrictions-{{ forloop.counter0 }}-{{ drform.scope_value.id_for_label }}">
+                                                    {{ drform.scope_value.label }}{% if drform.scope_value.field.required %} *{% endif %}
+                                                </label>
+                                                <input type="number" name="duration_restrictions-{{ forloop.counter0 }}-{{ drform.scope_value.name }}" id="duration_restrictions-{{ forloop.counter0 }}-{{ drform.scope_value.id_for_label }}"
+                                                       class="form-control{% if drform.scope_value.errors %} is-invalid{% endif %}"
+                                                       value="{{ drform.scope_value.value|default:0 }}" min="0" step="1">
+                                                {% if drform.scope_value.errors %}
+                                                {% for error in drform.scope_value.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="duration_restrictions-{{ forloop.counter0 }}-{{ drform.scope_unit.id_for_label }}">
+                                                    {{ drform.scope_unit.label }}{% if drform.scope_unit.field.required %} *{% endif %}
+                                                </label>
+                                                <select name="duration_restrictions-{{ forloop.counter0 }}-{{ drform.scope_unit.name }}" id="duration_restrictions-{{ forloop.counter0 }}-{{ drform.scope_unit.id_for_label }}"
+                                                        class="form-control{% if drform.scope_unit.errors %} is-invalid{% endif %}">
+                                                    {% for choice in drform.scope_unit.field.choices %}
+                                                    <option value="{{ choice.0 }}"{% if drform.scope_unit.value == choice.0 %} selected{% endif %}>
+                                                        {{ choice.1 }}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if drform.scope_unit.errors %}
+                                                {% for error in drform.scope_unit.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="duration_restrictions-{{ forloop.counter0 }}-{{ drform.maximum_duration.id_for_label }}">
+                                                    {{ drform.maximum_duration.label }}{% if drform.maximum_duration.field.required %} *{% endif %}
+                                                </label>
+                                                <input type="number" name="duration_restrictions-{{ forloop.counter0 }}-{{ drform.maximum_duration.name }}" id="duration_restrictions-{{ forloop.counter0 }}-{{ drform.maximum_duration.id_for_label }}"
+                                                       class="form-control{% if drform.maximum_duration.errors %} is-invalid{% endif %}"
+                                                       value="{{ drform.maximum_duration.value|default:1 }}" min="0" step="1">
+                                                {% if drform.maximum_duration.errors %}
+                                                {% for error in drform.maximum_duration.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="duration_restrictions-{{ forloop.counter0 }}-{{ drform.maximum_duration_unit.id_for_label }}">
+                                                    {{ drform.maximum_duration_unit.label }}{% if drform.maximum_duration_unit.field.required %} *{% endif %}
+                                                </label>
+                                                <select name="duration_restrictions-{{ forloop.counter0 }}-{{ drform.maximum_duration_unit.name }}" id="duration_restrictions-{{ forloop.counter0 }}-{{ drform.maximum_duration_unit.id_for_label }}"
+                                                        class="form-control{% if drform.maximum_duration_unit.errors %} is-invalid{% endif %}">
+                                                    {% for choice in drform.maximum_duration_unit.field.choices %}
+                                                    <option value="{{ choice.0 }}"{% if drform.maximum_duration_unit.value == choice.0 %} selected{% endif %}>
+                                                        {{ choice.1 }}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if drform.maximum_duration_unit.errors %}
+                                                {% for error in drform.maximum_duration_unit.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-check-inline">
+                                                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                    <label class="form-check-label" for="duration_restrictions-{{ forloop.counter0 }}-{{ drform.DELETE.id_for_label }}">
+                                                      {{ drform.DELETE.label }}{% if drform.DELETE.field.required %} *{% endif %}
+                                                        <input type="checkbox" name="duration_restrictions-{{ forloop.counter0 }}-{{ drform.DELETE.name }}" id="duration_restrictions-{{ forloop.counter0 }}-{{ drform.DELETE.id_for_label }}"
+                                                           class="form-check-input{% if drform.DELETE.errors %} is-invalid{% endif %}">
+                                                        <span></span>
+                                                    </label>
+                                                </span>
+                                                </div>
+                                                {% if drform.DELETE.errors %}
+                                                {% for error in drform.DELETE.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-main" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card mt-5">
+                            <div class="card-header secondary card-box">
+                                <div class="card-title">
+                                    <h2>Fixed-rate amount calculation</h2>
+                                </div>
+                            </div>
+
+                            <div class="card-block">
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="fid" value="form1">
+                                    <input type="hidden" name="rule" value="{{ object.pk }}">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group switch">
+                                                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                    <label for="f1_{{ form1.enabled.id_for_label }}">{{ form1.enabled.label }}
+                                                        <input type="checkbox" name="{{ form1.enabled.name }}" id="f1_{{ form1.enabled.id_for_label }}"{% if form1.enabled.value %} checked{% endif %}>
+                                                        <span></span>
+                                                    </label>
+                                                    {% if form1.enabled.errors %}
+                                                    {% for error in form1.enabled.errors %}
+                                                    <div class="invalid-feedback">{{ error }}</div>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="f1_{{ form1.basis.id_for_label }}">
+                                                    {{ form1.basis.label }}{% if form1.basis.field.required %} *{% endif %}
+                                                </label>
+                                                <select name="{{ form1.basis.name }}" id="f1_{{ form1.basis.id_for_label }}"
+                                                        class="form-control{% if form1.basis.errors %} is-invalid{% endif %}">
+                                                    {% for choice in form1.basis.field.choices %}
+                                                    <option value="{{ choice.0 }}"{% if form1.basis.value == choice.0 %} selected{% endif %}>
+                                                        {{ choice.1 }}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if form1.basis.errors %}
+                                                {% for error in form1.basis.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="f1_{{ form1.scope_value.id_for_label }}">
+                                                    {{ form1.scope_value.label }}{% if form1.scope_value.field.required %} *{% endif %}
+                                                </label>
+                                                <input type="number" name="{{ form1.scope_value.name }}" id="f1_{{ form1.scope_value.id_for_label }}"
+                                                       class="form-control{% if form1.scope_value.errors %} is-invalid{% endif %}"
+                                                       value="{{ form1.scope_value.value|default:1 }}" min="0" step="1">
+                                                {% if form1.scope_value.errors %}
+                                                {% for error in form1.scope_value.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="f1_{{ form1.amount.id_for_label }}">
+                                                    {{ form1.amount.label }}{% if form1.amount.field.required %} *{% endif %}
+                                                </label>
+                                                <input type="number" name="{{ form1.amount.name }}" id="f1_{{ form1.amount.id_for_label }}"
+                                                       class="form-control{% if form1.amount.errors %} is-invalid{% endif %}"
+                                                       value="{{ form1.amount.value|default:1.00 }}" min="0.00" step="0.10">
+                                                {% if form1.amount.errors %}
+                                                {% for error in form1.amount.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-main" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card mt-5">
+                            <div class="card-header secondary card-box">
+                                <div class="card-title">
+                                    <h2>Variable amount calculation</h2>
+                                </div>
+                            </div>
+
+                            <div class="card-block">
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="fid" value="form2">
+                                    <input type="hidden" name="rule" value="{{ object.pk }}">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group switch">
+                                                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                    <label for="f2_{{ form2.enabled.id_for_label }}">{{ form2.enabled.label }}
+                                                        <input type="checkbox" name="{{ form2.enabled.name }}" id="f2_{{ form2.enabled.id_for_label }}"{% if form2.enabled.value %} checked{% endif %}>
+                                                        <span></span>
+                                                    </label>
+                                                    {% if form2.enabled.errors %}
+                                                    {% for error in form2.enabled.errors %}
+                                                    <div class="invalid-feedback">{{ error }}</div>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="f2_f3_{{ form2.basis.id_for_label }}">
+                                                    {{ form2.basis.label }}{% if form2.basis.field.required %} *{% endif %}
+                                                </label>
+                                                <select name="{{ form2.basis.name }}" id="f2_f3_{{ form2.basis.id_for_label }}"
+                                                        class="form-control{% if form2.basis.errors %} is-invalid{% endif %}">
+                                                    {% for choice in form2.basis.field.choices %}
+                                                    <option value="{{ choice.0 }}"{% if form2.basis.value == choice.0 %} selected{% endif %}>
+                                                        {{ choice.1 }}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if form2.basis.errors %}
+                                                {% for error in form2.basis.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-main" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card mt-5">
+                            <div class="card-header secondary card-box">
+                                <div class="card-title">
+                                    <h2>Manual amount calculation</h2>
+                                </div>
+                            </div>
+
+                            <div class="card-block">
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="fid" value="form3">
+                                    <input type="hidden" name="rule" value="{{ object.pk }}">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group switch">
+                                                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                    <label for="f3_{{ form3.enabled.id_for_label }}">{{ form3.enabled.label }}
+                                                        <input type="checkbox" name="{{ form3.enabled.name }}" id="f3_{{ form3.enabled.id_for_label }}"{% if form3.enabled.value %} checked{% endif %}>
+                                                        <span></span>
+                                                    </label>
+                                                    {% if form3.enabled.errors %}
+                                                    {% for error in form3.enabled.errors %}
+                                                    <div class="invalid-feedback">{{ error }}</div>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-main" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card mt-5">
+                            <div class="card-header secondary card-box">
+                                <div class="card-title">
+                                    <h2>Rule-based amount calculation</h2>
+                                </div>
+                            </div>
+
+                            <div class="card-block">
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="fid" value="form4">
+                                    <input type="hidden" name="rule" value="{{ object.pk }}">
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group switch">
+                                                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                    <label for="f4_{{ form4.enabled.id_for_label }}">{{ form4.enabled.label }}
+                                                        <input type="checkbox" name="{{ form4.enabled.name }}" id="f4_{{ form4.enabled.id_for_label }}"{% if form4.enabled.value %} checked{% endif %}>
+                                                        <span></span>
+                                                    </label>
+                                                    {% if form4.enabled.errors %}
+                                                    {% for error in form4.enabled.errors %}
+                                                    <div class="invalid-feedback">{{ error }}</div>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="f4_{{ form4.basis.id_for_label }}">
+                                                    {{ form4.basis.label }}{% if form4.basis.field.required %} *{% endif %}
+                                                </label>
+                                                <select name="{{ form4.basis.name }}" id="f4_{{ form4.basis.id_for_label }}"
+                                                        class="form-control{% if form4.basis.errors %} is-invalid{% endif %}">
+                                                    {% for choice in form4.basis.field.choices %}
+                                                    <option value="{{ choice.0 }}"{% if form4.basis.value == choice.0 %} selected{% endif %}>
+                                                        {{ choice.1 }}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if form4.basis.errors %}
+                                                {% for error in form4.basis.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{ rbforms.management_form }}
+
+                                    {% for rbform in rbforms %}
+
+                                    <input type="hidden" name="formulae-{{ forloop.counter0 }}-variable" value="{{ object.rule_based_wage.variable.pk }}">
+                                    <input type="hidden" name="formulae-{{ forloop.counter0 }}-id"{% if rbform.id.value %} value="{{ rbform.id.value }}{% endif %}">
+
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label for="formulae-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}">
+                                                    {{ rbform.priority.label }}{% if rbform.priority.field.required %} *{% endif %}
+                                                </label>
+                                                <input type="number" name="formulae-{{ forloop.counter0 }}-{{ rbform.priority.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}"
+                                                       class="form-control{% if rbform.priority.errors %} is-invalid{% endif %}"
+                                                       value="{{ rbform.priority.value|default:1 }}" min="1" step="1">
+                                                {% if rbform.priority.errors %}
+                                                {% for error in rbform.priority.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="formulae-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}">
+                                                    {{ rbform.condition.label }}{% if rbform.condition.field.required %} *{% endif %}
+                                                </label>
+                                                <input type="text" name="formulae-{{ forloop.counter0 }}-{{ rbform.condition.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}"
+                                                       class="form-control{% if rbform.condition.errors %} is-invalid{% endif %}"
+                                                       value="{{ rbform.condition.value|default:'' }}" required>
+                                                {% if rbform.condition.errors %}
+                                                {% for error in rbform.condition.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="formulae-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}">
+                                                    {{ rbform.rule.label }}{% if rbform.rule.field.required %} *{% endif %}
+                                                </label>
+                                                <input type="text" name="formulae-{{ forloop.counter0 }}-{{ rbform.rule.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}"
+                                                       class="form-control{% if rbform.rule.errors %} is-invalid{% endif %}"
+                                                       value="{{ rbform.rule.value|default:'' }}" required>
+                                                {% if rbform.rule.errors %}
+                                                {% for error in rbform.rule.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="form-check-inline">
+                                                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                    <label class="form-check-label" for="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}">
+                                                      {{ rbform.DELETE.label }}{% if rbform.DELETE.field.required %} *{% endif %}
+                                                        <input type="checkbox" name="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}"
+                                                           class="form-check-input{% if rbform.DELETE.errors %} is-invalid{% endif %}">
+                                                        <span></span>
+                                                    </label>
+                                                </span>
+                                                </div>
+                                                {% if rbform.DELETE.errors %}
+                                                {% for error in rbform.DELETE.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {% endfor %}
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-main" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="card mt-5">
+                            <div class="card-block">
+                                <form method="post" novalidate>
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="done" value="yes">
+
+                                    <hr>
+
+                                    <div class="row mt-5">
+                                        <div class="col-md-12">
+                                            <div class="form-group text-right">
+                                                <button class="btn btn-main" type="submit">Return to Overtime List</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

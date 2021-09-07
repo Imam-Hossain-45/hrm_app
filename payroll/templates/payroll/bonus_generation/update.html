@@ -1,0 +1,121 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Update Bonus Generation{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Bonus Generation Update Form</h2>
+                        <p>Bonus Generation Update for employee info</p>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }}</label>
+                                <select name="{{ form.employee.name }}"
+                                        class="form-control{% if form.employee.errors %} is-invalid{% endif %}"
+                                        id="{{ form.employee.id_for_label }}">
+
+                                    {% if form.employee.value is not None %}
+                                        {% for choice in form.employee.field.choices %}
+                                            {% if form.employee.value == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in form.employee.field.choices %}
+                                            {% if employee.id == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+
+                                {% if form.employee.errors %}
+                                    {% for error in form.employee.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.amount.id_for_label }}">{{ form.amount.label }}</label>
+                                <input type="number" step="0.01" name="{{ form.amount.name }}"
+                                       id="{{ form.amount.id_for_label }}"
+                                       class="form-control {% if form.amount.errors %}is-invalid{% endif %}"
+                                       value="{{ form.amount.value|default_if_none:'' }}"
+                                       placeholder="Ex: 6000">
+
+                                {% if form.amount.errors %}
+                                    {% for error in form.amount.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.bonus_type.id_for_label }}">{{ form.bonus_type.label }}</label>
+                                <select name="{{ form.bonus_type.name }}"
+                                        class="form-control{% if form.bonus_type.errors %} is-invalid{% endif %}"
+                                        id="{{ form.bonus_type.id_for_label }}">
+
+                                    {% if form.bonus_type.value is not None %}
+                                        {% for choice in form.bonus_type.field.choices %}
+                                            {% if form.bonus_type.value == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in form.bonus_type.field.choices %}
+                                            {% if bonus_type.id == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+
+                                {% if form.bonus_type.errors %}
+                                    {% for error in form.bonus_type.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                                <textarea name="{{ form.description.name }}" cols="40" rows="5"
+                                          class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+                                          id="{{ form.description.id_for_label }}">{{ form.description.value|default_if_none:'' }}</textarea>
+
+                                {% if form.description.errors %}
+                                    {% for error in form.description.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class='form-group w-100'>
+                                <button type="submit" class="btn btn-main">Submit</button>
+                                <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:bonus_generation_list' %}">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

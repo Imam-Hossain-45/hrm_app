@@ -1,0 +1,48 @@
+<div class="form-group w-100">
+    <label for="{{ form.time.id_for_label }}">{{ form.time.label }}</label>
+    <input type="number" name="{{ form.time.name }}"
+           id="{{ form.time.id_for_label }}"
+           class="form-control{% if form.time.errors %} is-invalid{% endif %}"
+           placeholder="i.e., 1/2" value="{{ form.time.value|default_if_none:'' }}">
+
+    {% if form.time.errors %}
+        {% for error in form.time.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="form-group w-100">
+    <label for="{{ form.unit.id_for_label }}">{{ form.unit.label }}</label>
+    <select name="{{ form.unit.name }}" id="{{ form.unit.id_for_label }}"
+            class="form-control{% if form.unit.errors %} is-invalid{% endif %}"
+            required>
+        {% if form.unit.value %}
+            {% for choice in form.unit.field.choices %}
+                {% if form.unit.value == choice.0 %}
+                    <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                {% else %}
+                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for choice in form.unit.field.choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+            {% endfor %}
+        {% endif %}
+    </select>
+
+    {% if form.unit.errors %}
+        {% for error in form.unit.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <hr>
+    </div>
+</div>
+
+{% include 'payroll/master/deduction/deduction_component/settings/general_form.html' %}

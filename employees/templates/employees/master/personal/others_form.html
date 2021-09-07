@@ -1,0 +1,224 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.mothers_name.id_for_label }}">{{ others_form.mothers_name.label }}</label>
+            <input type="text" name="{{ others_form.mothers_name.name }}" class="form-control{% if others_form.mothers_name.errors %} is-invalid{% endif %}" id="{{ others_form.mothers_name.id_for_label }}" {% if others_form.mothers_name.value != None %}value="{{ others_form.mothers_name.value }}" {% endif %}>
+            {% if others_form.mothers_name.errors %}
+            {% for error in others_form.mothers_name.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.fathers_name.id_for_label }}">{{ others_form.fathers_name.label }}</label>
+            <input type="text" name="{{ others_form.fathers_name.name }}" class="form-control{% if others_form.fathers_name.errors %} is-invalid{% endif %}" id="{{ others_form.fathers_name.id_for_label }}" {% if others_form.fathers_name.value != None %}value="{{ others_form.fathers_name.value }}" {% endif %}>
+            {% if others_form.fathers_name.errors %}
+            {% for error in others_form.fathers_name.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ others_form.marital_status.id_for_label }}">{{ others_form.marital_status.label }}</label>
+            <select name="{{ others_form.marital_status.name }}" class="form-control{% if others_form.marital_status.errors %} is-invalid{% endif %}" id="{{ others_form.marital_status.id_for_label }}">
+
+                {% for m_status in others_form.marital_status %}
+                {{ m_status }}
+                {% endfor %}
+            </select>
+            {% if others_form.marital_status.errors %}
+            {% for error in others_form.marital_status.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12 spouce-info">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ others_form.spouse_name.id_for_label }}">{{ others_form.spouse_name.label }}<span>*</span></label>
+                    <input type="text" name="{{ others_form.spouse_name.name }}" class="form-control{% if others_form.spouse_name.errors %} is-invalid{% endif %}" id="{{ others_form.spouse_name.id_for_label }}" {% if others_form.spouse_name.value != None %}value="{{ others_form.spouse_name.value }}" {% endif %}>
+                    {% if others_form.spouse_name.errors %}
+                    {% for error in others_form.spouse_name.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ others_form.no_of_child.id_for_label }}">{{ others_form.no_of_child.label }}</label>
+                    <input type="number" name="{{ others_form.no_of_child.name }}" class="form-control{% if others_form.no_of_child.errors %} is-invalid{% endif %}" id="{{ others_form.no_of_child.id_for_label }}" {% if others_form.no_of_child.value != None %}value="{{ others_form.no_of_child.value }}" {% endif %}>
+                    {% if others_form.no_of_child.errors %}
+                    {% for error in others_form.no_of_child.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ others_form.height_ft.id_for_label }}">{{ others_form.height_ft.label }}</label>
+            <div class="input-group">
+                <table class="table border-0" style="max-width: 300px;">
+                    <tr>
+                        <td class="border-0 pl-0"><input type="text" class="form-control" aria-describedby="basic-addon1" value="{{ others_form.height_ft.value|default:'' }}" name="{{ others_form.height_ft.name }}"></td>
+                        <td class="border-0">
+                            <div class="">
+                                <span class="" id="basic-addon1">Ft</span>
+                            </div>
+                        </td>
+                        <td class="border-0"><input type="text" class="form-control" aria-describedby="basic-addon2" value="{{ others_form.height_in.value|default:'' }}" name="{{ others_form.height_in.name }}"></td>
+                        <td class="border-0">
+                            <div class="">
+                                <span class="" id="basic-addon2">In</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ others_form.weight.id_for_label }}">{{ others_form.weight.label }}</label>
+            <div class="input-group">
+                <table class="table border-0" style="max-width: 300px;">
+                    <tr>
+                        <td class="border-0 pl-0">
+                            <input type="text" class="form-control" aria-describedby="basic-addon3" value="{{ others_form.weight.value|default:'' }}" name="{{ others_form.weight.name }}">
+                        </td>
+                        <td class="border-0 pr-0">
+                            <div class="">
+                                <select class="form-control" id="basic-addon3" name="{{ others_form.weight_unit.name }}" class="form-control{% if others_form.weight_unit.errors %} is-invalid{% endif %}" id="{{ others_form.weight_unit.id_for_label }}">
+
+                                    {% for unit in others_form.weight_unit %}
+                                    {{ unit }}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.blood_group.id_for_label }}">{{ others_form.blood_group.label }}</label>
+            <select name="{{ others_form.blood_group.name }}" class="form-control{% if others_form.blood_group.errors %} is-invalid{% endif %}" id="{{ others_form.blood_group.id_for_label }}">
+
+                {% for m_status in others_form.blood_group %}
+                {{ m_status }}
+                {% endfor %}
+            </select>
+            {% if others_form.blood_group.errors %}
+            {% for error in others_form.blood_group.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.identification_mark.id_for_label }}">{{ others_form.identification_mark.label }}</label>
+            <input type="text" name="{{ others_form.identification_mark.name }}" class="form-control{% if others_form.identification_mark.errors %} is-invalid{% endif %}" id="{{ others_form.identification_mark.id_for_label }}" {% if others_form.identification_mark.value != None %}value="{{ others_form.identification_mark.value }}" {% endif %}>
+            {% if others_form.identification_mark.errors %}
+            {% for error in others_form.identification_mark.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.religion.id_for_label }}">{{ others_form.religion.label }}</label>
+            <select name="{{ others_form.religion.name }}" class="form-control{% if others_form.religion.errors %} is-invalid{% endif %}" id="{{ others_form.religion.id_for_label }}">
+
+                {% for m_status in others_form.religion %}
+                {{ m_status }}
+                {% endfor %}
+            </select>
+            {% if others_form.religion.errors %}
+            {% for error in others_form.religion.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.caste.id_for_label }}">{{ others_form.caste.label }}</label>
+            <input type="text" name="{{ others_form.caste.name }}" class="form-control{% if others_form.caste.errors %} is-invalid{% endif %}" id="{{ others_form.caste.id_for_label }}" {% if others_form.caste.value != None %}value="{{ others_form.caste.value }}" {% endif %}>
+            {% if others_form.caste.errors %}
+            {% for error in others_form.caste.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.mother_tongue.id_for_label }}">{{ others_form.mother_tongue.label }}</label>
+            <input type="text" name="{{ others_form.mother_tongue.name }}" class="form-control{% if others_form.mother_tongue.errors %} is-invalid{% endif %}" id="{{ others_form.mother_tongue.id_for_label }}" {% if others_form.mother_tongue.value != None %}value="{{ others_form.mother_tongue.value }}" {% endif %}>
+            {% if others_form.mother_tongue.errors %}
+            {% for error in others_form.mother_tongue.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ others_form.police_station_address.id_for_label }}">{{ others_form.police_station_address.label }}</label>
+            <textarea name="{{ others_form.police_station_address.name }}" cols="30" rows="5" class="form-control{% if others_form.police_station_address.errors %} is-invalid{% endif %}" id="{{ others_form.police_station_address.id_for_label }}">{{ others_form.police_station_address.value|default:'' }}</textarea>
+            {% if others_form.police_station_address.errors %}
+            {% for error in others_form.police_station_address.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.fingerprint.id_for_label }}">{{ others_form.fingerprint.label }}</label>
+            {% if others_form.fingerprint.value %}
+            Currently: <a href="{{ others_form.fingerprint.value.url }}">{{ others_form.fingerprint.value.url }}</a><br>
+            <input id="fingerprint-clear_id" name="fingerprint-clear" type="checkbox" style="display: inline-block;">
+            <label for="fingerprint-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ others_form.fingerprint.name }}" class="form-control{% if others_form.fingerprint.errors %} is-invalid{% endif %}" id="{{ others_form.fingerprint.id_for_label }}" accept="image/">
+            {% if others_form.fingerprint.errors %}
+            {% for error in others_form.fingerprint.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ others_form.signature.id_for_label }}">{{ others_form.signature.label }}</label>
+            {% if others_form.signature.value %}
+            Currently: <a href="{{ others_form.signature.value.url }}">{{ others_form.signature.value.url }}</a><br>
+            <input id="signature-clear_id" name="signature-clear" type="checkbox" style="display: inline-block;">
+            <label for="signature-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ others_form.signature.name }}" class="form-control{% if others_form.signature.errors %} is-invalid{% endif %}" id="{{ others_form.signature.id_for_label }}" accept="image/">
+            {% if others_form.signature.errors %}
+            {% for error in others_form.signature.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

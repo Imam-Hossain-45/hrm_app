@@ -1,0 +1,127 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Holiday Groups List{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_holidaygroup' in permissions %}
+            <div class="text-right">
+                <a href="{% url 'beehive_admin:attendance:holiday_group_create' %}" class="btn btn-main m-0">+
+                    Add a new holiday group
+                </a>
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>All holiday groups</h2>
+                        <p>View all holiday groups, edit or delete</p>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Short Code</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for group in groups %}
+                                        <tr>
+                                            <td>{{ group.name }}</td>
+                                            <td>{{ group.short_code|default_if_none:''|upper }}</td>
+                                            <td>{% if group.status %}Active{% else %}Inactive{% endif %}</td>
+                                            <td>
+                                                {% if request.user.is_superuser or 'change_holidaygroup' in permissions %}
+                                                <a title="edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="{% url 'beehive_admin:attendance:holiday_group_update' group.id %}">
+                                                    <i class="la la-edit"></i>
+                                                </a>
+                                                {% endif %}
+
+                                                {% if request.user.is_superuser or 'delete_holidaygroup' in permissions %}
+                                                <div class="modal fade" id="confirmDeleteModal{{ group.id }}"
+                                                     tabindex="-1" role="dialog"
+                                                     aria-labelledby="confirmDeleteModalLabel"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <form action="{% url 'beehive_admin:attendance:holiday_group_delete' group.id %}" method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="modal-content">
+                                                                <div class="modal-body confirm-delete">
+                                                                    Are you sure you want to delete {{ group }}?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                            class="btn btn-secondary"
+                                                                            data-dismiss="modal">
+                                                                        Cancel
+                                                                    </button>
+                                                                    <input type="submit" class="btn btn-danger"
+                                                                           value="Delete"
+                                                                           name="delete">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <a href="javascript:void(0)"
+                                                   title="delete"
+                                                   class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline"
+                                                   data-toggle="modal"
+                                                   data-target="#confirmDeleteModal{{ group.id }}"
+                                                   id="deleteButton{{ group.id }}">
+                                                    <i class="la la-times-circle-o"></i>
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if groups.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if groups.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ groups.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == groups.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ groups.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if groups.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ groups.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

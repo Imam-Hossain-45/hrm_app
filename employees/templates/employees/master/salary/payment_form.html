@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ payment_form.payment_mode.id_for_label }}">{{ payment_form.payment_mode.label }}</label>
+            <select name="{{ payment_form.payment_mode.name }}" class="form-control{% if payment_form.payment_mode.errors %} is-invalid{% endif %}" id="{{ payment_form.payment_mode.id_for_label }}">
+                {% for payment_mode in payment_form.payment_mode %}
+                {{ payment_mode }}
+                {% endfor %}
+            </select>
+            {% if payment_form.payment_mode.errors %}
+            {% for error in payment_form.payment_mode.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ payment_form.pay_schedule.id_for_label }}">{{ payment_form.pay_schedule.label }}</label>
+            <select name="{{ payment_form.pay_schedule.name }}" class="form-control{% if payment_form.pay_schedule.errors %} is-invalid{% endif %}" id="{{ payment_form.pay_schedule.id_for_label }}">
+                {% for pay_schedule in payment_form.pay_schedule %}
+                {{ pay_schedule }}
+                {% endfor %}
+            </select>
+            {% if payment_form.pay_schedule.errors %}
+            {% for error in payment_form.pay_schedule.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12 border-top mt-3 emp-bank-info">
+        <div class="row pt-3 pb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ payment_form.employee_bank_name.id_for_label }}">{{ payment_form.employee_bank_name.label }}</label>
+                    <select name="{{ payment_form.employee_bank_name.name }}" class="form-control{% if payment_form.employee_bank_name.errors %} is-invalid{% endif %}" id="{{ payment_form.employee_bank_name.id_for_label }}">
+                        {% for employee_bank_name in payment_form.employee_bank_name %}
+                        {{ employee_bank_name }}
+                        {% endfor %}
+                    </select>
+                    {% if payment_form.employee_bank_name.errors %}
+                    {% for error in payment_form.employee_bank_name.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ payment_form.employee_bank_AC_name.id_for_label }}">{{ payment_form.employee_bank_AC_name.label }}</label>
+                    <input type="text" name="{{ payment_form.employee_bank_AC_name.name }}" class="form-control{% if payment_form.employee_bank_AC_name.errors %} is-invalid{% endif %}" id="{{ payment_form.employee_bank_AC_name.id_for_label }}" {% if payment_form.employee_bank_AC_name.value != None %}value="{{ payment_form.employee_bank_AC_name.value }}" {% endif %}>
+                    {% if payment_form.employee_bank_AC_name.errors %}
+                    {% for error in payment_form.employee_bank_AC_name.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ payment_form.bank_branch_code.id_for_label }}">{{ payment_form.bank_branch_code.label }}</label>
+                    <input type="text" name="{{ payment_form.bank_branch_code.name }}" class="form-control{% if payment_form.bank_branch_code.errors %} is-invalid{% endif %}" id="{{ payment_form.bank_branch_code.id_for_label }}" {% if payment_form.bank_branch_code.value != None %}value="{{ payment_form.bank_branch_code.value }}" {% endif %}>
+                    {% if payment_form.bank_branch_code.errors %}
+                    {% for error in payment_form.bank_branch_code.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ payment_form.bank_AC_no.id_for_label }}">{{ payment_form.bank_AC_no.label }}</label>
+                    <input type="number" name="{{ payment_form.bank_AC_no.name }}" class="form-control{% if payment_form.bank_AC_no.errors %} is-invalid{% endif %}" id="{{ payment_form.bank_AC_no.id_for_label }}" {% if payment_form.bank_AC_no.value != None %}value="{{ payment_form.bank_AC_no.value }}" {% endif %}>
+                    {% if payment_form.bank_AC_no.errors %}
+                    {% for error in payment_form.bank_AC_no.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ payment_form.routing_number.id_for_label }}">{{ payment_form.routing_number.label }}</label>
+                    <input type="text" name="{{ payment_form.routing_number.name }}" class="form-control{% if payment_form.routing_number.errors %} is-invalid{% endif %}" id="{{ payment_form.routing_number.id_for_label }}" {% if payment_form.routing_number.value != None %}value="{{ payment_form.routing_number.value }}" {% endif %}>
+                    {% if payment_form.routing_number.errors %}
+                    {% for error in payment_form.routing_number.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

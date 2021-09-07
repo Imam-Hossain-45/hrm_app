@@ -1,0 +1,38 @@
+// Include media plugging into Bootstrap 4's Grid Breakpoints map
+//
+$breakpoints: $grid-breakpoints;
+
+// Body
+//
+// Overriding Bootstrap _variables.scss
+$body-bg: 										#fff;
+$body-max-width:								82rem;
+
+// Anchors
+//
+//
+$anchor-ondark:									#F9CA56 !default;
+$anchor-ondark-hover:							#efefef !default;
+$anchor-ondark-hover-decoration:				underline !default;
+
+// Header
+//
+//
+$header-bg:										#fff !default;
+$header-border-color:							#dfdfdf !default;
+$header-link-color:								#555555 !default;
+$header-link-hover-color:						#222 !default;
+$header-link-hover-decoration:					none !default;
+
+// Theme Color
+
+$light-green:                                   #7ab800;
+$deep-green:                                    #00704A;
+$leaf:                                          #6DB33F;
+$orange:                                        #F8981D;
+$carbon:                                        #444444;
+$gray:                                          #808080;
+$green-btn:                                     #558000;
+$btn-hover:                                     #496e00;
+$dark-green:                                    #3d5c00;
+$light-gray:                                    #f1f1f1;

@@ -1,0 +1,166 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payslips{% endblock %}
+
+{% block content %}
+{% include "layouts/event.html" %}
+
+<!-- Filters for input -->
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="card">
+                <div class="card-header secondary">
+                    <h2>Filter for Payslips</h2>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#specifyEmployee">
+                            Specify an employee
+                        </button>
+                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#additionalFilters">
+                            Additional filters
+                        </button>
+                    </p>
+                    <div class="collapse" id="specifyEmployee">
+                        <div class="card card-body">
+                            <form method="get" novalidate>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label for="{{ esform.employee.id_for_label }}">{{ esform.employee.label }}</label>
+                                        <select name="{{ esform.employee.name }}" id="{{ esform.employee.id_for_label }}" class="form-control{% if esform.employee.errors %} is-invalid{% endif %}" required>
+                                            {% for choice in esform.employee.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if esform.employee.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if esform.employee.errors %}
+                                        {% for error in esform.employee.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-group w-100 text-right">
+                                    <button class="btn btn-main" type="submit">Apply</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="collapse" id="additionalFilters">
+                        <div class="card card-body">
+                            <form method="get" novalidate>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label for="{{ efform.division.id_for_label }}">{{ efform.division.label }}</label>
+                                        <select name="{{ efform.division.name }}" id="{{ efform.division.id_for_label }}" class="form-control{% if efform.division.errors %} is-invalid{% endif %}" required>
+                                            {% for choice in efform.division.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if efform.division.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if efform.division.errors %}
+                                        {% for error in efform.division.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label for="{{ efform.department.id_for_label }}">{{ efform.department.label }}</label>
+                                        <select name="{{ efform.department.name }}" id="{{ efform.department.id_for_label }}" class="form-control{% if efform.department.errors %} is-invalid{% endif %}" required>
+                                            {% for choice in efform.department.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if efform.department.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if efform.department.errors %}
+                                        {% for error in efform.department.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label for="{{ efform.branch.id_for_label }}">{{ efform.branch.label }}</label>
+                                        <select name="{{ efform.branch.name }}" id="{{ efform.branch.id_for_label }}" class="form-control{% if efform.branch.errors %} is-invalid{% endif %}" required>
+                                            {% for choice in efform.branch.field.choices %}
+                                            <option value="{{ choice.0 }}" {% if efform.branch.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        {% if efform.branch.errors %}
+                                        {% for error in efform.branch.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="form-group text-right w-100">
+                                    <button class="btn btn-main" type="submit">Apply</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if results %}
+<!-- Table of results -->
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="card">
+                <div class="card-header secondary">
+                    <h2>Results</h2>
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Division</th>
+                                    <th>Department</th>
+                                    <th>Branch</th>
+                                    <th>Payslip</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {% for employee in results %}
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ employee }}</td>
+                                    <td>{{ employee.email }}</td>
+                                    <td>{{ employee.userprofile.division }}</td>
+                                    <td>{{ employee.userprofile.department }}</td>
+                                    <td>{{ employee.userprofile.branch }}</td>
+                                    <td>
+                                        <a href="{% url 'beehive_admin:payroll:payslip_view' employee.pk %}">
+                                            View
+                                        </a>
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<!-- :( -->
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10 col-md-offset-1">
+            <p class="text-muted text-center"><em>No results to show.</em></p>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

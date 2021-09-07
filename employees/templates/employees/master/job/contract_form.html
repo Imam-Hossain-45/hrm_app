@@ -1,0 +1,39 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ contract_form.due_on.id_for_label }}">{{ contract_form.due_on.label }}</label>
+            <input type="date" name="{{ contract_form.due_on.name }}" class="form-control{% if contract_form.due_on.errors %} is-invalid{% endif %}" id="{{ contract_form.due_on.id_for_label }}"  value="{% if contract_form.due_on.value|get_date_type == 'str' %}{{ contract_form.due_on.value }}{% else %}{{ contract_form.due_on.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if contract_form.due_on.errors %}
+            {% for error in contract_form.due_on.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ contract_form.date_of_settlement.id_for_label }}">{{ contract_form.date_of_settlement.label }}</label>
+            <input type="date" name="{{ contract_form.date_of_settlement.name }}" class="form-control{% if contract_form.date_of_settlement.errors %} is-invalid{% endif %}" id="{{ contract_form.date_of_settlement.id_for_label }}" value="{% if contract_form.date_of_settlement.value|get_date_type == 'str' %}{{ contract_form.date_of_settlement.value }}{% else %}{{ contract_form.date_of_settlement.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if contract_form.date_of_settlement.errors %}
+            {% for error in contract_form.date_of_settlement.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ contract_form.effective_date.id_for_label }}">{{ contract_form.effective_date.label }}</label>
+            <input type="date" name="{{ contract_form.effective_date.name }}" class="form-control{% if contract_form.effective_date.errors %} is-invalid{% endif %}" id="{{ contract_form.effective_date.id_for_label }}" value="{% if contract_form.effective_date.value|get_date_type == 'str' %}{{ contract_form.effective_date.value }}{% else %}{{ contract_form.effective_date.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if contract_form.effective_date.errors %}
+            {% for error in contract_form.effective_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

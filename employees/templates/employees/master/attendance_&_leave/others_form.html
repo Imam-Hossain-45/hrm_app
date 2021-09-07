@@ -1,0 +1,57 @@
+<div class="card-header secondary">
+    <h2>Overtime</h2>
+</div>
+<div class="form-group">
+    <div class="col-md-12 pl-0">
+        <label class="form-check-label" for="{{ leave_form.overtime.id_for_label }}">
+            <input type="checkbox" name="{{ leave_form.overtime.name }}" id="{{ leave_form.overtime.id_for_label }}" class="m-checkbox overtime-check form-check-input {% if leave_form.overtime.errors %} is-invalid{% endif %}" {% if leave_form.overtime.value == True %}checked{% endif %}>
+            {{ leave_form.overtime.label }}</label>
+        {% if leave_form.overtime.errors %}
+        {% for error in leave_form.overtime.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {{ error }}
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<div class="form-group overtime-wrap">
+    <label for="{{ leave_form.overtime_group.id_for_label }}">{{ leave_form.overtime_group.label }}</label>
+    <select name="{{ leave_form.overtime_group.name }}" id="{{ leave_form.overtime_group.id_for_label }}" class="form-control{% if leave_form.overtime_group.errors %} is-invalid{% endif %}">
+        {% for overtime_group in leave_form.overtime_group %}
+        {{ overtime_group }}
+        {% endfor %}
+    </select>
+    {% if leave_form.overtime_group.errors %}
+    {% for error in leave_form.overtime_group.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="card-header secondary">
+    <h2>Deduction</h2>
+</div>
+<div class="form-group">
+    <div class="col-md-12 pl-0">
+        <label class="form-check-label" for="{{ leave_form.deduction.id_for_label }}">
+            <input type="checkbox" name="{{ leave_form.deduction.name }}" id="{{ leave_form.deduction.id_for_label }}" class="m-checkbox deduction-check form-check-input {% if leave_form.deduction.errors %} is-invalid{% endif %}" {% if leave_form.deduction.value == True %}checked{% endif %}>
+            {{ leave_form.deduction.label }}</label>
+        {% if leave_form.deduction.errors %}
+        {% for error in leave_form.deduction.errors %}
+        <small style="color: red">{{ error }}</small>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<div class="form-group deduction-wrap">
+    <label for="{{ leave_form.deduction_group.id_for_label }}">{{ leave_form.deduction_group.label }}</label>
+    <select name="{{ leave_form.deduction_group.name }}" id="{{ leave_form.deduction_group.id_for_label }}" class="form-control{% if leave_form.deduction_group.errors %} is-invalid{% endif %}">
+        {% for deduction_group in leave_form.deduction_group %}
+        {{ deduction_group }}
+        {% endfor %}
+    </select>
+    {% if leave_form.deduction_group.errors %}
+    {% for error in leave_form.deduction_group.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+    {% endif %}
+</div>

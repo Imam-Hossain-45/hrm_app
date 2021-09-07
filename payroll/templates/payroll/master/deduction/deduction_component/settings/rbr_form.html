@@ -1,0 +1,158 @@
+{# Put this template inside a <form> and its own .container. #}
+{{ rbforms.management_form }}
+{% for rbform in rbforms %}
+
+<div class="form-one">
+    <div class="form-two">
+        <input type="hidden" name="rbr_set-{{ forloop.counter0 }}-{{ rbinfo.fk_model }}" value="{{ rbinfo.fk_id }}">
+        <input type="hidden" name="rbr_set-{{ forloop.counter0 }}-id" {% if rbform.id.value %} value="{{ rbform.id.value }}" {% endif %}>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="rbr_set-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}">
+                        {{ rbform.priority.label }}{% if rbform.priority.field.required %} *{% endif %}
+                    </label>
+                    <input type="number" name="rbr_set-{{ forloop.counter0 }}-{{ rbform.priority.name }}" id="rbr_set-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}" class="form-control{% if rbform.priority.errors %} is-invalid{% endif %}" value="{{ rbform.priority.value|default:1 }}" min="1" step="1">
+                    {% if rbform.priority.errors %}
+                    {% for error in rbform.priority.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="rbr_set-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}">
+                        {{ rbform.condition.label }}{% if rbform.condition.field.required %} *{% endif %}
+                    </label>
+                    <input type="text" name="rbr_set-{{ forloop.counter0 }}-{{ rbform.condition.name }}" id="rbr_set-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}" class="form-control{% if rbform.condition.errors %} is-invalid{% endif %}" value="{{ rbform.condition.value|default:'' }}" required>
+                    {% if rbform.condition.errors %}
+                    {% for error in rbform.condition.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="rbr_set-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}">
+                        {{ rbform.rule.label }}{% if rbform.rule.field.required %} *{% endif %}
+                    </label>
+                    <input type="text" name="rbr_set-{{ forloop.counter0 }}-{{ rbform.rule.name }}" id="rbr_set-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}" class="form-control{% if rbform.rule.errors %} is-invalid{% endif %}" value="{{ rbform.rule.value|default:'' }}" required>
+                    {% if rbform.rule.errors %}
+                    {% for error in rbform.rule.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="rbr_set-{{ forloop.counter0 }}-{{ rbform.deduct_from.id_for_label }}">
+                        {{ rbform.deduct_from.label }}{% if rbform.deduct_from.field.required %} *{% endif %}
+                    </label>
+                    <select name="rbr_set-{{ forloop.counter0 }}-{{ rbform.deduct_from.name }}" id="rbr_set-{{ forloop.counter0 }}-{{ rbform.deduct_from.id_for_label }}" class="form-control{% if rbform.deduct_from.errors %} is-invalid{% endif %}">
+                        {% for choice in rbform.deduct_from.field.choices %}
+                        <option value="{{ choice.0 }}" {% if rbform.deduct_from.value == choice.0 %} selected{% endif %}>
+                            {{ choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if rbform.deduct_from.errors %}
+                    {% for error in rbform.deduct_from.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="rbr_set-{{ forloop.counter0 }}-{{ rbform.leave_component.id_for_label }}">
+                        {{ rbform.leave_component.label }}{% if rbform.leave_component.field.required %} *{% endif %}
+                    </label>
+                    <select name="rbr_set-{{ forloop.counter0 }}-{{ rbform.leave_component.name }}" id="rbr_set-{{ forloop.counter0 }}-{{ rbform.leave_component.id_for_label }}" class="form-control{% if rbform.leave_component.errors %} is-invalid{% endif %}">
+                        {% for choice in rbform.leave_component.field.choices %}
+                        {% if rbform.leave_component.value == choice.0 %}
+                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                        {% else %}
+                        {% if rbform.leave_component.value == choice.0|stringformat:"i" %}
+                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                        {% else %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    {% if rbform.leave_component.errors %}
+                    {% for error in rbform.leave_component.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="rbr_set-{{ forloop.counter0 }}-{{ rbform.salary_component.id_for_label }}">
+                        {{ rbform.salary_component.label }}{% if rbform.salary_component.field.required %} *{% endif %}
+                    </label>
+                    <select name="rbr_set-{{ forloop.counter0 }}-{{ rbform.salary_component.name }}" id="rbr_set-{{ forloop.counter0 }}-{{ rbform.salary_component.id_for_label }}" class="form-control{% if rbform.salary_component.errors %} is-invalid{% endif %}">
+                        {% for choice in rbform.salary_component.field.choices %}
+                        {% if rbform.salary_component.value == choice.0 %}
+                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                        {% else %}
+                        {% if rbform.salary_component.value == choice.0|stringformat:"i" %}
+                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                        {% else %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    {% if rbform.salary_component.errors %}
+                    {% for error in rbform.salary_component.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group d-none">
+                    <div class="form-check-inline">
+                        <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                            <label class="form-check-label" for="rbr_set-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}">
+                                {{ rbform.DELETE.label }}{% if rbform.DELETE.field.required %} *{% endif %}
+                                <input type="checkbox" name="rbr_set-{{ forloop.counter0 }}-{{ rbform.DELETE.name }}" id="rbr_set-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}" class="form-check-input{% if rbform.DELETE.errors %} is-invalid{% endif %}">
+                                <span></span>
+                            </label>
+                        </span>
+                    </div>
+                    {% if rbform.DELETE.errors %}
+                    {% for error in rbform.DELETE.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="new-row deduct-form"></div>
+    <div class="clone-btn-wrapper" style="position: inherit;">
+        <div class="text-center">
+            <a href="javascript:;" class="clone-row clone-pm"></a>
+        </div>
+        <div class="text-center">
+            <a href="javascript:;" class="remove-row"></a>
+        </div>
+    </div>
+
+</div>
+
+
+{% endfor %}

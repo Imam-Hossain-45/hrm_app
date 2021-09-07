@@ -1,0 +1,123 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Leave{% endblock %}
+{% load staticfiles %}
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Self panel > Leave</p>
+                    <h2>Leave Apply</h2>
+                </div>
+                <div class="card-block">
+                    <div class="row ml-0">
+                        <div class="col-md-7 border-1 p-4 self-leave">
+                            <div>
+                                <table class="table table-no-border">
+                                    <tr>
+                                        <td>Leave Type :</td>
+                                        <td>{{ leave.leave_type }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leave Duration :</td>
+                                        <td>{{ leave.duration }} ({{ leave.start_date }}
+                                            {% if leave.start_time %} {{ leave.start_time|time:'h:i A' }}{% endif %} -
+                                            {{ leave.end_date }}{% if leave.end_time %}
+                                            {{ leave.end_time|time:'h:i A' }}{% endif %})</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leave Application Date :</td>
+                                        <td>{{ leave.created_at|date:'M d, Y h:i A' }}</td>
+                                    </tr>
+                                    {% if leave.attachment %}
+                                    <tr>
+                                        <td>Reason of Leave :</td>
+                                        <td>{{ leave.reason }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td>Attachment :</td>
+                                        <td>{{ leave.attachment }} <a class="link-text" href="{{ leave.attachment_url }}">View</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Status:</td>
+                                        <td class="text-bold">{{ leave.get_status_display }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="POST" novalidate>
+                                        {% csrf_token %}
+                                        {% include 'leave/process/approval/form.html' %}
+
+                                        {% if comments %}
+                                        <div class="comment-wrapper">
+                                            {% for obj in comments %}
+                                            <div class="comment-wrap d-flex">
+                                                <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                                <div class="comment-info">
+                                                    <h2>{{ obj.user }}<span>{% if obj.user.user_job_information.latest.designationt %}, {{ obj.user.user_job_information.latest.designation }}{% endif %}, {{ obj.created_at }}</span> </h2>
+                                                    <p>{{ obj.comment }}</p>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+
+
+                                        <div class="form-group row mt-5">
+                                            <div class="col">
+                                                <a href="javascript:;" class="btn btn-main" onclick="document.getElementById('delete-leave').submit()">Remove this leave</a>
+                                            </div>
+
+                                            <div class="col text-right">
+                                                <a class="btn btn-main b-none" href="{% url 'self_panel:leave_status' %}">Cancel</a>
+                                                <button type="submit" class="btn btn-main">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <form method="POST" id="delete-leave" action="{% url 'self_panel:leave_delete' leave.pk %}">
+                                        {% csrf_token %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            {% comment %}<div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Leave Type</th>
+                                            <th scope="col">Credit</th>
+                                            <th scope="col">Avail</th>
+                                            <th scope="col">Remaining</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for obj in leave_list %}
+                                        <tr>
+                                            <td>{{ obj.type }}</td>
+                                            <td>{{ obj.credit }}</td>
+                                            <td>{{ obj.avail }}</td>
+                                            <td>{{ obj.remaining }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>{% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

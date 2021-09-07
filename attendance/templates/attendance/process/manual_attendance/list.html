@@ -1,0 +1,253 @@
+{% extends "layouts/master.html" %}
+{% block title %}Manual Attendance Entry > List{% endblock %}
+{% load staticfiles %}
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Attendance > Operation</p>
+                    <h2>Manual Attendance Entry</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Filter Employees</h2>
+            <form method="GET" novalidate class="mw-initial mb-5">
+                {% include 'leave/process/layout/search.html' %}
+                <div class="col-md-12">
+                    <div class="form-group text-right mt-3">
+                        <button type="submit" name="attendance_search" class="btn btn-main pull-right">Go to
+                            Attendance
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 mt-3">
+            <hr>
+        </div>
+
+        {% if loop_times %}
+        {% if object_list %}
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p>Date:
+                                    {% for loop in loop_times %}{% if forloop.first %}{{ loop }}{% endif %}
+                                    {% if forloop.last %} to {{ loop }}{% endif %}{% endfor %}
+                                </p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-main" data-toggle="modal" data-target="#attendanceModal">
+                                    Action for All
+                                </button>
+                                {% include 'attendance/process/manual_attendance/modal.html' %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive" style="overflow: visible;">
+                                <form action="" class="mw-initial" method="POST" novalidate>
+                                    {% csrf_token %}
+                                    <table class="table table-hover manual-process-table" id="datatable">
+                                        <thead>
+                                            <tr class="selectable">
+                                                <th scope="col">Employee</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col" style="display: flex; justify-content: space-around; width: 400px;">
+                                                    <p>In Time</p>
+                                                    <p>Out Time</p>
+                                                </th>
+                                                <th scope="col">Day Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in loop_times %}
+                                            {% for obj in object_list %}
+                                            <tr>
+                                                <td>
+                                                    <h2>{{ obj.get_title_display }} {{ obj.first_name }} {{ obj.middle_name }} {{ obj.last_name }}</h2>
+                                                    <p>{{ obj.employee_job_information.last.designation|default_if_none:'' }}</p>
+                                                    <p>{{ obj.employee_id }}</p>
+                                                    <p>{{ obj.employee_attendance.last.schedule_type.get_schedule_type_display }}</p>
+                                                    <input type="hidden" value="{{ obj.id }}" name="{{ attendance_form.employee.name }}" multiple>
+                                                </td>
+                                                <td>{{ i|date:'d/m/Y' }}<input type="hidden" value="{{ i|date:'d/m/Y' }}" name="{{ attendance_form.date.name }}" multiple>
+                                                </td>
+                                                <td style="width: 400px;">
+                                                    <input type="hidden" multiple name='attendance_id' {% for l in attendance_list %}{% if l.id == obj.id and l.date == i %}value="{{ l.attendance_id }}" {% endif %}{% endfor %}>
+                                                    <div class="time-wrap d-flex justify-content-between">
+                                                        <div class="in-time-wrap">
+                                                            <input type="text" value="{% for l in attendance_list %}{% if l.id == obj.id and l.date == i %}{{ l.in_time|date:'h:i A' }}{% endif %}{% endfor %}" name="{{ attendance_form.in_time.name }}" multiple class="datetimepicker form-control{% if attendance_form.in_time.errors %} is-invalid{% endif %} mw-initial w-100" placeholder="In time">
+                                                            {% if attendance_form.in_time.errors %}
+                                                            {% for error in attendance_form.in_time.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                        </div>
+
+                                                        <div class="out-time-wrap">
+                                                            <div class=" mb-3 manual-process-field">
+                                                                <input type="text" {% for l in attendance_list %} {% if l.id == obj.id and l.date == i %} value="{{ l.out_time|date:'h:i A' }}" {% endif %}{% endfor %} name="{{ attendance_form.out_time.name }}" multiple class="datetimepicker mw-initial form-control{% if attendance_form.out_time.errors %} is-invalid{% endif %}" placeholder="Out time">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple {% if obj.id in has_attendance %} {% for l in attendance_list %} {% if l.id == obj.id and l.date == i %} {% if l.out_date %} value="{{ l.out_date|date:'Y-m-d' }}" {% else %} value="{{ i|date:'Y-m-d' }}" {% endif %} {% elif l.id == obj.id and l.date != i %} value="{{ i|date:'Y-m-d' }}" {% endif %} {% endfor %} {% else %} value="{{ i|date:'Y-m-d' }}" {% endif %} name="{{ attendance_form.out_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            {% if attendance_form.out_time.errors %}
+                                                            {% for error in attendance_form.out_time.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="{{ obj.id }}_{{ i|date:'Y-m-d' }}_break" style="width: 94%; float: left;">
+                                                        {% for l in attendance_list %}
+                                                        {% if l.id == obj.id and l.date == i %}
+                                                        {% for b in l.break_data %}
+                                                        <div class="{{ obj.id }}_{{ i|date:'Y-m-d' }}_append_break d-flex">
+                                                            <input type="hidden" value="{{ b.id }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_break_id" multiple>
+                                                            <div class="mb-3 manual-process-field">
+                                                                <input type="text" value="{{ b.break_start|date:'h:i A' }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_start.name }}" multiple class="datetimepicker form-control{% if attendance_break_form.break_start.errors %} is-invalid{% endif %}" placeholder="Break start">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ b.break_start_date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_start_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            {% if attendance_break_form.break_start.errors %}
+                                                            {% for error in attendance_break_form.break_start.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                            <div class=" mb-3 manual-process-field" style="width: 50%;">
+                                                                <input type="text" value="{{ b.break_end|date:'h:i A' }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_end.name }}" multiple class="datetimepicker form-control{% if attendance_break_form.break_end.errors %} is-invalid{% endif %}" placeholder="Break end">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ b.break_end_date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_end_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            {% if attendance_break_form.break_end.errors %}
+                                                            {% for error in attendance_break_form.break_end.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                            <input type="button" value="-" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_btn_decrease" class="btn break_danger remove-row" style="display: {% if forloop.counter == 1 %}none{% else %}block{% endif %}; background-color: transparent; width: 21px; height: 20px; margin-top: 10px; padding: 0; border-radius: 100%; border: none; background-color: transparent;">
+                                                        </div>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        <div {% for l in attendance_list %}{% if l.id == obj.id and l.date == i and l.break_data %} style="display: none !important;" {% endif %}{% endfor %} class="{{ obj.id }}_{{ i|date:'Y-m-d' }}_append_break d-flex">
+                                                            <input type="hidden" value="{{ b.id }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_break_id" multiple>
+                                                            <div class=" mb-3 manual-process-field" style="width: 50%;">
+                                                                <input type="text" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_start.name }}" multiple class="datetimepicker form-control{% if attendance_break_form.break_start.errors %} is-invalid{% endif %}" placeholder="Break start">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ i|date:'Y-m-d' }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_start_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            {% if attendance_break_form.break_start.errors %}
+                                                            {% for error in attendance_break_form.break_start.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                            <div class=" mb-3 manual-process-field" style="width: 50%;">
+                                                                <input type="text" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_end.name }}" multiple class="datetimepicker form-control{% if attendance_break_form.break_end.errors %} is-invalid{% endif %}" placeholder="Break end">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ i|date:'Y-m-d' }}" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_{{ attendance_break_form.break_end_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            {% if attendance_break_form.break_end.errors %}
+                                                            {% for error in attendance_break_form.break_end.errors %}
+                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                            {% endfor %}
+                                                            {% endif %}
+                                                            <input type="button" value="-" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_btn_decrease" class="btn break_danger remove-row" style="display: block; background-color: transparent; width: 21px; height: 20px; margin-top: 10px; padding: 0; border-radius: 100%; border: none; background-color: transparent;">
+                                                        </div>
+                                                    </div>
+                                                    <div class="incr-btn-wrapper d-flex flex-column align-items-center" style="width: 6%; float: left;">
+                                                        <input type="button" value="+" name="{{ obj.id }}_{{ i|date:'Y-m-d' }}_btn_increase" class="break_success clone-row" style="display: block; width: 20px; height: 20px; margin-top: 10px; padding: 0; border-radius: 100%; border: none; background-color: transparent;">
+                                                    </div>
+
+                                                </td>
+                                                <td>
+                                                    {% for l in attendance_list %}
+                                                    {% if l.id == obj.id and l.date == i %}
+                                                    {{ l.d_status }}
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    {% for leave in em_leave_status %}
+                                                    {% if leave.id == obj.id and leave.date == i %}
+                                                    {{ leave.d_status }}
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="del_break">
+                                    <button type="submit" class="btn btn-main pull-right mt-5" name="form1">Save
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No Data Found</p>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).on('click', '.break_danger', function () {
+        var del_btn_name = $(this).attr('name');
+        var del_split_name = del_btn_name.split("_");
+        var element = $(this).closest("." + del_split_name[0] + "_" + del_split_name[1] + "_append_break");
+        var del_id = element.children("input[name=" + del_split_name[0] + "_" + del_split_name[1] + "_break_id" + "]").val();
+
+        $value = $("input[name='del_break']").val();
+        if ($value != '') {
+            $data = $value + ',' + del_id;
+        } else {
+            $data = del_id;
+        }
+        $("input[name='del_break']").val($data);
+        element.remove();
+    });
+
+</script>
+<script src="{% static 'src/js/break_time.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}BIRT Demo Report{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class="container">
+        <iframe id="birt-demo-report"
+                title="BIRT Demo Report"
+                height="500"
+                width="100%"
+                src="{{ report_url }}/frameset?__report=employee_info.rptdesign">
+        </iframe>
+    </div>
+{% endblock %}

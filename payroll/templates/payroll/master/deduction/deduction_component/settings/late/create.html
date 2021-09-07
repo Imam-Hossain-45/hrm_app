@@ -1,0 +1,35 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Create new late slab{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Create new late slab</h2>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+
+                            <div>
+                                {% include 'payroll/master/deduction/deduction_component/settings/late/form.html' %}
+                            </div>
+
+                            <div class="form-group w-100 mt-5 text-right">
+                                <a class="btn btn-main b-none"
+                                   href="{% url 'beehive_admin:payroll:deduction_late_settings' component.id %}">Cancel</a>
+                                <button type="submit" class="btn btn-main">Save</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

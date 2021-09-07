@@ -1,0 +1,381 @@
+<div class="row leave-form">
+    <div class="col-md-12 pt-3 pb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="m-0" for="{{ form_data.employee_can_apply.id_for_label }}">
+                            <input type="checkbox" name="{{ form_data.employee_can_apply.html_name }}" id="{{ form_data.employee_can_apply.id_for_label }}" class="form-check-input ml-3{% if form_data.employee_can_apply.errors %} is-invalid{% endif %}" {% if form_data.employee_can_apply.value == True %}checked{% endif %}>
+                            <p class="ml-4">{{ form_data.employee_can_apply.label }}</p>
+                        </label>
+
+                        {% if form_data.employee_can_apply.errors %}
+                            {% for error in form_data.employee_can_apply.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <h2>{{ form_data.leave_credit.label }}</h2>
+                {#                <label for="{{ form_data.leave_credit.id_for_label }}">{{ form_data.leave_credit.label }}</label>#}
+                <p>How many {{ data.time_unit_basis }} will be allocated for {{ data.name }}</p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="d-flex align-items-center justify-content-start">
+                            <input type="number" name="{{ form_data.leave_credit.html_name }}" min="0" max="999" id="{{ form_data.leave_credit.id_for_label }}" class="form-control  leave-input{% if form_data.leave_credit.errors %} is-invalid{% endif %}"
+                                   value="{{ form_data.leave_credit.value|default_if_none:'' }}">
+                            <p class="ml-3">{{ data.time_unit_basis }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-9 d-flex align-items-center">
+                        <p>Availing Frequency: {{ data.available_frequency_number }} {{ data.available_frequency_unit }} <a href="{% url 'beehive_admin:leave:leave_master_edit' data.id %}">Change</a></p>
+                    </div>
+                </div>
+
+                {% if form_data.leave_credit.errors %}
+                    {% for error in form_data.leave_credit.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <hr>
+    </div>
+
+    <div class="col-md-12 pt-3 pb-3">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <h2>Restriction</h2>
+                {% for restriction in restriction_form %}
+                    {% if restriction.prefix == form_data.prefix %}
+                        <table class="table table-hover">
+                            {% for formset_data in restriction %}
+
+                                <tr>
+                                    <td>
+                                        <p>Employee can enjoy</p>
+                                    </td>
+                                    <td class="">
+                                        <input type="number" name="{{ formset_data.can_enjoy.html_name }}" id="{{ formset_data.can_enjoy.id_for_label }}" min="0" max="999" class="form-control leave-input{% if formset_data.can_enjoy.errors %} is-invalid{% endif %}"
+                                               value="{{ formset_data.can_enjoy.value|default_if_none:'' }}">
+                                    </td>
+                                    <td>
+                                        <p>{{ data.time_unit_basis }} {{ data.name }} within</p>
+                                    </td>
+                                    <td>
+                                        <input type="number" name="{{ formset_data.within.html_name }}" min="0" max="999" id="{{ formset_data.within.id_for_label }}" class="form-control  leave-input{% if formset_data.within.errors %} is-invalid{% endif %}"
+                                               value="{{ formset_data.within.value|default_if_none:'' }}">
+                                    </td>
+                                    <td>
+                                        <select name="{{ formset_data.within_unit.html_name }}" id="{{ formset_data.within_unit.id_for_label }}" class="form-control  leave-input{% if formset_data.within_unit.errors %} is-invalid{% endif %}">
+                                            {% for within_unit in formset_data.within_unit %}
+                                                {{ within_unit }}
+                                            {% endfor %}
+                                        </select>
+                                        {% if formset_data.can_enjoy.errors %}
+                                            {% for error in formset_data.can_enjoy.errors %}
+                                                <div class="text-danger">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        {% if formset_data.within.errors %}
+                                            {% for error in formset_data.within.errors %}
+                                                <div class="text-danger">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </td>
+                                    <td class="d-flex align-items-center">
+                                        <input type="checkbox" name="{{ formset_data.DELETE.html_name }}" id="{{ formset_data.DELETE.id_for_label }}" {% if formset_data.DELETE.value %}checked{% endif %}><label for="{{ formset_data.DELETE.id_for_label }}">{{ formset_data.DELETE.label }}</label>
+                                        <input type="hidden" name="{{ formset_data.id.html_name }}" id="{{ formset_data.id.id_for_label }}" class="form-control formset-field {% if formset_data.id.errors %} is-invalid{% endif %}" value="{{ formset_data.id.value|default:'' }}">
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        {{ restriction.management_form }}{{ restriction.non_form_errors }}
+
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <hr>
+    </div>
+
+    <div class="col-md-12 pb-3 pt-3">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <h2>Leave Avail Limit at a time</h2>
+
+
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center justify-content-start">
+                            <p class="mr-3">Employee can enjoy Minimum</p>
+                            <input type="number" name="{{ form_data.minimum_enjoy.html_name }}" id="{{ form_data.minimum_enjoy.id_for_label }}" min="0" max="999" class="form-control leave-input {% if form_data.minimum_enjoy.errors %} is-invalid{% endif %}"
+                                   value="{{ form_data.minimum_enjoy.value|default_if_none:'' }}">
+                            <p class="ml-3">{{ data.time_unit_basis }} to Maximum</p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="d-flex align-items-center justify-content-start">
+                            <input type="number" name="{{ form_data.maximum_enjoy.html_name }}" min="0" max="999" id="{{ form_data.maximum_enjoy.id_for_label }}" class="form-control leave-input {% if form_data.maximum_enjoy.errors %} is-invalid{% endif %}"
+                                   value="{{ form_data.maximum_enjoy.value|default_if_none:'' }}">
+                            <p class="ml-3"> {{ data.time_unit_basis }} {{ data.name }} at a time</p>
+                        </div>
+                    </div>
+                </div>
+                {% if form_data.minimum_enjoy.errors %}
+                    {% for error in form_data.minimum_enjoy.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% if form_data.maximum_enjoy.errors %}
+                    {% for error in form_data.maximum_enjoy.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <hr>
+    </div>
+
+    <div class="col-md-12 pb-3 pt-3">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <label class="m-0" for="{{ form_data.leave_gap.id_for_label }}">
+                            <input type="checkbox" name="{{ form_data.leave_gap.html_name }}" id="{{ form_data.leave_gap.id_for_label }}" class="form-check-input ml-3{% if form_data.leave_gap.errors %} is-invalid{% endif %}" {% if form_data.leave_gap.value == True %}checked{% endif %}>
+                            <p class="ml-4">{{ form_data.leave_gap.label }}</p>
+                        </label>
+
+                        {% if form_data.leave_gap.errors %}
+                            {% for error in form_data.leave_gap.errors %}
+                                <div class="text-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center justify-content-start">
+                                    <label class="m-0" for="{{ form_data.minimum_gap.id_for_label }}">{{ form_data.minimum_gap.label }}</label>
+                                </div>
+                            </div>
+                            <div class="col-md-9 d-flex align-items-center">
+                                <input type="number" name="{{ form_data.minimum_gap.html_name }}" id="{{ form_data.minimum_gap.id_for_label }}" min="0" max="999" class="form-control leave-input mr-3{% if form_data.minimum_gap.errors %} is-invalid{% endif %}"
+                                       value="{{ form_data.minimum_gap.value|default_if_none:'' }}">
+                                <select name="{{ form_data.minimum_gap_unit.html_name }}" id="{{ form_data.minimum_gap_unit.id_for_label }}" class="form-control leave-input{% if form_data.minimum_gap_unit.errors %} is-invalid{% endif %}">
+                                    {% for minimum_gap_unit in form_data.minimum_gap_unit %}
+                                        {{ minimum_gap_unit }}
+                                    {% endfor %}
+                                </select>
+                                {% if form_data.minimum_gap.errors %}
+                                    {% for error in form_data.minimum_gap.errors %}
+                                        <div class="text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12">
+        <hr>
+    </div>
+
+
+    <div class="col-md-12">
+        <div class="form-group w-100">
+            <h2>Eligibility</h2>
+            <label for="{{ form_data.eligibility_based_on.id_for_label }}">{{ form_data.eligibility_based_on.label }}</label>
+            <div>
+                <div class="form-check-inline check-one">
+                    <label class="form-check-label">
+                        {% for obj in form_data.eligibility_based_on %}
+                            {{ obj }}
+                        {% endfor %}
+                    </label>
+                </div>
+            </div>
+
+            {% if form_data.eligibility_based_on.errors %}
+                {% for error in form_data.eligibility_based_on.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="col-md-12 option-one">
+        <div class="form-group w-100">
+            <label for="{{ form_data.eligible_employee_in.id_for_label }}">{{ form_data.eligible_employee_in.label }}</label>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        {% for obj in form_data.eligible_employee_in %}
+                            {{ obj }}
+                        {% endfor %}
+                    </label>
+                </div>
+
+            {% if form_data.eligible_employee_in.errors %}
+                {% for error in form_data.eligible_employee_in.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12 align-items-center option-two">
+        <label class="d-inline" for="{{ form_data.cannot_enjoy.id_for_label }}">{{ form_data.cannot_enjoy.label }}</label>
+        <input type="number" name="{{ form_data.cannot_enjoy.html_name }}" id="{{ form_data.cannot_enjoy.id_for_label }}" min="0" max="999" class="form-control leave-input d-inline mr-3{% if form_data.cannot_enjoy.errors %} is-invalid{% endif %}"
+               value="{{ form_data.cannot_enjoy.value|default_if_none:'' }}">
+        <select name="{{ form_data.cannot_enjoy_unit.html_name }}" id="{{ form_data.cannot_enjoy_unit.id_for_label }}" class="form-control d-inline leave-input{% if form_data.cannot_enjoy_unit.errors %} is-invalid{% endif %}">
+            {% for cannot_enjoy_unit in form_data.cannot_enjoy_unit %}
+                {{ cannot_enjoy_unit }}
+            {% endfor %}
+        </select>
+        {% if form_data.cannot_enjoy.errors %}
+            {% for error in form_data.cannot_enjoy.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-md-12">
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group w-100">
+            <label for="{{ form_data.avail_based_on.id_for_label }}">{{ form_data.avail_based_on.label }}</label>
+                <div class="form-check-inline check-two">
+                    <label class="form-check-label">
+                        {% for obj in form_data.avail_based_on %}
+                            {{ obj }}
+                        {% endfor %}
+                    </label>
+                </div>
+
+            {% if form_data.avail_based_on.errors %}
+                {% for error in form_data.avail_based_on.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12 option-three">
+        <div class="form-group w-100">
+            <label for="{{ form_data.avail_employee_in.id_for_label }}">{{ form_data.avail_employee_in.label }}</label>
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    {% for obj in form_data.avail_employee_in %}
+                        {{ obj }}
+                    {% endfor %}
+                </label>
+            </div>
+            {% if form_data.avail_employee_in.errors %}
+                {% for error in form_data.avail_employee_in.errors %}
+                    <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12 align-items-center option-four">
+        <label class="d-inline" for="{{ form_data.can_enjoy.id_for_label }}">{{ form_data.can_enjoy.label }}</label>
+        <input type="number" name="{{ form_data.can_enjoy.html_name }}" id="{{ form_data.can_enjoy.id_for_label }}" min="0" max="999" class="form-control d-inline leave-input mr-3{% if form_data.can_enjoy.errors %} is-invalid{% endif %}" value="{{ form_data.can_enjoy.value|default_if_none:'' }}">
+        <select name="{{ form_data.can_enjoy_unit.html_name }}" id="{{ form_data.can_enjoy_unit.id_for_label }}" class="form-control d-inline leave-input{% if form_data.can_enjoy_unit.errors %} is-invalid{% endif %}">
+            {% for can_enjoy_unit in form_data.can_enjoy_unit %}
+                {{ can_enjoy_unit }}
+            {% endfor %}
+        </select>
+        {% if form_data.can_enjoy.errors %}
+            {% for error in form_data.can_enjoy.errors %}
+                <div class="text-danger">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="col-md-12 d-flex align-items-center">
+        <input type="hidden" name="{{ form_data.timebase.html_name }}" value="{{ data.leave_credit_type }}">
+        {% if data.leave_credit_type == 'timebase' %}
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+                <div class="col-md-12">
+                    <label for="{{ form_data.timebase_credit.id_for_label }}">{{ form_data.timebase_credit.label }}</label>
+                </div>
+                <div class="col-md-12 d-flex align-items-center">
+                    <input type="number" name="{{ form_data.timebase_credit.html_name }}" id="{{ form_data.timebase_credit.id_for_label }}" min="0" max="999" class="form-control leave-input mr-3{% if form_data.timebase_credit.errors %} is-invalid{% endif %}"
+                           value="{{ form_data.timebase_credit.value|default_if_none:'' }}">
+                    <select name="{{ form_data.timebase_credit_unit.html_name }}" id="{{ form_data.timebase_credit_unit.id_for_label }}" class="form-control leave-input {% if form_data.timebase_credit_unit.errors %} is-invalid{% endif %}">
+                        {% for timebase_credit_unit in form_data.timebase_credit_unit %}
+                            {{ timebase_credit_unit }}
+                        {% endfor %}
+                    </select>
+                    {% if form_data.timebase_credit.errors %}
+                        {% for error in form_data.timebase_credit.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <p class="ml-3 mr-3">work will create</p>
+                    <input type="number" name="{{ form_data.work_will_create.html_name }}" id="{{ form_data.work_will_create.id_for_label }}" min="0" max="999" class="form-control leave-input mr-3{% if form_data.work_will_create.errors %} is-invalid{% endif %}"
+                           value="{{ form_data.work_will_create.value|default_if_none:'' }}">
+                    <select name="{{ form_data.work_will_create_unit.html_name }}" id="{{ form_data.work_will_create_unit.id_for_label }}" class="form-control leave-input {% if form_data.work_will_create_unit.errors %} is-invalid{% endif %}">
+                        {% for work_will_create_unit in form_data.work_will_create_unit %}
+                            {{ work_will_create_unit }}
+                        {% endfor %}
+                    </select>
+                    <p class="ml-3">{{ data.name }}</p>
+                    {% if form_data.work_will_create.errors %}
+                        {% for error in form_data.work_will_create.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+
+        {% endif %}
+    </div>
+    <div class="col-md-12 d-flex align-items-center">
+        <input type="hidden" name="{{ form_data.fraction.html_name }}" value="{{ data.fractional }}">
+        {% if data.fractional is True %}
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Leave duration for hourly leave</p>
+                </div>
+
+                <div class="col-md-12 d-flex align-items-center">
+                    <label for="{{ form_data.fractional_duration.id_for_label }}">{{ form_data.fractional_duration.label }}</label>
+                    <input type="number" name="{{ form_data.fractional_duration.html_name }}" min="0" max="999" id="{{ form_data.fractional_duration.id_for_label }}" class="form-control leave-input ml-3{% if form_data.fractional_duration.errors %} is-invalid{% endif %}"
+                           value="{{ form_data.fractional_duration.value|default_if_none:'' }}"> {{ data.fractional_time_unit }}
+                    {% if form_data.fractional_duration.errors %}
+                        {% for error in form_data.fractional_duration.errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

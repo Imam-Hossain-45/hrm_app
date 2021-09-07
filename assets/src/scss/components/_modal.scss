@@ -1,0 +1,238 @@
+// Modal center align
+.modal.show .modal-dialog {
+  display: flex;
+  // align-items: flex-start;
+  // height: 100%;
+  margin-top: 3%;
+  margin-bottom: 0;
+  max-width: 750px;
+
+  @include media("<lg") {
+    margin-top: 74px;
+  }
+
+  .modal-body {
+    background-color: #fff;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    position: relative;
+    height: 100%;
+  }
+
+  .pb-cimplux {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    img {
+      max-height: 32px;
+
+      //@include media("<md") {
+      //  max-height: 30px;
+      //}
+    }
+  }
+}
+
+.modal-content {
+  border-radius: 0;
+
+  .form-title {
+    h3 {
+      @include heading-font();
+      font-size: 1.5rem;
+      color: #ce1126;
+      line-height: 22px;
+      margin-top: 0;
+    }
+
+    .text-bold {
+      font-weight: 700 !important;
+    }
+  }
+
+  .close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 6px;
+    right: 15px;
+    outline: none;
+    border: none;
+
+    @include media("<md") {
+      z-index: 99;
+    }
+
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  // Modal Product container
+  .product-img {
+    max-width: 300px;
+    max-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include media("<md") {
+      max-width: 250px;
+      max-height: 250px;
+      margin: auto;
+    }
+
+    img {
+      max-height: 300px;
+      max-width: 300px;
+
+      @include media("<md") {
+        max-width: 250px;
+        max-height: 250px;
+        margin: auto;
+      }
+    }
+  }
+
+  .product-des {
+    padding-right: 1.5rem;
+    text-align: left;
+
+    @include media("<md") {
+      padding-right: 1rem;
+      padding-left: 1rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: $deep-green;
+      padding-bottom: 0;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 12px;
+      white-space: normal;
+      word-break: break-word
+    }
+
+    &:last-child {
+      margin-bottom: 6rem;
+    }
+
+    .btn-modal {
+      background: $deep-green;
+      color: #fff;
+      padding: 5px 2rem;
+      margin-top: .5rem;
+      border-radius: 0;
+      width: 99%;
+
+      @include media("<md") {}
+    }
+  }
+
+  .modal-inc {
+    position: absolute;
+    left: 0;
+    bottom: 20px;
+    width: 200px;
+
+    @include media("<md") {
+      width: 90%;
+      right: 0;
+      margin: auto;
+    }
+  }
+
+  .modal-bin {
+    position: absolute;
+    top: -3px;
+    right: -36px;
+    width: 40px;
+    padding: 10px;
+    color: #fff;
+    background: red;
+    border: 3px solid #FFF;
+  }
+
+  .cart-increment {
+    height: 45px;
+
+    @include media("<lg") {
+      right: 36px;
+    }
+  }
+
+  .input-group input {
+    color: #fff;
+  }
+
+  // Delivery Success message
+  .success-icon {
+    i {
+      font-size: 4rem;
+      color: $deep-green;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .success-text {
+    h2 {
+      font-size: 1.25rem;
+      color: $gray;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+#userManagementPasswordReset {
+  .modal-dialog {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    height: 100%;
+  }
+
+  .modal-body {
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-content .close {
+    top: 4%;
+    right: 26px;
+  }
+
+  .modal-header {
+    padding: 0 0 1rem 2rem;
+    border: none;
+
+    h5 {
+      font-weight: 700;
+    }
+  }
+
+  .modal-text {
+    padding: 1rem 0 2rem 2rem;
+    width: 100%;
+  }
+
+  .password-box {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .modal-footer {
+    border: none;
+  }
+
+}

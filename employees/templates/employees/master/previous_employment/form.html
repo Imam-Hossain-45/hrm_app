@@ -1,0 +1,114 @@
+{% load index %}
+<table class="table form-table table-bordered table-sm">
+    <thead class="text-center">
+        <tr>
+            <th>Organization<span>*</span></th>
+            <th>Designation<span>*</span></th>
+            <th>Department</th>
+            <th>From<span>*</span></th>
+            <th>To<span>*</span></th>
+            <th>Salary (Gross)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="form-two">
+        {% for form_data in previous_employment_form %}
+        <tr class="item">
+            <td>
+                <input type="text" name="{{ form_data.organization.html_name }}" id="{{ form_data.organization.id_for_label }}" class="formset-field form-control {% if form_data.organization.errors %} is-invalid{% endif %}" {% if form_data.organization.value != None %}value="{{ form_data.organization.value }}" {% endif %}>
+                {% if form_data.organization.errors %}
+                {% for error in form_data.organization.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.designation.html_name }}" id="{{ form_data.designation.id_for_label }}" class="formset-field form-control {% if form_data.designation.errors %} is-invalid{% endif %}" {% if form_data.designation.value != None %}value="{{ form_data.designation.value }}" {% endif %}>
+                {% if form_data.designation.errors %}
+                {% for error in form_data.designation.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.department.html_name }}" id="{{ form_data.department.id_for_label }}" class="formset-field form-control {% if form_data.department.errors %} is-invalid{% endif %}" {% if form_data.department.value != None %}value="{{ form_data.department.value }}" {% endif %}>
+                {% if form_data.department.errors %}
+                {% for error in form_data.department.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <div class="calendar">
+                    <input type="date" name="{{ form_data.start_from.html_name }}" id="{{ form_data.start_from.id_for_label }}" class="formset-field form-control {% if form_data.start_from.errors %} is-invalid{% endif %}" value="{% if form_data.start_from.value|get_date_type == 'str' %}{{ form_data.start_from.value }}{% else %}{{ form_data.start_from.value|date:'Y-m-d' }}{% endif %}">
+                    <i class="m-menu__link-icon flaticon-calendar-1" style="top: 15%; left: 78%;"></i>
+                    {% if form_data.start_from.errors %}
+                    {% for error in form_data.start_from.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+            </td>
+            <td>
+                <div class="calendar">
+                    <input type="date" name="{{ form_data.to.html_name }}" id="{{ form_data.to.id_for_label }}" class="formset-field form-control {% if form_data.to.errors %} is-invalid{% endif %}" value="{% if form_data.to.value|get_date_type == 'str' %}{{ form_data.to.value }}{% else %}{{ form_data.to.value|date:'Y-m-d' }}{% endif %}">
+                    <i class="m-menu__link-icon flaticon-calendar-1" style="top: 15%; left: 130px;"></i>
+                    {% if form_data.to.errors %}
+                    {% for error in form_data.to.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.salary.html_name }}" id="{{ form_data.salary.id_for_label }}" class="formset-field form-control {% if form_data.salary.errors %} is-invalid{% endif %}" {% if form_data.salary.value != None %}value="{{ form_data.salary.value }}" {% endif %}>
+                {% if form_data.salary.errors %}
+                {% for error in form_data.salary.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="v-middle m-100">
+                <input type="checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="clone-btn-wrapper d-flex" style="position: initial;">
+    <div class="ml-auto">
+        <a href="javascript:;" class="clone-row emergency-contact-add"></a>
+    </div>
+
+    <div class="">
+        <a href="javascript:;" class="remove-row emergency-contact-rem"></a>
+    </div>
+</div>
+
+{% if objects.paginator.num_pages > 1 %}
+    <nav aria-label="navigation" class="margin-lg margin-md">
+        <ul class="pagination d-flex justify-content-center">
+            {% if objects.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ objects.previous_page_number }}">Previous</a>
+                </li>
+            {% endif %}
+
+            {% for pg in page_range %}
+                <li class="page-item">
+                    <a class="page-link {% if pg == objects.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ objects.current_page_number }}</a>
+                </li>
+            {% endfor %}
+
+            {% if objects.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ objects.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+
+{{ previous_employment_form.management_form }}

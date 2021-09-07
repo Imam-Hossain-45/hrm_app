@@ -1,0 +1,70 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Reference{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'view_reference' in permissions %}
+                <div class="text-right">
+                    <a href="{% url 'employees:employee_reference_list' pk %}" class="btn btn-main m-0">List of Reference</a>
+                </div>
+            {% endif %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Employee Master</p>
+                    <h2>Reference</h2>
+                </div>
+                <div class="card-block">
+                    <div class="card-header secondary border-0">
+                        <h2>Add Reference</h2>
+                    </div>
+                    <form class="mw-initial" method="POST" autocomplete="off" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/reference/form.html' %}
+                        <div class="form-group w-100 text-right mt-5">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main" name="form1">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $("[name='country']").on('change', function () {
+            $.ajax({
+                url: ".",
+                data: {
+                    'country_id': $(this).val()
+                },
+                success: function (result) {
+                    $("[name='state']").html(result);
+                }
+            });
+        });
+        $("[name='state']").on('change', function () {
+            $.ajax({
+                url: ".",
+                data: {
+                    'state_id': $(this).val()
+                },
+                success: function (result) {
+                    $("[name='city']").html(result);
+                }
+            });
+        });
+
+    });
+
+</script>
+{% endblock %}

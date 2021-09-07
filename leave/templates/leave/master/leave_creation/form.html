@@ -1,0 +1,603 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card-header secondary">
+            <h2>General</h2>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" class="form-control{% if form.name.errors %} is-invalid{% endif %}" placeholder="Ex: Short Leave" value="{{ form.name.value|default_if_none:'' }}">
+
+                {% if form.name.errors %}
+                    {% for error in form.name.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.short_name.id_for_label }}">{{ form.short_name.label }}</label>
+                <input type="text" name="{{ form.short_name.name }}" id="{{ form.short_name.id_for_label }}" class="form-control{% if form.short_name.errors %} is-invalid{% endif %}" value="{{ form.short_name.value|default_if_none:'' }}">
+
+                {% if form.short_name.errors %}
+                    {% for error in form.short_name.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                <textarea type="text" name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="form-control{% if form.description.errors %} is-invalid{% endif %}" placeholder="Description about this leave">{{ form.description.value|default_if_none:'' }}</textarea>
+
+                {% if form.description.errors %}
+                    {% for error in form.description.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card-header secondary">
+            <h2>Leave Assignment</h2>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form.gender.id_for_label }}">{{ form.gender.label }}</label>
+            <div class="">
+                <div class="form-check-inline m-radio-list">
+                    <label class="m-radio">
+                        {% for obj in form.gender %}
+                            {{ obj }}
+                        {% endfor %}
+                    </label>
+                </div>
+            </div>
+            {% if form.gender.errors %}
+                {% for error in form.gender.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card-header secondary">
+            <h2>Leave Settings</h2>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label for="{{ form.available_frequency_number.id_for_label }}">Available Frequency</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" name="{{ form.available_frequency_number.name }}" id="{{ form.available_frequency_number.id_for_label }}" class="form-control{% if form.available_frequency_number.errors %} is-invalid{% endif %}" value="{{ form.available_frequency_number.value }}">
+                        {% if form.available_frequency_number.errors %}
+                            {% for error in form.available_frequency_number.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <select name="{{ form.available_frequency_unit.name }}" id="{{ form.available_frequency_unit.id_for_label }}" class="form-control{% if form.available_frequency_unit.errors %} is-invalid{% endif %}">
+                            {% for available_frequency_unit in form.available_frequency_unit %}
+                                {{ available_frequency_unit }}
+                            {% endfor %}
+                        </select>
+
+                        {% if form.available_frequency_unit.errors %}
+                            {% for error in form.available_frequency_unit.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.time_unit_basis.id_for_label }}">{{ form.time_unit_basis.label }}</label>
+                <select name="{{ form.time_unit_basis.name }}" id="{{ form.time_unit_basis.id_for_label }}" class="form-control{% if form.time_unit_basis.errors %} is-invalid{% endif %}">
+                    {% for time_unit_basis in form.time_unit_basis %}
+                        {{ time_unit_basis }}
+                    {% endfor %}
+                </select>
+
+                {% if form.time_unit_basis.errors %}
+                    {% for error in form.time_unit_basis.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.fractional.id_for_label }}">
+                    <input type="checkbox" name="{{ form.fractional.name }}" id="{{ form.fractional.id_for_label }}" class="m-checkbox form-check-input {% if form.fractional.errors %} is-invalid{% endif %}" {% if form.fractional.value == True %}checked{% endif %}>
+                    {{ form.fractional.label }}</label>
+                {% if form.fractional.errors %}
+                    {% for error in form.fractional.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        <small style="color:rgb(244,81,108)">{{ error }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.fractional_time_unit.id_for_label }}">{{ form.fractional_time_unit.label }}</label>
+                <select name="{{ form.fractional_time_unit.name }}" id="{{ form.fractional_time_unit.id_for_label }}" class="form-control{% if form.fractional_time_unit.errors %} is-invalid{% endif %}">
+                    {% for fractional_time_unit in form.fractional_time_unit %}
+                        {{ fractional_time_unit }}
+                    {% endfor %}
+                </select>
+
+                {% if form.fractional_time_unit.errors %}
+                    {% for error in form.fractional_time_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.paid.id_for_label }}">
+                    <input type="checkbox" name="{{ form.paid.name }}" id="{{ form.paid.id_for_label }}" class="m-checkbox form-check-input{% if form.paid.errors %} is-invalid{% endif %}" {% if form.paid.value == True %}checked{% endif %}>
+                    {{ form.paid.label }}</label>
+
+                {% if form.paid.errors %}
+                    {% for error in form.paid.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.carry_forwardable.id_for_label }}">
+                    <input type="checkbox" name="{{ form.carry_forwardable.name }}" id="{{ form.carry_forwardable.id_for_label }}" class="m-checkbox form-check-input{% if form.carry_forwardable.errors %} is-invalid{% endif %}" {% if form.carry_forwardable.value == True %}checked{% endif %}>
+                    {{ form.carry_forwardable.label }}</label>
+
+                {% if form.carry_forwardable.errors %}
+                    {% for error in form.carry_forwardable.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.carry_forward_on.id_for_label }}">{{ form.carry_forward_on.label }}</label>
+                <select name="{{ form.carry_forward_on.name }}" id="{{ form.carry_forward_on.id_for_label }}" class="form-control{% if form.carry_forward_on.errors %} is-invalid{% endif %}">
+                    {% for carry_forward_on in form.carry_forward_on %}
+                        {{ carry_forward_on }}
+                    {% endfor %}
+                </select>
+
+                {% if form.carry_forward_on.errors %}
+                    {% for error in form.carry_forward_on.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.carry_forward_leave_no.id_for_label }}">{{ form.carry_forward_leave_no.label }}</label>
+                <input type="number" name="{{ form.carry_forward_leave_no.name }}" id="{{ form.carry_forward_leave_no.id_for_label }}" class="form-control{% if form.carry_forward_leave_no.errors %} is-invalid{% endif %}" placeholder="No. of leaves"
+                       value="{{ form.carry_forward_leave_no.value|default_if_none:'' }}">
+
+                {% if form.carry_forward_leave_no.errors %}
+                    {% for error in form.carry_forward_leave_no.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.encashable.id_for_label }}">
+                    <input type="checkbox" name="{{ form.encashable.name }}" id="{{ form.encashable.id_for_label }}" class="m-checkbox form-check-input{% if form.encashable.errors %} is-invalid{% endif %}" {% if form.encashable.value == True %}checked{% endif %}>
+                    {{ form.encashable.label }}</label>
+
+                {% if form.encashable.errors %}
+                    {% for error in form.encashable.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.encashment_on.id_for_label }}">{{ form.encashment_on.label }}</label>
+                <select name="{{ form.encashment_on.name }}" id="{{ form.encashment_on.id_for_label }}" class="form-control{% if form.encashment_on.errors %} is-invalid{% endif %}">
+                    {% for encashment_on in form.encashment_on %}
+                        {{ encashment_on }}
+                    {% endfor %}
+                </select>
+
+                {% if form.encashment_on.errors %}
+                    {% for error in form.encashment_on.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.encashment_leave_no.id_for_label }}">{{ form.encashment_leave_no.label }}</label>
+                <input type="number" name="{{ form.encashment_leave_no.name }}" id="{{ form.encashment_leave_no.id_for_label }}" class="form-control{% if form.encashment_leave_no.errors %} is-invalid{% endif %}" placeholder="No. of leaves"
+                       value="{{ form.encashment_leave_no.value|default_if_none:'' }}">
+
+                {% if form.encashment_leave_no.errors %}
+                    {% for error in form.encashment_leave_no.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.document_required.id_for_label }}">
+                    <input type="checkbox" name="{{ form.document_required.name }}" id="{{ form.document_required.id_for_label }}" class="m-checkbox form-check-input{% if form.document_required.errors %} is-invalid{% endif %}" {% if form.document_required.value == True %}checked{% endif %}>
+                    {{ form.document_required.label }}</label>
+
+                {% if form.document_required.errors %}
+                    {% for error in form.document_required.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.tolerance_limit.id_for_label }}">{{ form.tolerance_limit.label }}</label>
+                <input type="number" name="{{ form.tolerance_limit.name }}" id="{{ form.tolerance_limit.id_for_label }}" class="form-control{% if form.tolerance_limit.errors %} is-invalid{% endif %}" value="{{ form.tolerance_limit.value|default_if_none:'' }}">
+
+                {% if form.tolerance_limit.errors %}
+                    {% for error in form.tolerance_limit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.tolerance_limit_unit.id_for_label }}">{{ form.tolerance_limit_unit.label }}</label>
+                <select name="{{ form.tolerance_limit_unit.name }}" id="{{ form.tolerance_limit_unit.id_for_label }}" class="form-control{% if form.tolerance_limit_unit.errors %} is-invalid{% endif %}">
+                    {% for tolerance_limit_unit in form.tolerance_limit_unit %}
+                        {{ tolerance_limit_unit }}
+                    {% endfor %}
+                </select>
+
+                {% if form.tolerance_limit_unit.errors %}
+                    {% for error in form.tolerance_limit_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.before_availing_leave.id_for_label }}">
+                    <input type="checkbox" name="{{ form.before_availing_leave.name }}" id="{{ form.before_availing_leave.id_for_label }}" class="m-checkbox form-check-input{% if form.before_availing_leave.errors %} is-invalid{% endif %}"
+                           {% if form.before_availing_leave.value == True %}checked{% endif %}>
+                    {{ form.before_availing_leave.label }}</label>
+
+                {% if form.before_availing_leave.errors %}
+                    {% for error in form.before_availing_leave.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.before_minimum.id_for_label }}">{{ form.before_minimum.label }}</label>
+                <input type="number" name="{{ form.before_minimum.name }}" id="{{ form.before_minimum.id_for_label }}" class="form-control{% if form.before_minimum.errors %} is-invalid{% endif %}" value="{{ form.before_minimum.value|default_if_none:'' }}">
+
+                {% if form.before_minimum.errors %}
+                    {% for error in form.before_minimum.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.before_minimum_unit.id_for_label }}">{{ form.before_minimum_unit.label }}</label>
+                <select name="{{ form.before_minimum_unit.name }}" id="{{ form.before_minimum_unit.id_for_label }}" class="form-control{% if form.before_minimum_unit.errors %} is-invalid{% endif %}">
+                    {% for before_minimum_unit in form.before_minimum_unit %}
+                        {{ before_minimum_unit }}
+                    {% endfor %}
+                </select>
+
+                {% if form.before_minimum_unit.errors %}
+                    {% for error in form.before_minimum_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.before_maximum.id_for_label }}">{{ form.before_maximum.label }}</label>
+                <input type="number" name="{{ form.before_maximum.name }}" id="{{ form.before_maximum.id_for_label }}" class="form-control{% if form.before_maximum.errors %} is-invalid{% endif %}" value="{{ form.before_maximum.value|default_if_none:'' }}">
+
+                {% if form.before_maximum.errors %}
+                    {% for error in form.before_maximum.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.before_maximum_unit.id_for_label }}">{{ form.before_maximum_unit.label }}</label>
+                <select name="{{ form.before_maximum_unit.name }}" id="{{ form.before_maximum_unit.id_for_label }}" class="form-control{% if form.before_maximum_unit.errors %} is-invalid{% endif %}">
+                    {% for before_maximum_unit in form.before_maximum_unit %}
+                        {{ before_maximum_unit }}
+                    {% endfor %}
+                </select>
+
+                {% if form.before_maximum_unit.errors %}
+                    {% for error in form.before_maximum_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.after_availing_leave.id_for_label }}">
+                    <input type="checkbox" name="{{ form.after_availing_leave.name }}" id="{{ form.after_availing_leave.id_for_label }}" class="m-checkbox form-check-input{% if form.after_availing_leave.errors %} is-invalid{% endif %}"
+                           {% if form.after_availing_leave.value == True %}checked{% endif %}>
+                    {{ form.after_availing_leave.label }}</label>
+
+                {% if form.after_availing_leave.errors %}
+                    {% for error in form.after_availing_leave.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.after_maximum.id_for_label }}">{{ form.after_maximum.label }}</label>
+                <input type="number" name="{{ form.after_maximum.name }}" id="{{ form.after_maximum.id_for_label }}" class="form-control{% if form.after_maximum.errors %} is-invalid{% endif %}" value="{{ form.after_maximum.value|default_if_none:'' }}">
+
+                {% if form.after_maximum.errors %}
+                    {% for error in form.after_maximum.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.after_maximum_unit.id_for_label }}">{{ form.after_maximum_unit.label }}</label>
+                <select name="{{ form.after_maximum_unit.name }}" id="{{ form.after_maximum_unit.id_for_label }}" class="form-control{% if form.after_maximum_unit.errors %} is-invalid{% endif %}">
+                    {% for after_maximum_unit in form.after_maximum_unit %}
+                        {{ after_maximum_unit }}
+                    {% endfor %}
+                </select>
+
+                {% if form.after_maximum_unit.errors %}
+                    {% for error in form.after_maximum_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.compensateable.id_for_label }}">
+                    <input type="checkbox" name="{{ form.compensateable.name }}" id="{{ form.compensateable.id_for_label }}" class="m-checkbox form-check-input{% if form.compensateable.errors %} is-invalid{% endif %}" {% if form.compensateable.value == True %}checked{% endif %}>
+                    {{ form.compensateable.label }}</label>
+
+                {% if form.compensateable.errors %}
+                    {% for error in form.compensateable.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form.leave_credit_type.id_for_label }}">{{ form.leave_credit_type.label }}</label>
+            <div class="">
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        {% for obj in form.leave_credit_type %}
+                            {{ obj }}
+                        {% endfor %}
+                    </label>
+                </div>
+            </div>
+            {% if form.leave_credit_type.errors %}
+                {% for error in form.leave_credit_type.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.variable_with_time.id_for_label }}">
+                    <input type="checkbox" name="{{ form.variable_with_time.name }}" id="{{ form.variable_with_time.id_for_label }}" class="m-checkbox form-check-input{% if form.variable_with_time.errors %} is-invalid{% endif %}" {% if form.variable_with_time.value == True %}checked{% endif %}>
+                    {{ form.variable_with_time.label }}</label>
+
+                {% if form.variable_with_time.errors %}
+                    {% for error in form.variable_with_time.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.round_of_time.id_for_label }}">{{ form.round_of_time.label }}</label>
+                <select name="{{ form.round_of_time.name }}" id="{{ form.round_of_time.id_for_label }}" class="form-control{% if form.round_of_time.errors %} is-invalid{% endif %}">
+                    {% for round_of_time in form.round_of_time %}
+                        {{ round_of_time }}
+                    {% endfor %}
+                </select>
+
+                {% if form.round_of_time.errors %}
+                    {% for error in form.round_of_time.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.partial_leave_allowed.id_for_label }}">
+                    <input type="checkbox" name="{{ form.partial_leave_allowed.name }}" id="{{ form.partial_leave_allowed.id_for_label }}" class="m-checkbox form-check-input{% if form.partial_leave_allowed.errors %} is-invalid{% endif %}"
+                           {% if form.partial_leave_allowed.value == True %}checked{% endif %}>
+                    {{ form.partial_leave_allowed.label }}</label>
+                {% if form.partial_leave_allowed.errors %}
+                    {% for error in form.partial_leave_allowed.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <table class="table form-table table-bordered table-sm">
+            <thead class="text-center">
+            <tr>
+                <th>Hours</th>
+                <th>Day</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for form_data in partial_leave_converter %}
+                <tr class="item">
+                    <td>
+                        <input type="text" name="{{ form_data.partial_leave_hours.html_name }}" id="{{ form_data.partial_leave_hours.id_for_label }}" class="formset-field form-control {% if form_data.partial_leave_hours.errors %} is-invalid{% endif %}"
+                               {% if form_data.partial_leave_hours.value != None %}value="{{ form_data.partial_leave_hours.value }}" {% endif %}>
+                        {% if form_data.partial_leave_hours.errors %}
+                            {% for error in form_data.partial_leave_hours.errors %}
+                                {{ error }}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <input type="text" name="{{ form_data.partial_leave_day.html_name }}" id="{{ form_data.partial_leave_day.id_for_label }}" class="formset-field form-control {% if form_data.partial_leave_day.errors %} is-invalid{% endif %}"
+                               {% if form_data.partial_leave_day.value != None %}value="{{ form_data.partial_leave_day.value }}" {% endif %}>
+                        {% if form_data.partial_leave_day.errors %}
+                            {% for error in form_data.partial_leave_day.errors %}
+                                {{ error }}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td class="v-middle m-100 text-center">
+                        <input type="checkbox" class="m-checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                        <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ partial_leave_converter.management_form }}
+    <div style="color:red">{{ partial_leave_converter.non_form_errors }}</div>
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-12">
+                <label class="form-check-label" for="{{ form.sandwich_leave_allowed.id_for_label }}">
+                    <input type="checkbox" name="{{ form.sandwich_leave_allowed.name }}" id="{{ form.sandwich_leave_allowed.id_for_label }}" class="m-checkbox form-check-input{% if form.sandwich_leave_allowed.errors %} is-invalid{% endif %}"
+                           {% if form.sandwich_leave_allowed.value == True %}checked{% endif %}>
+                    {{ form.sandwich_leave_allowed.label }}</label>
+                {% if form.sandwich_leave_allowed.errors %}
+                    {% for error in form.sandwich_leave_allowed.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group switch">
+            <div class="col-md-12">
+                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                    <label for="{{ form.status.id_for_label }}">{{ form.status.label }}
+                        <input type="checkbox" class="" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}" {% if form.status.value %}checked="" {% endif %}>
+                        <span></span>
+                    </label>
+
+                    {% if form.status.errors %}
+                        {% for error in form.status.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

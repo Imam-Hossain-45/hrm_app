@@ -1,0 +1,60 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Leave{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Self panel > Leave</p>
+                    <h2>Leave Apply</h2>
+                </div>
+                <div class="card-block">
+                    <div class="row ml-0">
+                        <div class="col-md-7 border-1 p-4 self-leave">
+                            <form method="POST" novalidate enctype="multipart/form-data" class="mw-initial">
+                                {% csrf_token %}
+                                {% include 'leave/process/entry/form.html' %}
+
+                                <div class="form-group w-100 text-right">
+                                    <a class="btn btn-main b-none" href="{% url 'self_panel:leave_apply' %}">Cancel</a>
+                                    <button type="submit" class="btn btn-main" name="apply">Apply</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-md-5">
+                            <div class="table-responsive">
+                                <table class="table table-hover border-1" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th class="text-left pl-4" scope="col">Leave Type</th>
+                                            <th class="text-center" scope="col">Credit</th>
+                                            <th class="text-center" scope="col">Avail</th>
+                                            <th class="text-center" scope="col">Remaining</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for obj in leave_list %}
+                                        <tr>
+                                            <td class="text-left pl-4">{{ obj.type }}</td>
+                                            <td class="text-center">{{ obj.credit }}</td>
+                                            <td class="text-center">{{ obj.avail }}</td>
+                                            <td class="text-center">{{ obj.remaining }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

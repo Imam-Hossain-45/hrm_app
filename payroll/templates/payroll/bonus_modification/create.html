@@ -1,0 +1,99 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Create Bonus Modification{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Bonus Modification Create Form</h2>
+                        <p>Bonus Modification create for employee info</p>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }}</label>
+                                <select name="{{ form.employee.name }}"
+                                        class="form-control{% if form.employee.errors %} is-invalid{% endif %}"
+                                        id="{{ form.employee.id_for_label }}">
+                                    {% if form.employee.value %}
+                                        {% for choice in form.employee.field.choices %}
+                                            {% if form.employee.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in form.employee.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+
+                                {% if form.employee.errors %}
+                                    {% for error in form.employee.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.amount.id_for_label }}">{{ form.amount.label }}</label>
+                                <input type="number" step="0.01" name="{{ form.amount.name }}"
+                                       id="{{ form.amount.id_for_label }}"
+                                       class="form-control {% if form.amount.errors %}is-invalid{% endif %}"
+                                       value="{{ form.amount.value|default_if_none:'' }}"
+                                       placeholder="Ex: 6000">
+
+                                {% if form.amount.errors %}
+                                    {% for error in form.amount.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.adjusted_amount.id_for_label }}">{{ form.adjusted_amount.label }}</label>
+                                <input type="number" step="0.01" name="{{ form.adjusted_amount.name }}"
+                                       id="{{ form.adjusted_amount.id_for_label }}"
+                                       class="form-control {% if form.adjusted_amount.errors %}is-invalid{% endif %}"
+                                       value="{{ form.adjusted_amount.value|default_if_none:'' }}"
+                                       placeholder="Ex: 6000">
+
+                                {% if form.adjusted_amount.errors %}
+                                    {% for error in form.adjusted_amount.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.remarks.id_for_label }}">{{ form.remarks.label }}</label>
+                                <textarea name="{{ form.remarks.name }}" cols="40" rows="5"
+                                          class="form-control{% if form.remarks.errors %} is-invalid{% endif %}"
+                                          id="{{ form.remarks.id_for_label }}">{{ form.remarks.value|default_if_none:'' }}</textarea>
+
+                                {% if form.remarks.errors %}
+                                    {% for error in form.remarks.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class='form-group w-100'>
+                                <button type="submit" class="btn btn-main">Submit</button>
+                                <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:bonus_modification_list' %}">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

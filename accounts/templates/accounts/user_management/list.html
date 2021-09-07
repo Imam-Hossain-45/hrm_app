@@ -1,0 +1,879 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}User List{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_calendarmodel' in permissions %}
+                <div class="text-right">
+                    <a href="{% url 'beehive_admin:user_create' %}" class="btn btn-main m-0">+
+                        Add</a>
+                </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>All employees</h2>
+                        <p>View all employees, edit or delete</p>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form method="POST" novalidate>
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.first_name.name }}"
+                                           id="{{ form.first_name.id_for_label }}"
+                                           class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
+                                           {% if form.first_name.value %}value="{{ form.first_name.value }}"{% endif %}
+                                           maxlength="200" placeholder="First Name">
+
+                                    {% if form.first_name.errors %}
+                                        {% for error in form.first_name.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.last_name.name }}"
+                                           id="{{ form.last_name.id_for_label }}"
+                                           class="form-control{% if form.last_name.errors %} is-invalid{% endif %}"
+                                           {% if form.last_name.value %}value="{{ form.last_name.value }}"{% endif %}
+                                           maxlength="200" placeholder="Last Name">
+
+                                    {% if form.last_name.errors %}
+                                        {% for error in form.last_name.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}"
+                                           class="form-control{% if form.email.errors %} is-invalid{% endif %}"
+                                           {% if form.email.value %}value="{{ form.email.value }}"{% endif %}
+                                           maxlength="200" placeholder="Email">
+
+                                    {% if form.email.errors %}
+                                        {% for error in form.email.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.work_phone.name }}"
+                                           id="{{ form.work_phone.id_for_label }}"
+                                           class="form-control{% if form.work_phone.errors %} is-invalid{% endif %}"
+                                           {% if form.work_phone.value %}value="{{ form.work_phone.value }}"{% endif %}
+                                           maxlength="200" placeholder="Work Phone">
+
+                                    {% if form.work_phone.errors %}
+                                        {% for error in form.work_phone.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.personal_phone.name }}"
+                                           id="{{ form.personal_phone.id_for_label }}"
+                                           class="form-control{% if form.personal_phone.errors %} is-invalid{% endif %}"
+                                           {% if form.personal_phone.value %}value="{{ form.personal_phone.value }}"{% endif %}
+                                           maxlength="200" placeholder="Personal Phone">
+
+                                    {% if form.personal_phone.errors %}
+                                        {% for error in form.personal_phone.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.city.name }}" id="{{ form.city.id_for_label }}"
+                                           class="form-control{% if form.city.errors %} is-invalid{% endif %}"
+                                           {% if form.city.value %}value="{{ form.city.value }}"{% endif %}
+                                           maxlength="200" placeholder="City">
+
+                                    {% if form.city.errors %}
+                                        {% for error in form.city.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.rfid.name }}" id="{{ form.rfid.id_for_label }}"
+                                           class="form-control{% if form.rfid.errors %} is-invalid{% endif %}"
+                                           {% if form.rfid.value %}value="{{ form.rfid.value }}"{% endif %}
+                                           maxlength="200" placeholder="RFID">
+
+                                    {% if form.rfid.errors %}
+                                        {% for error in form.rfid.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="{{ form.state.name }}" id="{{ form.state.id_for_label }}"
+                                           class="form-control{% if form.state.errors %} is-invalid{% endif %}"
+                                           {% if form.state.value %}value="{{ form.state.value }}"{% endif %}
+                                           maxlength="200" placeholder="State">
+
+                                    {% if form.state.errors %}
+                                        {% for error in form.state.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="number" name="{{ form.zip_code.name }}"
+                                           id="{{ form.zip_code.id_for_label }}"
+                                           class="form-control{% if form.zip_code.errors %} is-invalid{% endif %}"
+                                           {% if form.zip_code.value %}value="{{ form.zip_code.value }}"{% endif %}
+                                           placeholder="Zip Code">
+
+                                    {% if form.zip_code.errors %}
+                                        {% for error in form.zip_code.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.country.name }}"
+                                            class="form-control{% if form.country.errors %} is-invalid{% endif %}"
+                                            id="{{ form.country.id_for_label }}">
+
+                                        {% for choice in form.country.field.choices %}
+                                            {% if form.country.value == choice.0 %}
+                                                {% if forloop.counter == 1 %}
+                                                    <option value="{{ choice.0 }}" selected>-- country --</option>
+                                                {% else %}
+                                                    <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if forloop.counter == 1 %}
+                                                    <option value="{{ choice.0 }}">-- country --</option>
+                                                {% else %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.country.errors %}
+                                        {% for error in form.country.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.gender.name }}"
+                                            class="form-control{% if form.gender.errors %} is-invalid{% endif %}"
+                                            id="{{ form.gender.id_for_label }}">
+
+                                        {% for choice in form.gender.field.choices %}
+                                            {% if form.gender.value == choice.0 %}
+                                                {% if forloop.counter == 1 %}
+                                                    <option value="{{ choice.0 }}" selected>-- gender --</option>
+                                                {% else %}
+                                                    <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                {% endif %}
+                                            {% else %}
+                                                {% if forloop.counter == 1 %}
+                                                    <option value="{{ choice.0 }}">-- gender --</option>
+                                                {% else %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.gender.errors %}
+                                        {% for error in form.gender.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.department.name }}"
+                                            class="form-control{% if form.department.errors %} is-invalid{% endif %}"
+                                            id="{{ form.department.id_for_label }}">
+
+                                        {% for choice in form.department.field.choices %}
+                                            {% if form.department.value in request.build_absolute_uri %}
+                                                {% if form.department.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- department --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- department --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.department.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- department --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- department --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.department.errors %}
+                                        {% for error in form.department.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.designation.name }}"
+                                            class="form-control{% if form.designation.errors %} is-invalid{% endif %}"
+                                            id="{{ form.designation.id_for_label }}">
+
+                                        {% for choice in form.designation.field.choices %}
+                                            {% if form.designation.value in request.build_absolute_uri %}
+                                                {% if form.designation.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- designation --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- designation --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.designation.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- designation --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- designation --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.designation.errors %}
+                                        {% for error in form.designation.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.division.name }}"
+                                            class="form-control{% if form.division.errors %} is-invalid{% endif %}"
+                                            id="{{ form.division.id_for_label }}">
+
+                                        {% for choice in form.division.field.choices %}
+                                            {% if form.division.value in request.build_absolute_uri %}
+                                                {% if form.division.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- division --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- division --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.division.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- division --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- division --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.division.errors %}
+                                        {% for error in form.division.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.category.name }}"
+                                            class="form-control{% if form.category.errors %} is-invalid{% endif %}"
+                                            id="{{ form.category.id_for_label }}">
+
+                                        {% for choice in form.category.field.choices %}
+                                            {% if form.category.value in request.build_absolute_uri %}
+                                                {% if form.category.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- category --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- category --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.category.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- category --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- category --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.category.errors %}
+                                        {% for error in form.category.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.grade.name }}"
+                                            class="form-control{% if form.grade.errors %} is-invalid{% endif %}"
+                                            id="{{ form.grade.id_for_label }}">
+
+                                        {% for choice in form.grade.field.choices %}
+                                            {% if form.grade.value in request.build_absolute_uri %}
+                                                {% if form.grade.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- grade --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- grade --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.grade.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- grade --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- grade --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.grade.errors %}
+                                        {% for error in form.grade.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.pay_scale.name }}"
+                                            class="form-control{% if form.pay_scale.errors %} is-invalid{% endif %}"
+                                            id="{{ form.pay_scale.id_for_label }}">
+
+                                        {% for choice in form.pay_scale.field.choices %}
+                                            {% if form.pay_scale.value in request.build_absolute_uri %}
+                                                {% if form.pay_scale.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- pay scale --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- pay scale --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.pay_scale.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- pay scale --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- pay scale --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.pay_scale.errors %}
+                                        {% for error in form.pay_scale.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.job_status.name }}"
+                                            class="form-control{% if form.job_status.errors %} is-invalid{% endif %}"
+                                            id="{{ form.job_status.id_for_label }}">
+
+                                        {% for choice in form.job_status.field.choices %}
+                                            {% if form.job_status.value in request.build_absolute_uri %}
+                                                {% if form.job_status.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- job status --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- job status --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.job_status.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- job status --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- job status --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.job_status.errors %}
+                                        {% for error in form.job_status.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.report_to.name }}"
+                                            class="form-control{% if form.report_to.errors %} is-invalid{% endif %}"
+                                            id="{{ form.report_to.id_for_label }}">
+
+                                        {% for choice in form.report_to.field.choices %}
+                                            {% if form.report_to.value in request.build_absolute_uri %}
+                                                {% if form.report_to.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- supervisor --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- supervisor --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.report_to.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- supervisor --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- supervisor --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.report_to.errors %}
+                                        {% for error in form.report_to.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.schedule.name }}"
+                                            class="form-control{% if form.schedule.errors %} is-invalid{% endif %}"
+                                            id="{{ form.schedule.id_for_label }}">
+
+                                        {% for choice in form.schedule.field.choices %}
+                                            {% if form.schedule.value in request.build_absolute_uri %}
+                                                {% if form.schedule.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- schedule --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- schedule --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.schedule.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- schedule --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- schedule --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.schedule.errors %}
+                                        {% for error in form.schedule.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.salary.name }}"
+                                            class="form-control{% if form.salary.errors %} is-invalid{% endif %}"
+                                            id="{{ form.salary.id_for_label }}">
+
+                                        {% for choice in form.salary.field.choices %}
+                                            {% if form.salary.value in request.build_absolute_uri %}
+                                                {% if form.salary.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- salary --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- salary --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.salary.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- salary --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- salary --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.salary.errors %}
+                                        {% for error in form.salary.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.leave_group.name }}"
+                                            class="form-control{% if form.leave_group.errors %} is-invalid{% endif %}"
+                                            id="{{ form.leave_group.id_for_label }}">
+
+                                        {% for choice in form.leave_group.field.choices %}
+                                            {% if form.leave_group.value in request.build_absolute_uri %}
+                                                {% if form.leave_group.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- leave group --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- leave group --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.leave_group.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- leave group --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- leave group --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.leave_group.errors %}
+                                        {% for error in form.leave_group.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.policy_group.name }}"
+                                            class="form-control{% if form.policy_group.errors %} is-invalid{% endif %}"
+                                            id="{{ form.policy_group.id_for_label }}">
+
+                                        {% for choice in form.policy_group.field.choices %}
+                                            {% if form.policy_group.value in request.build_absolute_uri %}
+                                                {% if form.policy_group.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- policy group --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- policy group --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.policy_group.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- policy group --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- policy group --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.policy_group.errors %}
+                                        {% for error in form.policy_group.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="{{ form.late_policy.name }}"
+                                            class="form-control{% if form.late_policy.errors %} is-invalid{% endif %}"
+                                            id="{{ form.late_policy.id_for_label }}">
+
+                                        {% for choice in form.late_policy.field.choices %}
+                                            {% if form.late_policy.value in request.build_absolute_uri %}
+                                                {% if form.late_policy.value == choice.0|stringformat:"i" %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- late policy --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- late policy --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if form.late_policy.value == choice.0|slugify %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}" selected>-- late policy --
+                                                        </option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <option value="{{ choice.0 }}">-- late policy --</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+
+                                    {% if form.late_policy.errors %}
+                                        {% for error in form.late_policy.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-main float-right">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">Sl.</th>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">User Type</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for member_profile in members_profile %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'beehive_admin:user_detail' pk=member_profile.user.id %}">{{ forloop.counter }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'beehive_admin:user_detail' pk=member_profile.user.id %}">{{ member_profile.user.id }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'beehive_admin:user_detail' pk=member_profile.user.id %}">
+                                                {{ member_profile.user.first_name|default_if_none:'---' }}
+                                                {{ member_profile.user.last_name|default_if_none:'---' }}</a>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'beehive_admin:user_detail' pk=member_profile.user.id %}">{{ member_profile.user.email }}</a>
+                                            </td>
+
+                                            {% if member_profile.user.is_employee %}
+                                                <td>Employee</td>
+                                            {% else %}
+                                                <td>Admin</td>
+                                            {% endif %}
+                                            <td>
+                                                {% if request.user.is_superuser or 'change_user' in permissions %}
+                                                    <a href="{% url "beehive_admin:user_detail" member_profile.user.id %}">
+                                                        <i class="la la-edit"></i>
+                                                    </a>
+                                                {% endif %}
+
+                                                {% if request.user.is_superuser or 'delete_user' in permissions %}
+                                                    <a href="{% url "beehive_admin:user_delete" member_profile.user.id %}">
+                                                        <i class="la la-times-circle-o"></i>
+                                                    </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

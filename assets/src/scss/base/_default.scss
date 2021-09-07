@@ -1,0 +1,17 @@
+body {
+	@include primary-font(14px);
+	color: $body-color;
+	hyphens: auto;
+	word-wrap: break-word;
+	background-color: $body-bg;
+}
+
+.container {
+  @include media(">lg") {
+    max-width: 1200px;
+  }
+}
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+}

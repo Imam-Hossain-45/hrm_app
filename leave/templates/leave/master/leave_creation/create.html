@@ -1,0 +1,30 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Leave > Leave Creation{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Leave Master</p>
+                    <h2>Leave Creation</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        {% include 'leave/master/leave_creation/form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main b-none"
+                                   href="{% url 'beehive_admin:leave:leave_master_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main" name="form1">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

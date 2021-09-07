@@ -1,0 +1,124 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Designation List{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_designation' in permissions %}
+            <div class="text-right">
+                <a href="{% url 'beehive_admin:setting:designation_create' %}" class="btn btn-main m-0">+
+                    Add a new designation
+                </a>
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>All Designations</h2>
+                        <p>View all designations, edit or delete</p>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Code</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for designation in designations %}
+                                        <tr>
+                                            <td>{{ designation.name }}</td>
+                                            <td>{{ designation.short_code|default_if_none:''|upper }}</td>
+                                            <td>{{ designation.status|title }}</td>
+                                            <td>
+                                                {% if request.user.is_superuser or 'change_designation' in permissions %}
+                                                <a title="edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="{% url 'beehive_admin:setting:designation_update' designation.id %}">
+                                                    <i class="la la-edit"></i>
+                                                </a>
+                                                {% endif %}
+
+                                                {% if request.user.is_superuser or 'delete_designation' in permissions %}
+                                                <div class="modal fade" id="confirmDeleteModal{{ designation.id }}"
+                                                     tabindex="-1" role="dialog"
+                                                     aria-labelledby="confirmDeleteModalLabel"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <form action="{% url 'beehive_admin:setting:designation_delete' designation.id %}" method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="modal-content">
+                                                                <div class="modal-body confirm-delete">
+                                                                    Are you sure you want to delete {{ designation }}?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button"
+                                                                            class="btn btn-secondary"
+                                                                            data-dismiss="modal">
+                                                                        Cancel
+                                                                    </button>
+                                                                    <input type="submit" class="btn btn-danger"
+                                                                           value="Delete"
+                                                                           name="delete">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <a href="javascript:void(0)"
+                                                   title="delete"
+                                                   class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline"
+                                                   data-toggle="modal"
+                                                   data-target="#confirmDeleteModal{{ designation.id }}"
+                                                   id="deleteButton{{ designation.id }}">
+                                                    <i class="la la-times-circle-o"></i>
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if designations.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if designations.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ designations.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == designations.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ designations.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if designations.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ designations.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

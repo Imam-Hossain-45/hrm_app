@@ -1,0 +1,71 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ asset_form.asset_category.id_for_label }}">{{ asset_form.asset_category.label }}<span>*</span></label>
+            <input type="text" name="{{ asset_form.asset_category.name }}" class="form-control{% if asset_form.asset_category.errors %} is-invalid{% endif %}" id="{{ asset_form.asset_category.id_for_label }}" value="{{ asset_form.asset_category.value|default_if_none:'' }}">
+            {% if asset_form.asset_category.errors %}
+            {% for error in asset_form.asset_category.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ asset_form.asset_brand_name.id_for_label }}">{{ asset_form.asset_brand_name.label }}<span>*</span></label>
+            <input type="text" name="{{ asset_form.asset_brand_name.name }}" class="form-control{% if asset_form.asset_brand_name.errors %} is-invalid{% endif %}" id="{{ asset_form.asset_brand_name.id_for_label }}" value="{{ asset_form.asset_brand_name.value|default_if_none:'' }}">
+            {% if asset_form.asset_brand_name.errors %}
+            {% for error in asset_form.asset_brand_name.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ asset_form.description.id_for_label }}">{{ asset_form.description.label }}</label>
+            <input type="text" name="{{ asset_form.description.name }}" class="form-control{% if asset_form.description.errors %} is-invalid{% endif %}" id="{{ asset_form.description.id_for_label }}">{{ asset_form.description.value|default_if_none:'' }}
+            {% if asset_form.description.errors %}
+            {% for error in asset_form.description.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ asset_form.serial_number.id_for_label }}">{{ asset_form.serial_number.label }}<span>*</span></label>
+            <input type="text" name="{{ asset_form.serial_number.name }}" class="form-control{% if asset_form.serial_number.errors %} is-invalid{% endif %}" id="{{ asset_form.serial_number.id_for_label }}" value="{{ asset_form.serial_number.value|default_if_none:'' }}">
+            {% if asset_form.serial_number.errors %}
+            {% for error in asset_form.serial_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ asset_form.date_loaned.id_for_label }}">{{ asset_form.date_loaned.label }}<span>*</span></label>
+            <input type="date" name="{{ asset_form.date_loaned.name }}" class="form-control{% if asset_form.date_loaned.errors %} is-invalid{% endif %}" id="{{ asset_form.date_loaned.id_for_label }}" value="{% if asset_form.date_loaned.value|get_date_type == 'str' %}{{ asset_form.date_loaned.value }}{% else %}{{ asset_form.date_loaned.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if asset_form.date_loaned.errors %}
+            {% for error in asset_form.date_loaned.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ asset_form.date_returned.id_for_label }}">{{ asset_form.date_returned.label }}<span>*</span></label>
+            <input type="date" name="{{ asset_form.date_returned.name }}" class="form-control{% if asset_form.date_returned.errors %} is-invalid{% endif %}" id="{{ asset_form.date_returned.id_for_label }}" value="{% if asset_form.date_returned.value|get_date_type == 'str' %}{{ asset_form.date_returned.value }}{% else %}{{ asset_form.date_returned.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if asset_form.date_returned.errors %}
+            {% for error in asset_form.date_returned.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

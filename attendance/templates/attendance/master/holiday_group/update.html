@@ -1,0 +1,171 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Update a Holiday Group{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <p>Attendance Master</p>
+                    <h2>Holiday Group Creation</h2>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.name.id_for_label }}">Holiday Group {{ form.name.label }}<span>*</span></label>
+                                        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                                               class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+                                               placeholder="Ex: Holiday Group 1"
+                                               value="{{ form.name.value|default_if_none:'' }}">
+
+                                        {% if form.name.errors %}
+                                            {% for error in form.name.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.short_code.id_for_label }}">{{ form.short_code.label }}<span>*</span></label>
+                                        <input type="text" name="{{ form.short_code.name }}"
+                                               id="{{ form.short_code.id_for_label }}"
+                                               class="form-control{% if form.short_code.errors %} is-invalid{% endif %}"
+                                               placeholder="Ex: HG1"
+                                               value="{{ form.short_code.value|default_if_none:'' }}">
+
+                                        {% if form.short_code.errors %}
+                                            {% for error in form.short_code.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                                        <textarea type="text" cols="30" rows="5" name="{{ form.description.name }}"
+                                                  id="{{ form.description.id_for_label }}"
+                                                  class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+                                                  placeholder="Description about this holiday group">{{ form.description.value|default_if_none:'' }}</textarea>
+
+                                        {% if form.description.errors %}
+                                            {% for error in form.description.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                    <label for="{{ form.status.id_for_label }}">{{ form.status.label }}
+                                        <input type="checkbox" class="form-control" name="{{ form.status.name }}"
+                                               id="{{ form.status.id_for_label }}"
+                                               {% if form.status.value %}checked="" {% endif %}>
+                                        <span></span>
+                                    </label>
+                                </span>
+
+
+                                        {% if form.status.errors %}
+                                            {% for error in form.status.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h2>Select Holidays</h2>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-wrapper">
+                                        <div>
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                {% for year in years %}
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="nav-{{ year }}-tab"
+                                                           href="#nav-{{ year }}" data-toggle="pill" role="tab"
+                                                           aria-controls="nav-{{ year }}"
+                                                           aria-selected="true">{{ year }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+
+                                        <div class="tab-content" id="pills-tabContent">
+                                            {% for year, month_wise in final_holidays_list %}
+                                                <div id="nav-{{ year }}" class="tab-pane fade" role="tabpanel"
+                                                     aria-labelledby="nav-{{ year }}-tab">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h2></h2>
+                                                        <a class="holiday-select-link" href="javascript:;">Select All From {{ year }}</a>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="tab-wrap">
+                                                        {% for month, holidays in month_wise %}
+                                                            <div class="content">
+                                                                <div>
+                                                                    <h2>{{ month }}</h2>
+                                                                    {% for holiday in holidays %}
+                                                                        <div>
+                                                                            {% for choice in form.holiday.field.choices %}
+                                                                                {% if choice.0 %}
+                                                                                    {% if choice.0 == holiday.id %}
+                                                                                        <div class="form-group">
+                                                                                            <input type="checkbox"
+                                                                                                   class="form-control d-inline year-{{ year }}"
+                                                                                                   name="{{ form.holiday.name }}"
+                                                                                                   id="id_{{ choice.0 }}"
+                                                                                                   value="{{ choice.0 }}"
+                                                                                                    {% for sel in selected %}
+                                                                                                   {% if choice.0 == sel.master.id %}checked=""
+                                                                                                   {% endif %} {% endfor %}>
+                                                                                            <label for="id_{{ choice.0 }}">{{ choice.1 }}</label>
+
+                                                                                            {% if form.holiday.errors %}
+                                                                                                {% for error in form.holiday.errors %}
+                                                                                                    <div class="invalid-feedback">{{ error }}</div>
+                                                                                                {% endfor %}
+                                                                                            {% endif %}
+                                                                                        </div>
+                                                                                    {% endif %}
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+
+                                    <div class="form-group w-100 text-right">
+                                        <a class="btn btn-main b-none"
+                                           href="{% url 'beehive_admin:attendance:holiday_group_list' %}">Cancel</a>
+                                        <button type="submit" class="btn btn-main">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

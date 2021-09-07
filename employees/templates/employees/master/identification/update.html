@@ -1,0 +1,30 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Edit Employee{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Employee Master</h2>
+                    <p>Identification</p>
+                </div>
+                <div class="card-block">
+                    <form method="POST" enctype='multipart/form-data' novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/identification/form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main b-none" href="{% url 'employees:employee_master_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

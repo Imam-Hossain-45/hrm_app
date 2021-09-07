@@ -1,0 +1,39 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Add a new organizational structure{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Organizational structure Description</h2>
+                    <p>Organizational structure name and address.</p>
+                </div>
+                <div class="card-block">
+                    <form method="post" novalidate>
+
+                        {% csrf_token %}
+
+                        {% include 'setting/organizational-structure/form.html' %}
+
+                        <ul id="sortable">
+                            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Company</li>
+                            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Branch</li>
+                            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Business Unit</li>
+                            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Division</li>
+                            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Department</li>
+                        </ul>
+
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main  b-none" href="{% url 'beehive_admin:setting:organizational_structure_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Create Structure</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

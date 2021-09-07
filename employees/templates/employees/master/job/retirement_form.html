@@ -1,0 +1,39 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ retirement_form.due_on.id_for_label }}">{{ retirement_form.due_on.label }}</label>
+            <input type="date" name="{{ retirement_form.due_on.name }}" class="form-control{% if retirement_form.due_on.errors %} is-invalid{% endif %}" id="{{ retirement_form.due_on.id_for_label }}"  value="{% if retirement_form.due_on.value|get_date_type == 'str' %}{{ retirement_form.due_on.value }}{% else %}{{ retirement_form.due_on.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if retirement_form.due_on.errors %}
+            {% for error in retirement_form.due_on.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ retirement_form.date_of_settlement.id_for_label }}">{{ retirement_form.date_of_settlement.label }}</label>
+            <input type="date" name="{{ retirement_form.date_of_settlement.name }}" class="form-control{% if retirement_form.date_of_settlement.errors %} is-invalid{% endif %}" id="{{ retirement_form.date_of_settlement.id_for_label }}"  value="{% if retirement_form.date_of_settlement.value|get_date_type == 'str' %}{{ retirement_form.date_of_settlement.value }}{% else %}{{ retirement_form.date_of_settlement.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if retirement_form.date_of_settlement.errors %}
+            {% for error in retirement_form.date_of_settlement.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ retirement_form.effective_date.id_for_label }}">{{ retirement_form.effective_date.label }}</label>
+            <input type="date" name="{{ retirement_form.effective_date.name }}" class="form-control{% if retirement_form.effective_date.errors %} is-invalid{% endif %}" id="{{ retirement_form.effective_date.id_for_label }}" value="{% if retirement_form.effective_date.value|get_date_type == 'str' %}{{ retirement_form.effective_date.value }}{% else %}{{ retirement_form.effective_date.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if retirement_form.effective_date.errors %}
+            {% for error in retirement_form.effective_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

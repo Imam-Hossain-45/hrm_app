@@ -1,0 +1,85 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Salary Adjustment{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header secondary card-box">
+                        <div class="card-title">
+                            <p>{{ object_list.employee }}</p>
+                            <h2>{{ object_list.employee.employee_job_information.last.designation|default_if_none:'' }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if object_list %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header secondary card-box">
+                            <div class="card-title">
+                                <h2>Salary Breakdown: {{ object_list.start_date }} to {{ object_list.end_date }}</h2>
+                            </div>
+                        </div>
+
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Earning Component</th>
+                                            <th scope="col">Amount (BDT)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for obj in earning_component %}
+                                            <tr>
+                                                <td>{{ obj.name }}</td>
+                                                <td>{{ obj.value }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td>Total Earning</td>
+                                            <th>{{ object_list.total_earning }}</th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Deduction Component</th>
+                                            <th scope="col">Amount (BDT)</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for obj in deduction_component %}
+                                            <tr>
+                                                <td>{{ obj.name }}</td>
+                                                <td>{{ obj.value }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td>Total Deduction</td>
+                                            <th>{{ object_list.total_deduction }}</th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row w-100">
+                                <div class="col-md-6" style="background-color: whitesmoke">Net Earning: {{ object_list.net_earning }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,245 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Claim Report{% endblock %}
+
+{% block content %}
+{% include "layouts/event.html" %}
+
+<!-- Filters for input -->
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header secondary">
+                    <h2>Filter for Claims</h2>
+                </div>
+                <div class="card-block">
+                    <p>
+                        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#specifyEmployee">
+                            Specify an employee
+                        </button>
+                        {#                            <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#additionalFilters">#}
+                        {#                                Additional filters#}
+                        {#                            </button>#}
+                    </p>
+                    <div class="collapse" id="specifyEmployee">
+                        <div class="card card-body">
+                            <form method="get" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <label for="{{ csform.from_date.id_for_label }}">{{ csform.from_date.label }}</label>
+                                                <input type="date" name="{{ csform.from_date.name }}" id="{{ csform.from_date.id_for_label }}" class="timeinput form-control{% if csform.from_date.errors %} is-invalid{% endif %}" value="{{ csform.from_date.value|default:'' }}">
+                                                {% if csform.from_date.errors %}
+                                                {% for error in csform.from_date.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <label for="{{ csform.to_date.id_for_label }}">{{ csform.to_date.label }}</label>
+                                                <input type="date" name="{{ csform.to_date.name }}" id="{{ csform.to_date.id_for_label }}" class="timeinput form-control{% if csform.to_date.errors %} is-invalid{% endif %}" value="{{ csform.to_date.value|default:'' }}">
+                                                {% if csform.to_date.errors %}
+                                                {% for error in csform.to_date.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <label for="{{ csform.status.id_for_label }}">{{ csform.status.label }}</label>
+                                                <select name="{{ csform.status.name }}" id="{{ csform.status.id_for_label }}" class="form-control{% if csform.status.errors %} is-invalid{% endif %}" required>
+                                                    {% for choice in csform.status.field.choices %}
+                                                    <option value="{{ choice.0 }}" {% if csform.status.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if csform.status.errors %}
+                                                {% for error in csform.status.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <label for="{{ csform.category.id_for_label }}">{{ csform.category.label }}</label>
+                                                <select name="{{ csform.category.name }}" id="{{ csform.category.id_for_label }}" class="form-control{% if csform.category.errors %} is-invalid{% endif %}" required>
+                                                    {% for choice in csform.category.field.choices %}
+                                                    <option value="{{ choice.0 }}" {% if csform.category.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if csform.category.errors %}
+                                                {% for error in csform.category.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <label for="{{ csform.employee.id_for_label }}">{{ csform.employee.label }}</label>
+                                                <select name="{{ csform.employee.name }}" id="{{ csform.employee.id_for_label }}" class="form-control{% if csform.employee.errors %} is-invalid{% endif %}" required>
+                                                    {% for choice in csform.employee.field.choices %}
+                                                    <option value="{{ choice.0 }}" {% if csform.employee.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                {% if csform.employee.errors %}
+                                                {% for error in csform.employee.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                                {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group text-right w-100">
+                                            <button class="btn btn-main" type="submit">Apply</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {#                        <div class="collapse" id="additionalFilters">#}
+                    {#                            <div class="card card-body">#}
+                    {#                                <form method="get" novalidate>#}
+                    {#                                    <div class="form-group row">#}
+                    {#                                        <div class="col-md-12">#}
+                    {#                                            <label for="{{ cfform.division.id_for_label }}">{{ cfform.division.label }}</label>#}
+                    {#                                            <select name="{{ cfform.division.name }}" id="{{ cfform.division.id_for_label }}"#}
+                    {#                                                    class="form-control{% if cfform.division.errors %} is-invalid{% endif %}"#}
+                    {#                                                    required>#}
+                    {#                                                {% for choice in cfform.division.field.choices %}#}
+                    {#                                                    <option value="{{ choice.0 }}"{% if cfform.division.value == choice.0 %}#}
+                    {#                                                            selected{% endif %}>{{ choice.1 }}</option>#}
+                    {#                                                {% endfor %}#}
+                    {#                                            </select>#}
+                    {#                                            {% if cfform.division.errors %}#}
+                    {#                                                {% for error in cfform.division.errors %}#}
+                    {#                                                    <div class="invalid-feedback">{{ error }}</div>#}
+                    {#                                                {% endfor %}#}
+                    {#                                            {% endif %}#}
+                    {#                                        </div>#}
+                    {#                                    </div>#}
+                    {#                                    <div class="form-group row">#}
+                    {#                                        <div class="col-md-12">#}
+                    {#                                            <label for="{{ cfform.department.id_for_label }}">{{ cfform.department.label }}</label>#}
+                    {#                                            <select name="{{ cfform.department.name }}" id="{{ cfform.department.id_for_label }}"#}
+                    {#                                                    class="form-control{% if cfform.department.errors %} is-invalid{% endif %}"#}
+                    {#                                                    required>#}
+                    {#                                                {% for choice in cfform.department.field.choices %}#}
+                    {#                                                    <option value="{{ choice.0 }}"{% if cfform.department.value == choice.0 %}#}
+                    {#                                                            selected{% endif %}>{{ choice.1 }}</option>#}
+                    {#                                                {% endfor %}#}
+                    {#                                            </select>#}
+                    {#                                            {% if cfform.department.errors %}#}
+                    {#                                                {% for error in cfform.department.errors %}#}
+                    {#                                                    <div class="invalid-feedback">{{ error }}</div>#}
+                    {#                                                {% endfor %}#}
+                    {#                                            {% endif %}#}
+                    {#                                        </div>#}
+                    {#                                    </div>#}
+                    {#                                    <div class="form-group row">#}
+                    {#                                        <div class="col-md-12">#}
+                    {#                                            <label for="{{ cfform.branch.id_for_label }}">{{ cfform.branch.label }}</label>#}
+                    {#                                            <select name="{{ cfform.branch.name }}" id="{{ cfform.branch.id_for_label }}"#}
+                    {#                                                    class="form-control{% if cfform.branch.errors %} is-invalid{% endif %}"#}
+                    {#                                                    required>#}
+                    {#                                                {% for choice in cfform.branch.field.choices %}#}
+                    {#                                                    <option value="{{ choice.0 }}"{% if cfform.branch.value == choice.0 %}#}
+                    {#                                                            selected{% endif %}>{{ choice.1 }}</option>#}
+                    {#                                                {% endfor %}#}
+                    {#                                            </select>#}
+                    {#                                            {% if cfform.branch.errors %}#}
+                    {#                                                {% for error in cfform.branch.errors %}#}
+                    {#                                                    <div class="invalid-feedback">{{ error }}</div>#}
+                    {#                                                {% endfor %}#}
+                    {#                                            {% endif %}#}
+                    {#                                        </div>#}
+                    {#                                    </div>#}
+                    {#                                    <div class="form-group row w-100">#}
+                    {#                                        <button class="btn btn-main" type="submit">Apply</button>#}
+                    {#                                    </div>#}
+                    {#                                </form>#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if results %}
+<!-- Table of results -->
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="card">
+                <div class="card-header secondary">
+                    <h2>Results</h2>
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Employee</th>
+                                    <th>Email</th>
+                                    <th>Claim Date</th>
+                                    <th>Claim Amount</th>
+                                    <th>Claim Status</th>
+                                    <th>Claim Category</th>
+                                    {#                                    <th>Branch</th>#}
+                                    {#                                    <th>Claim</th>#}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {% for claim in results %}
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ claim.employee }}</td>
+                                    <td>{{ claim.employee.email }}</td>
+                                    <td>{{ claim.claim_date }}</td>
+                                    <td>{{ claim.claim_amount }}</td>
+                                    <td>{{ claim.get_claim_status_display }}</td>
+                                    <td>{{ claim.get_category_display|default:'None' }}</td>
+                                    {#                                    <td>{{ employee.userprofile.branch }}</td>#}
+                                    {#                                    <td>#}
+                                    {#                                        <a href="{% url '#' employee.pk %}">#}
+                                    {#                                            View#}
+                                    {#                                        </a>#}
+                                    {#                                    </td>#}
+                                    {% endfor %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<!-- :( -->
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10 col-md-offset-1">
+            <p class="text-muted text-center"><em>No results to show.</em></p>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

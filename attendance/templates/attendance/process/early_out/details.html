@@ -1,0 +1,129 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Attendance > Early Out > Details{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Details of Early Out Entry</h2>
+                </div>
+            </div>
+            {% if info %}
+            <div class='card'>
+                <div class="card-block border-1">
+                    <div class="row">
+                        <div class="col-6" style="border-right: 1px solid #ccc;">
+                            <div class="employee-wrap p-4">
+                                <h2>{{ info.name }}</h2>
+                                <p>{{ info.designation|default_if_none:'' }}</p>
+                                <p>Employee ID: {{ info.employee_id }}</p>
+                                <p>Schedule Type: {{ info.schedule_type.get_schedule_type_display }}</p>
+                                <p>Company: {{ info.company|default_if_none:'' }}</p>
+                                <p>Division: {{ info.division|default_if_none:'' }}</p>
+                                <p>Department: {{ info.department|default_if_none:'' }}</p>
+                                <p>Business Unit: {{ info.business_unit|default_if_none:'' }}</p>
+                                <p>Project: {{ info.project|default_if_none:'' }}</p>
+                            </div>
+                        </div>
+                        {% if early_list %}
+                        <div class="col-6">
+                            <table class="table table-hover" id="datatable">
+                                <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">No. of early out applied</th>
+                                        <td>{{ early_list.applied }}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">Approved</th>
+                                        <td>{{ early_list.approved }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Declined</th>
+                                        <td>{{ early_list.declined }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Pending</th>
+                                        <td>{{ early_list.pending }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% if early_apply %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Last Early Out Applied</h2>
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="datatable">
+                            <thead>
+                                <tr class="selectable">
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Early Out Time</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ early_apply.out_date|date:'d/m/Y' }}</td>
+                                    <td>{{ early_apply.out_time|date:'h:i A' }}</td>
+                                    <td>{{ duration }}</td>
+                                    <td>{{ early_apply.status }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer secondary">
+                    <a href="{% url 'beehive_admin:attendance:early_out_individual_list' employee %}">Show
+                        All Early Out History</a>
+                </div>
+            </div>
+            {% endif %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Early Out Details</h2>
+                </div>
+                <div class="card-block">
+                    {% if early_info %}
+                        <div>
+                            <p>Entry Date : {{ early_info.out_date|date:'M d, Y' }}</p>
+                            <p>Entry Out Time : {{ early_info.out_time|date:'h:i A' }}</p>
+                            <p>Duration : {{ early_info.duration }} </p>
+                            <p>Application Date & Time : {{ early_info.created_at|date:'M d, Y' }}</p>
+                            <p>Reason of Early Out : {{ early_info.reason }}</p>
+                            {% if early_info.attachment %}
+                                <p>Attachment : {{ early_info.attachment }} <a href="{{ early_info.attachment_url }}">View</a></p>
+                            {% endif %}
+                            <p>Status : {{ early_info.status }}</p>
+                        </div>
+                    {% endif %}
+                    <br>
+                    {% if comment %}
+                        <h2>Comments:</h2>
+                        {% for obj in comment %}
+                            <h3>{{ obj.user }}, {{ obj.user.user_job_information.latest.designation.name|default_if_none:'' }}, {{ obj.created_at }} </h3>
+                            <p>{{ obj.comment }}</p>
+                            <hr>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="card-footer"> <a class="btn btn-main" href="{% url 'beehive_admin:attendance:early_out_application_list' %}">Go Back</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

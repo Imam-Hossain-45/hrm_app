@@ -1,0 +1,99 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Adjustment{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header secondary card-box">
+                        <div class="card-title">
+                            <p>{{ object_list.employee }}</p>
+                            <h2>{{ object_list.employee.employee_job_information.last.designation|default_if_none:'' }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if object_list %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header secondary card-box">
+                            <div class="card-title">
+                                <h2>Salary Breakdown: {{ object_list.start_date }} to {{ object_list.end_date }}</h2>
+                            </div>
+                        </div>
+
+                        <div class="card-block">
+                            <form method="POST" novalidate>
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr class="selectable">
+                                                <th scope="col">Earning Component</th>
+                                                <th scope="col">Amount (BDT)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for obj in earning_component %}
+                                                <tr>
+                                                    <td>{{ obj.name }}</td>
+                                                    <td><input type="number" name="{{ obj.html_name }}"
+                                                               value="{% if obj.value != '' %}{{ obj.value }}{% endif %}"
+                                                               {% if obj.condition_type != 'manual-entry' %}readonly{% endif %}>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td>Total Earning</td>
+                                                <th>{{ object_list.total_earning }}</th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr class="selectable">
+                                                <th scope="col">Deduction Component</th>
+                                                <th scope="col">Amount (BDT)</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for obj in deduction_component %}
+                                                <tr>
+                                                    <td>{{ obj.name }}</td>
+                                                    <td><input type="number" name="{{ obj.html_name }}"
+                                                               value="{% if obj.value != '' %}{{ obj.value }}{% endif %}"
+                                                               {% if obj.condition_type != 'manual-entry' %}readonly{% endif %}>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            <tr>
+                                                <td>Total Deduction</td>
+                                                <th>{{ object_list.total_deduction }}</th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="form-group w-100">
+                                    <div class="col-md-6">Net Earning</div>
+                                    <div class="col-md-6">{{ object_list.net_earning }}</div>
+                                </div>
+                                <div class="form-group w-100">
+                                    <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:salary_adjustment' %}">Cancel</a>
+                                    <button type="submit" class="btn btn-main pull-right" name="form1">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

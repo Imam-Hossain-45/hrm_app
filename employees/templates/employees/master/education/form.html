@@ -1,0 +1,173 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ education_form.degree.id_for_label }}">{{ education_form.degree.label }}<span>*</span></label>
+            <input type="text" name="{{ education_form.degree.name }}" class="form-control{% if education_form.degree.errors %} is-invalid{% endif %}" id="{{ education_form.degree.id_for_label }}" value="{{ education_form.degree.value|default_if_none:'' }}">
+            {% if education_form.degree.errors %}
+            {% for error in education_form.degree.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ education_form.university.id_for_label }}">{{ education_form.university.label }}<span>*</span></label>
+            <input type="text" name="{{ education_form.university.name }}" class="form-control{% if education_form.university.errors %} is-invalid{% endif %}" id="{{ education_form.university.id_for_label }}" value="{{ education_form.university.value|default_if_none:'' }}">
+            {% if education_form.university.errors %}
+            {% for error in education_form.university.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ education_form.subject.id_for_label }}">{{ education_form.subject.label }}<span>*</span></label>
+            <input type="text" name="{{ education_form.subject.name }}" class="form-control{% if education_form.subject.errors %} is-invalid{% endif %}" id="{{ education_form.subject.id_for_label }}" value="{{ education_form.subject.value|default_if_none:'' }}">
+            {% if education_form.subject.errors %}
+            {% for error in education_form.subject.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ education_form.year_of_completion.id_for_label }}">{{ education_form.year_of_completion.label }}</label>
+            <select name="{{ education_form.year_of_completion.name }}" class="form-control{% if education_form.year_of_completion.errors %} is-invalid{% endif %}" id="{{ education_form.year_of_completion.id_for_label }}">
+                {% for year_of_completion in education_form.year_of_completion %}
+                {{ year_of_completion }}
+                {% endfor %}
+            </select>
+            {% if education_form.year_of_completion.errors %}
+            {% for error in education_form.year_of_completion.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="{{ education_form.result_type.id_for_label }}">{{ education_form.result_type.label }}</label>
+                            <select name="{{ education_form.result_type.name }}" class="form-control{% if education_form.result_type.errors %} is-invalid{% endif %}" id="{{ education_form.result_type.id_for_label }}">
+                                {% for result_type in education_form.result_type %}
+                                {{ result_type }}
+                                {% endfor %}
+                            </select>
+                            {% if education_form.result_type.errors %}
+                            {% for error in education_form.result_type.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ education_form.result_of_gpa.id_for_label }}"></label>
+                                <input type="text" name="{{ education_form.result_of_gpa.name }}" class="form-control{% if education_form.result_of_gpa.errors %} is-invalid{% endif %}" id="{{ education_form.result_of_gpa.id_for_label }}" value="{{ education_form.result_of_gpa.value|default_if_none:'' }}">
+                                {% if education_form.result_of_gpa.errors %}
+                                {% for error in education_form.result_of_gpa.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="result-gpa">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ education_form.out_of.id_for_label }}">{{ education_form.out_of.label }}<span>*</span></label>
+                                <select name="{{ education_form.out_of.name }}" class="form-control{% if education_form.out_of.errors %} is-invalid{% endif %}" id="{{ education_form.out_of.id_for_label }}">
+                                    {% for out_of in education_form.out_of %}
+                                    {{ out_of }}
+                                    {% endfor %}
+                                </select>
+                                {% if education_form.out_of.errors %}
+                                {% for error in education_form.out_of.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ education_form.grade.id_for_label }}">{{ education_form.grade.label }}<span>*</span></label>
+                                <select name="{{ education_form.grade.name }}" class="form-control{% if education_form.grade.errors %} is-invalid{% endif %}" id="{{ education_form.grade.id_for_label }}">
+                                    {% for grade in education_form.grade %}
+                                    {{ grade }}
+                                    {% endfor %}
+                                </select>
+                                {% if education_form.grade.errors %}
+                                {% for error in education_form.grade.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-division">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ education_form.result_of_division.id_for_label }}">{{ education_form.result_of_division.label }}<span>*</span></label>
+                                <select name="{{ education_form.result_of_division.name }}" class="form-control{% if education_form.result_of_division.errors %} is-invalid{% endif %}" id="{{ education_form.result_of_division.id_for_label }}">
+                                    {% for result_of_division in education_form.result_of_division %}
+                                    {{ result_of_division }}
+                                    {% endfor %}
+                                </select>
+                                {% if education_form.result_of_division.errors %}
+                                {% for error in education_form.result_of_division.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ education_form.marks.id_for_label }}">{{ education_form.marks.label }}<span>*</span></label>
+                                <input type="number" name="{{ education_form.marks.name }}" class="form-control{% if education_form.marks.errors %} is-invalid{% endif %}" id="{{ education_form.marks.id_for_label }}" value="{{ education_form.marks.value|default_if_none:'' }}">
+                                {% if education_form.marks.errors %}
+                                {% for error in education_form.marks.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ education_form.certificate.id_for_label }}">{{ education_form.certificate.label }}</label>
+            {% if education_form.certificate.value %}
+            Currently: <a href="{{ education_form.certificate.value.url }}">{{ education_form.certificate.value.url }}</a><br>
+            <input id="certificate-clear_id" name="certificate-clear" type="checkbox" style="display: inline-block;">
+            <label for="certificate-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ education_form.certificate.name }}" class="form-control{% if education_form.certificate.errors %} is-invalid{% endif %}" id="{{ education_form.certificate.id_for_label }}" accept="image/">
+            {% if education_form.certificate.errors %}
+            {% for error in education_form.certificate.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

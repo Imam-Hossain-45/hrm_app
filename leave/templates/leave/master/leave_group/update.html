@@ -1,0 +1,67 @@
+
+{% extends "layouts/master.html" %}
+
+{% block title %}Leave > Leave Group > Update{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Leave Group</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        {% include 'leave/master/leave_group/form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main b-none"
+                                   href="{% url 'beehive_admin:leave:leave_group_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main" name="form1">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Leave Settings of this Group</p>
+                </div>
+                <div class="card-block d-flex">
+                    <!-- Nav tabs -->
+                    <ul class="nav flex-column nav-pills verticle-nav" role="tablist" style="">
+                        {% for data in form.instance.leave.all %}
+                            <li class="nav-item ">
+                                <a class="nav-link{% with data.id|stringformat:"i" as data_id %}{% if "menu_"|add:data_id == active_tab %} active show {% endif %}{% endwith %}" data-toggle="tab" href="#menu_{{ data.id }}">{{ data.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="width: 80%; padding-left: 1.5rem;">
+                        {% for form_data in settings_form %}
+                            {% for data in form.instance.leave.all %}
+                                {% if data.id|stringformat:"i" == form_data.prefix %}
+                                    <div id="menu_{{ form_data.prefix }}" class="container tab-pane fade{% with data.id|stringformat:"i" as data_id %}{% if "menu_"|add:data_id == active_tab %} active show {% endif %}{% endwith %}"><br>
+                                        <form method="POST" novalidate>
+                                            {% csrf_token %}
+                                            {% include 'leave/master/leave_group/leave_settings_form.html' %}
+                                            <input type="hidden" name="form_name" value="{{ form_data.prefix }}">
+                                            <div class="form-group w-100 text-right mt-5">
+                                                <button type="submit" class="btn btn-main pull-right" name="{{ form_data.prefix }}">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Attendance and Leave{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Employee Master</p>
+                    <h2>Attendance and Leave</h2>
+                </div>
+                <div class="card-block">
+                    <div class="card-header secondary border-0">
+                        <h2>Attendance</h2>
+                    </div>
+                    <form method="POST" class="mw-initial" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/attendance_&_leave/attendance_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form1">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Leave</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/attendance_&_leave/leave_form.html' %}
+                        {% if leave_list %}
+                        <p>Leave Breakdown</p>
+                        {% include 'employees/master/attendance_&_leave/leave_list.html' %}
+                        {% endif %}
+                        {% include 'employees/master/attendance_&_leave/others_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form2">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

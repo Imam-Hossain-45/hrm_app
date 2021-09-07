@@ -1,0 +1,63 @@
+{% load index %}
+<div class="col-md-6">
+    <div class="form-group w-100">
+        <label for="{{ form.holiday_group.id_for_label }}">{{ form.holiday_group.label }}</label>
+        <select name="{{ form.holiday_group.name }}" id="{{ form.holiday_group.id_for_label }}"
+                class="form-control{% if form.holiday_group.errors %} is-invalid{% endif %} label selection fluid dropdown">
+            {% for holiday_group in form.holiday_group %}
+                {{ holiday_group }}
+            {% endfor %}
+        </select>
+
+        {% if form.holiday_group.errors %}
+            {% for error in form.holiday_group.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group calendar">
+        <label for="{{ form.effective_start_date.id_for_label }}">{{ form.effective_start_date.label }}<span>*</span></label>
+        <input type="date" name="{{ form.effective_start_date.name }}" id="{{ form.effective_start_date.id_for_label }}"
+               class="form-control{% if form.effective_start_date.errors %} is-invalid{% endif %}"
+               value="{% if form.effective_start_date.value|get_date_type == 'str' %}{{ form.effective_start_date.value }}{% else %}{{ form.effective_start_date.value|date:'Y-m-d' }}{% endif %}">
+        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+        {% if form.effective_start_date.errors %}
+            {% for error in form.effective_start_date.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group calendar">
+        <label for="{{ form.effective_end_date.id_for_label }}">{{ form.effective_end_date.label }}</label>
+        <input type="date" name="{{ form.effective_end_date.name }}" id="{{ form.effective_end_date.id_for_label }}"
+               class="form-control{% if form.effective_end_date.errors %} is-invalid{% endif %}"
+               value="{% if form.effective_end_date.value|get_date_type == 'str' %}{{ form.effective_end_date.value }}{% else %}{{ form.effective_end_date.value|date:'Y-m-d' }}{% endif %}">
+        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+        {% if form.effective_end_date.errors %}
+            {% for error in form.effective_end_date.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="form-group  m-checkbox-list">
+        <label class="m-checkbox m-checkbox--bold"
+               for="{{ form.workday.id_for_label }}">{{ form.workday.label }}</label>
+        {% for item in form.workday %}
+            {{ item }}
+        {% endfor %}
+
+        {% if form.workday.errors %}
+            {% for error in form.workday.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>

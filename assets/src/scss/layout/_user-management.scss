@@ -1,0 +1,33 @@
+.role-data {
+  background: #f1f1f1;
+}
+
+.m-menu__ver-arrow:before {
+  font-size: 12px;
+}
+
+.rotate {
+  transform: rotateZ(90deg);
+}
+
+.employee-select-box {
+  display: none;
+}
+
+.reset-password {
+  color: #716aca;
+
+  &:hover {
+    color: #000;
+    text-decoration: none;
+  }
+}
+
+.workflow {
+  background: #f4f4f4;
+  padding: 1rem;
+  flex: 1;
+  width: 48%;
+  margin: 0 1%;
+  ;
+}

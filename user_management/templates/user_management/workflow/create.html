@@ -1,0 +1,127 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Add a new Level{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>User Management</p>
+                    <h2>Workflow</h2>
+                </div>
+                <div class="card-block">
+                    <form class="mw-initial" method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form.management_form }}
+                        {{ form.non_form_errors }}
+
+                        <div>
+                            {% include 'user_management/workflow/form.html' %}
+                        </div>
+
+                        <div class="form-group text-right mt-5">
+                            <a class="btn btn-main  b-none" href="{% url 'user_management:workflows_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Variation</th>
+                                            <th scope="col">Initiator</th>
+                                            <th scope="col">Level</th>
+                                            <th scope="col">Approved By</th>
+                                            <th scope="col">Notified By</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for variation in workflow.workflowvariation_set.all %}
+                                        <tr>
+                                            <td>Variation {{ forloop.counter }}</td>
+                                            <td>
+                                                {% for var_init in variation.workflowvariationinitiator_set.all %}
+                                                {{ var_init.initiator }}{% if not forloop.last %},{% endif %}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for level in variation.workflowvariationlevel_set.all %}
+                                                <p>Level {{ level.level }}</p>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for level in variation.workflowvariationlevel_set.all %}
+                                                {% for approval in level.workflowapproval_set.all %}
+                                                <p>{{ approval.approved_by }} {{ approval.next_approval_operator }}</p>
+                                                {% endfor %}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% for level in variation.workflowvariationlevel_set.all %}
+                                                {% for notify in level.workflownotificationrecipient_set.all %}
+                                                <p>{{ notify.notification_recipient.all|join:", " }}</p>
+                                                {% endfor %}
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                {% if request.user.is_superuser or 'change_workflow' in permissions %}
+                                                <a title="edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="{% url 'user_management:workflows_update' workflow.content_type.id variation.id %}">
+                                                    <i class="la la-edit"></i>
+                                                </a>
+                                                {% endif %}
+
+                                                {% if request.user.is_superuser or 'delete_workflow' in permissions %}
+                                                <div class="modal fade" id="confirmDeleteModal{{ variation.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <form action="{% url 'user_management:workflows_delete' workflow.content_type.id variation.id %}" method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="modal-content">
+                                                                <div class="modal-body confirm-delete">
+                                                                    Are you sure you want to delete variation {{ forloop.counter }} of {{ workflow.content_type }}?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                                        Cancel
+                                                                    </button>
+                                                                    <input type="submit" class="btn btn-danger" value="Delete" name="delete">
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <a href="javascript:void(0)" title="delete" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline" data-toggle="modal" data-target="#confirmDeleteModal{{ variation.id }}" id="deleteButton{{ variation.id }}">
+                                                    <i class="la la-times-circle-o"></i>
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

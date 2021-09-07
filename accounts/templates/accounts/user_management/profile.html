@@ -1,0 +1,74 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}{{ member.first_name|default_if_none:member.email }}
+    {{ member.last_name|default_if_none:'' }}{% endblock %}
+{% load static %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            {% if member.userprofile.profile_picture %}
+                <!--img-rounded, img-circle, img-thumbnail-->
+                <img class="rounded-circle" src="{{ member.userprofile.profile_picture.url }}"
+                     height="140" width="130">
+            {% endif %}
+            <p></p>
+            <h4><b><u>{{ member.first_name|default_if_none:member.email }}
+                {{ member.last_name|default_if_none:'' }}</u></b></h4>
+            <p>
+                <a class="btn btn-info" href="{% url 'beehive_admin:user_update' pk=member.id %}">Edit Profile</a>
+                {% if request.user.is_superuser or request.user.admin and 'change_user' in permissions %}
+                <a class="btn btn-danger" href="{% url 'beehive_admin:user_change_password' member.id %}">Change Password</a>
+                {% endif %}
+                <a class="btn btn-danger" href="{% url 'beehive_admin:user_delete' pk=member.id %}">Delete</a>
+            </p>
+            <ul class="list-group"><p><b><u>Personal Info:</u></b></p>
+                <li class="list-group-item"><b>Name:</b>
+                    {{ member.first_name|default_if_none:'--' }} {{ member.last_name|default_if_none:'' }}</li>
+                <li class="list-group-item"><b>Gender: </b>{{ member.userprofile.gender }}</li>
+                <li class="list-group-item"><b>Blood Group: </b>{{ member.userprofile.blood_group }}</li>
+                <li class="list-group-item"><b>Blood Group: </b>{{ member.userprofile.religion }}</li>
+                <li class="list-group-item"><b>Date of Birth: </b>{{ member.userprofile.date_of_birth }}</li>
+                <li class="list-group-item"><b>NID: </b>
+                    {% if member.userprofile.nid %}
+                        <a href="{% get_media_prefix %}{{ member.userprofile.nid }}">
+                            {{ member.userprofile.nid }}</a>
+                    {% else %}
+                        Not Updated Yet
+                    {% endif %}
+                </li>
+            </ul>
+
+            <p></p>
+            <ul class="list-group"><p><b><u>Office Info:</u></b></p>
+                <li class="list-group-item"><b>Date of Joining: </b>{{ member.userprofile.date_of_joining }}</li>
+                <li class="list-group-item"><b>Division: </b>{{ member.userprofile.division }}</li>
+                <li class="list-group-item"><b>Department: </b>{{ member.userprofile.department }}</li>
+                <li class="list-group-item"><b>Designation: </b>{{ member.userprofile.designation }}</li>
+                <li class="list-group-item"><b>Grade: </b>{{ member.userprofile.grade }}</li>
+                <li class="list-group-item"><b>Pay Scale: </b>{{ member.userprofile.pay_scale }}</li>
+                <li class="list-group-item"><b>Category: </b>{{ member.userprofile.category }}</li>
+                <li class="list-group-item"><b>Job Status: </b>{{ member.userprofile.job_status }}</li>
+                <li class="list-group-item"><b>Report To: </b>{{ member.userprofile.report_to }}</li>
+                <li class="list-group-item"><b>Late Policy: </b>{{ member.userprofile.late_policy }}</li>
+                <li class="list-group-item"><b>Leave Group: </b>{{ member.userprofile.leave_group }}</li>
+                <li class="list-group-item"><b>Policy Group: </b>{{ member.userprofile.policy_group }}</li>
+                <li class="list-group-item"><b>Salary: </b>{{ member.userprofile.salary }}</li>
+                <li class="list-group-item"><b>RFID Number: </b>{{ member.userprofile.rfid }}</li>
+            </ul>
+
+            <p></p>
+            <ul class="list-group"><p><b><u>Contact Info:</u></b></p>
+                <li class="list-group-item"><b>Email: </b>{{ member.email }}</li>
+                <li class="list-group-item"><b>Work Phone: </b>{{ member.userprofile.work_phone }}</li>
+                <li class="list-group-item"><b>Personal Phone: </b>{{ member.userprofile.personal_phone }}</li>
+                <li class="list-group-item"><b>Address Line 1: </b>{{ member.userprofile.address_line1 }}</li>
+                <li class="list-group-item"><b>Address Line 2: </b>{{ member.userprofile.address_line2 }}</li>
+                <li class="list-group-item"><b>State: </b>{{ member.userprofile.state }}</li>
+                <li class="list-group-item"><b>City: </b>{{ member.userprofile.city }}</li>
+                <li class="list-group-item"><b>Zip Code: </b>{{ member.userprofile.zip_code }}</li>
+                <li class="list-group-item"><b>Country: </b>{{ member.userprofile.country }}</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

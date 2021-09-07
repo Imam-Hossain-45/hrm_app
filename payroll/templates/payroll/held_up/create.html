@@ -1,0 +1,80 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Held Up > Create{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="" novalidate autocomplete="off">
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }} :</label>
+                                <select name="{{ form.employee.name }}" id="{{ form.employee.id_for_label }}" class="form-control{% if form.employee.errors %} is-invalid{% endif %}">
+                                    {% for emp in form.employee %}
+                                    {{ emp }}
+                                    {% endfor %}
+                                </select>
+                                {% if form.employee.errors %}
+                                {% for error in form.employee.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.from_date.id_for_label }}">{{ form.from_date.label }} :</label>
+                                <input type="date" name="{{ form.from_date.name }}" id="{{ form.from_date.id_for_label }}" class="form-control{% if form.from_date.errors %} is-invalid{% endif %}" value="{{ form.from_date.value|default_if_none:'' }}">
+                                {% if form.from_date.errors %}
+                                {% for error in form.from_date.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.to_date.id_for_label }}">{{ form.to_date.label }} :</label>
+                                <input type="date" name="{{ form.to_date.name }}" id="{{ form.to_date.id_for_label }}" class="form-control{% if form.to_date.errors %} is-invalid{% endif %}" value="{{ form.to_date.value|default_if_none:'' }}">
+                                {% if form.to_date.errors %}
+                                {% for error in form.to_date.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.held_up_types.id_for_label }}">{{ form.held_up_types.label }}</label>
+                                {% for item in form.held_up_types %}
+                                {{ item }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.remarks.id_for_label }}">{{ form.remarks.label }} :</label>
+                                <input type="text" name="{{ form.remarks.name }}" id="{{ form.remarks.id_for_label }}" class="form-control{% if form.remarks.errors %} is-invalid{% endif %}" value="{{ form.remarks.value|default_if_none:'' }}">
+                                {% if form.remarks.errors %}
+                                {% for error in form.remarks.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-main float-right">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% for form_data in fax_form %}
+<div class="col-md-6 mb-3">
+    <div class="form-group w-100" style="position: relative;">
+        <label for="{{ form_data.address.id_for_label }}">Fax: </label>
+
+        <div class="main">
+            <input type="text" name="{{ form_data.address.html_name }}" id="{{ form_data.address.id_for_label }}" class="form-field form-control {% if form_data.address.errors %} is-invalid{% endif %}" {% if form_data.address.value != None %}value="{{ form_data.address.value }}" {% endif %}>
+        </div>
+
+
+        <div class="d-flex clone-btn-wrapper" style="bottom: 4px; left: 310px; right: auto;">
+            <div class="text-center">
+                <a href="javascript:;" class="clone-field"></a>
+            </div>
+
+            <div class="text-center">
+                <a href="javascript:;" class="remove-field"></a>
+            </div>
+        </div>
+
+        {% if form_data.address.errors %}
+        {% for error in form_data.address.errors %}
+        {{ error }}
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="form-group w-100">
+        <input type="hidden" name="{{ form_data.status.html_name }}" value="active">
+    </div>
+
+    {% if form_type == 'update' %}
+    <div class="form-group switch d-none">
+        <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+            <label for="{{ form_data.delete.id_for_label }}">{{ form_data.delete.label }}
+                <input type="checkbox" name="{{ form_data.delete.html_name }}" id="{{ form_data.delete.id_for_label }}" {% if form_data.delete.value %}checked{% endif %}>
+                <span></span>
+            </label>
+        </span>
+
+        {% if form_data.delete.errors %}
+        {% for error in form_data.delete.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+    <div>
+        <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+    </div>
+</div>
+{% endfor %}
+
+{{ fax_form.management_form }}

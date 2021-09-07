@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ favourite_form.preferred_food.id_for_label }}">{{ favourite_form.preferred_food.label }}</label>
+            <p>Write food name separate with comma (,)</p>
+            <textarea name="{{ favourite_form.preferred_food.name }}" class="form-control{% if favourite_form.preferred_food.errors %} is-invalid{% endif %}" id="{{ favourite_form.preferred_food.id_for_label }}">{{ favourite_form.preferred_food.value|default:'' }}</textarea>
+            {% if favourite_form.preferred_food.errors %}
+            {% for error in favourite_form.preferred_food.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ favourite_form.hobby.id_for_label }}">{{ favourite_form.hobby.label }}</label>
+            <p>Write hobby separate with comma (,)</p>
+            <textarea name="{{ favourite_form.hobby.name }}" class="form-control{% if favourite_form.hobby.errors %} is-invalid{% endif %}" id="{{ favourite_form.hobby.id_for_label }}">{{ favourite_form.hobby.value|default:'' }}</textarea>
+            {% if favourite_form.hobby.errors %}
+            {% for error in favourite_form.hobby.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Early Out > List{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>{{ job.employee }}</h2>
+                        <p>{{ job.designation.name }}</p>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">Application Date</th>
+                                        <th scope="col">Applied For (Date & Early out Time)</th>
+                                        <th scope="col">Out Time</th>
+                                        <th scope="col">Duration</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if objects %}
+                                            {% for obj in early_out_application %}
+                                                <tr>
+                                                    <td>{{ obj.created|date:'d/m/Y' }}</td>
+                                                    <td>{{ obj.out_date|date:'d/m/Y' }} {{ obj.out_time|date:'h:i A' }}</td>
+                                                    <td>{{ obj.duration }}</td>
+                                                    <td>{{ obj.status }}</td>
+                                                    {% if obj.status == 'Pending' %}
+                                                    <td>
+                                                        {% if request.user.is_superuser or 'change_earlyapplication' in permissions %}
+                                                            <a href="{% url 'beehive_admin:attendance:early_out_new_edit' obj.id obj.employee_id %}">
+                                                                <i class="la la-edit"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </td>
+                                                    {% else %}
+                                                    <td>
+                                                        {% if request.user.is_superuser or 'view_earlyapplication' in permissions %}
+                                                            <a href="{% url 'beehive_admin:attendance:early_out_details' obj.id obj.employee_id %}">
+                                                                <i class="la la-eye"></i>
+                                                            </a>
+                                                        {% endif %}
+                                                    </td>
+                                                {% endif %}
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="5">No data found.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if early_out_application.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if early_out_application.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ early_out_application.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == early_out_application.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ early_out_application.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if early_out_application.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ early_out_application.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

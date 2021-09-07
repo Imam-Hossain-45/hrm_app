@@ -1,0 +1,82 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Attendance{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Self panel > Attendance</p>
+                    <h2>Remote Check In/Out</h2>
+                </div>
+                <div class="card-block text-center">
+                    <h2 class="text-bold mb-3">{% now 'j M Y, h:i A' %}</h2>
+
+                    <form id="checkin-checkout-form" method="POST">
+                        {% csrf_token %}
+                        {% if attendance_data.in_time and not attendance_data.out_time %}
+                        <button type="button" class="btn btn-main btn-large" data-toggle="modal" data-target="#attendanceModal">
+                            Check Out
+                        </button>
+                        {% else %}
+                        <button type="button" class="btn btn-main btn-large" data-toggle="modal" data-target="#attendanceModal">
+                            Check In
+                        </button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="attendanceModal" tabindex="-1" role="dialog" aria-labelledby="attendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card text-center p-5">
+                            {% csrf_token %}
+                            {% if attendance_data.in_time and not attendance_data.out_time %}
+                            <h2>Are you going to Check Out?</h2>
+                            {% else %}
+                            <h2>Are you going to Check In?</h2>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-12 d-flex text-right justify-content-end">
+                        <button type="button" class="btn btn-main b-none" data-dismiss="modal">No</button>
+                        <form id="checkin-checkout-form" method="POST" style="margin-left: 0;">
+                            {% csrf_token %}
+                            {% if attendance_data.in_time and not attendance_data.out_time %}
+                            <input type="submit" name="check_out" value="Check Out" class="btn btn-dark">
+                            {% else %}
+                            <input type="submit" name="check_in" value="Check In" class="btn btn-dark">
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% comment %} <script>
+    $(document).ready(function () {
+        $('#checkin-checkout-form').submit(function (e) {
+            e.preventDefault();
+            alert('done');
+        });
+    });
+
+</script> {% endcomment %}
+{% endblock %}

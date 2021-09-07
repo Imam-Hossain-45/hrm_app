@@ -1,0 +1,99 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Leave{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        {% include 'layouts/event.html' %}
+
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <p>Self panel > Leave</p>
+                        <h2>Leave Apply</h2>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div>
+                                    <p>Date of Late: {{ late_info.date|date:'M d, Y' }}</p>
+                                    <p>Late Duration: {{ late_info.late_duration }}</p>
+                                    <p>Application Date & Time: {{ late_info.created_at|date:'M d, Y h:i A' }}</p>
+                                    <p>Reason of Late: {{ late_info.reason }}</p>
+
+                                    {% if late_info.attachment %}
+                                        <p>Attachment: {{ late_info.attachment }} <a href="{{ late_info.attachment_url }}">View</a></p>
+                                    {% endif %}
+
+                                    <p>Status: {{ late_info.get_status_display }}</p>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form method="POST" novalidate>
+                                            {% csrf_token %}
+                                            {% include 'attendance/process/late_approval/form.html' %}
+
+                                            {% if comments %}
+                                                {% for obj in comments %}
+                                                    <h2>{{ obj.user }}, {{ obj.user.user_job_information.latest.designation }}, {{ obj.created_at }} </h2>
+                                                    <p>{{ obj.comment }}</p>
+                                                    <hr>
+                                                {% endfor %}
+                                            {% endif %}
+
+                                            <div class="form-group row">
+                                                {% if late_info.status == 'pending' %}
+                                                    <div class="col">
+                                                        <a href="javascript:;" class="btn btn-main" onclick="document.getElementById('delete-late').submit()">Remove this late</a>
+                                                    </div>
+                                                {% endif %}
+
+                                                <div class="col text-right">
+                                                    <a href="{% url 'self_panel:late_status' %}">Cancel</a>
+                                                    <button type="submit" class="btn btn-main">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        {% if late_info.status == 'pending' %}
+                                            <form method="POST" id="delete-late" action="{% url 'self_panel:late_delete' pk %}">
+                                                {% csrf_token %}
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                {% comment %}<div class="table-responsive">
+                                    <table class="table table-hover" id="datatable">
+                                        <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Leave Type</th>
+                                            <th scope="col">Credit</th>
+                                            <th scope="col">Avail</th>
+                                            <th scope="col">Remaining</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for obj in leave_list %}
+                                            <tr>
+                                                <td>{{ obj.type }}</td>
+                                                <td>{{ obj.credit }}</td>
+                                                <td>{{ obj.avail }}</td>
+                                                <td>{{ obj.remaining }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>{% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

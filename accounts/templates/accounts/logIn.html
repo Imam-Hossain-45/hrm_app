@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Login</title>
+
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/dist/css/bootstrap.min.css' %}">
+
+    <link href="{% static 'dist/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <section class="user-section">
+        <div id="login" class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="login well well-sm">
+                        <div class="text-center img-wrapper">
+                            <img class="img-fluid" src="{% static 'img/logo_beehive.png' %}" alt="BeeHive Logo">
+
+                            {% if messages %}
+                            <div class="alert alert-danger">
+                                {% for message in messages %}
+                                <i class="fa fa-times-circle"></i> {{ message }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <form class="form-div" method="POST" novalidate>
+                            {% csrf_token %}
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+
+                                    <input type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" name="{{ form.email.name }}" placeholder="Email" required id="{{ form.email.id_for_label }}" autocomplete="new-email">
+
+                                    {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                    <p class="invalid-feedback">{{ error }}</p>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-12">
+                                    <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+
+                                    <input type="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}" name="{{ form.password.name }}" placeholder="Password" required id="{{ form.password.id_for_label }}" autocomplete="new-password">
+
+                                    {% if form.password.errors %}
+                                    {% for error in form.password.errors %}
+                                    <p class="invalid-feedback">{{ error }}</p>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if request.GET.next %}
+                            <input type="hidden" name="next" value="{{ request.GET.next }}">
+                            {% endif %}
+
+                            <div class='form-group login-wrap text-center'>
+                                <button type="submit" class='btn btn-main'>Log in</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

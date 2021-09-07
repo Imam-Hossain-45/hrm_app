@@ -1,0 +1,27 @@
+<div class="row align-items-center">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ email_form.official_email_ID.id_for_label }}">{{ email_form.official_email_ID.label }}</label>
+                    <input type="email" name="{{ email_form.official_email_ID.name }}" class="form-control{% if email_form.official_email_ID.errors %} is-invalid{% endif %}" id="{{ email_form.official_email_ID.id_for_label }}" {% if email_form.official_email_ID.value != None %}value="{{ email_form.official_email_ID.value }}" {% endif %}>
+                    {% if email_form.official_email_ID.errors %}
+                    {% for error in email_form.official_email_ID.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ email_form.personal_email_ID.id_for_label }}">{{ email_form.personal_email_ID.label }}</label>
+                    <input type="email" name="{{ email_form.personal_email_ID.name }}" class="form-control{% if email_form.personal_email_ID.errors %} is-invalid{% endif %}" id="{{ email_form.personal_email_ID.id_for_label }}" {% if email_form.personal_email_ID.value != None %}value="{{ email_form.personal_email_ID.value }}" {% endif %}>
+                    {% if email_form.personal_email_ID.errors %}
+                    {% for error in email_form.personal_email_ID.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>

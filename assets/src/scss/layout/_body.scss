@@ -1,0 +1,80 @@
+// Body
+//
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 14px !important;
+  margin: 0 auto;
+}
+
+body {}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include heading-font();
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+// iPhone/iPad style override
+input,
+button,
+textarea,
+input[type="text"],
+input[type="button"],
+button[type="button"],
+a[type="button"],
+input[type="submit"] {
+  // -webkit-appearance: none;
+  // -moz-appearance: none;
+  // appearance: none;
+  border-radius: 0;
+  -webkit-border-radius: 0px;
+}
+
+body.m-content--skin-light2 {
+  background: #fff;
+}
+
+
+h2.title-text {
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+// Header Sidebar toggle & Logo
+@include media("<lg") {
+  .m-stack.m-stack--general {
+  display: flex;
+  align-items: center;
+
+  .m-brand__logo-wrapper {
+    max-width: 90px;
+  }
+}
+}
+

@@ -1,0 +1,132 @@
+{% load index %}
+<table class="table table-hover">
+    <thead class="text-center">
+        <tr>
+            <th>Name of Family Member<span>*</span></th>
+            <th>Relation with Employee<span>*</span></th>
+            <th>DOB</th>
+            <th>Age</th>
+            <th>Gender<span>*</span></th>
+            <th>Employed</th>
+            <th>Dependent</th>
+        </tr>
+    </thead>
+    <tbody class="form-two">
+        {% for form_data in family_form %}
+        <tr class="item">
+            <td>
+                <input type="text" name="{{ form_data.name_of_family_member.html_name }}" id="{{ form_data.name_of_family_member.id_for_label }}" class="formset-field form-control {% if form_data.name_of_family_member.errors %} is-invalid{% endif %}" {% if form_data.name_of_family_member.value != None %}value="{{ form_data.name_of_family_member.value }}" {% endif %}>
+                {% if form_data.name_of_family_member.errors %}
+                {% for error in form_data.name_of_family_member.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.relationship_with_employee.html_name }}" id="{{ form_data.relationship_with_employee.id_for_label }}" class="formset-field form-control {% if form_data.relationship_with_employee.errors %} is-invalid{% endif %}" {% if form_data.relationship_with_employee.value != None %}value="{{ form_data.relationship_with_employee.value }}" {% endif %}>
+                {% if form_data.relationship_with_employee.errors %}
+                {% for error in form_data.relationship_with_employee.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <div class="calendar">
+                    <input type="date" name="{{ form_data.DOB.html_name }}" id="{{ form_data.DOB.id_for_label }}" class="formset-field form-control {% if form_data.DOB.errors %} is-invalid{% endif %}" value="{% if form_data.DOB.value|get_date_type == 'str' %}{{ form_data.DOB.value }}{% else %}{{ form_data.DOB.value|date:'Y-m-d' }}{% endif %}">
+                    <i class="m-menu__link-icon flaticon-calendar-1" style="top: 15%; left: 133px;"></i>
+                    {% if form_data.DOB.errors %}
+                    {% for error in form_data.DOB.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
+            </td>
+            <td>
+                <input type="number" name="{{ form_data.age.html_name }}" id="{{ form_data.age.id_for_label }}" class="formset-field form-control {% if form_data.age.errors %} is-invalid{% endif %}" {% if form_data.age.value != None %}value="{{ form_data.age.value }}" {% endif %}>
+                {% if form_data.age.errors %}
+                {% for error in form_data.age.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <select name="{{ form_data.gender.html_name }}" id="{{ form_data.gender.id_for_label }}" class="formset-field form-control {% if form_data.gender.errors %} is-invalid{% endif %}">
+                    {% for gender in form_data.gender %}
+                    {{ gender }}
+                    {% endfor %}
+                </select>
+                {% if form_data.gender.errors %}
+                {% for error in form_data.gender.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <select name="{{ form_data.employed.html_name }}" id="{{ form_data.employed.id_for_label }}" class="formset-field form-control {% if form_data.employed.errors %} is-invalid{% endif %}">
+                    {% for employed in form_data.employed %}
+                    {{ employed }}
+                    {% endfor %}
+                </select>
+                {% if form_data.employed.errors %}
+                {% for error in form_data.employed.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <select name="{{ form_data.dependent.html_name }}" id="{{ form_data.dependent.id_for_label }}" class="formset-field form-control {% if form_data.dependent.errors %} is-invalid{% endif %}">
+                    {% for dependent in form_data.dependent %}
+                    {{ dependent }}
+                    {% endfor %}
+                </select>
+                {% if form_data.dependent.errors %}
+                {% for error in form_data.dependent.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="v-middle m-100">
+                <input type="checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="clone-btn-wrapper d-flex" style="position: initial;">
+    <div class="ml-auto">
+        <a href="javascript:;" class="clone-row emergency-contact-add"></a>
+    </div>
+
+    <div class="">
+        <a href="javascript:;" class="remove-row emergency-contact-rem"></a>
+    </div>
+</div>
+
+{% if objects.paginator.num_pages > 1 %}
+    <nav aria-label="navigation" class="margin-lg margin-md">
+            <ul class="pagination d-flex justify-content-center">
+                {% if objects.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ objects.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for pg in page_range %}
+                    <li class="page-item">
+                        <a class="page-link {% if pg == objects.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ objects.current_page_number }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if objects.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ objects.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+{% endif %}
+
+{{ family_form.management_form }}

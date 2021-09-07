@@ -1,0 +1,65 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Category > List{% endblock %}
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="text-right">
+                <a href="{% url 'beehive_admin:payroll:claim_category_create' %}" class="btn btn-main m-0">+ Add</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>All Categories</h2>
+                        <p>View all claimable categories</p>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Active</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for category in categories %}
+                                        <tr>
+                                            <td>{{ category.name }}</td>
+                                            <td>
+                                                {% if category.active %}
+                                                <input type="checkbox" disabled checked>
+                                                {% else %}
+                                                <input type="checkbox" disabled>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a href="{% url "beehive_admin:payroll:claim_category_update" category.id %}">
+                                                    <i class="la la-edit"></i>
+                                                </a>
+
+                                                <a href="{% url "beehive_admin:payroll:claim_category_delete" category.id %}">
+                                                    <i class="la la-times-circle-o"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

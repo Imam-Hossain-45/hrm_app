@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" class="form-control{% if form.name.errors %} is-invalid{% endif %}" placeholder="Ex: Executive Leave" value="{{ form.name.value|default_if_none:'' }}">
+
+                {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.code.id_for_label }}">{{ form.code.label }}</label>
+                <input type="text" name="{{ form.code.name }}" id="{{ form.code.id_for_label }}" class="form-control{% if form.code.errors %} is-invalid{% endif %}" placeholder="Ex: EL01" value="{{ form.code.value|default_if_none:'' }}">
+
+                {% if form.code.errors %}
+                {% for error in form.code.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                <textarea type="text" cols="30" rows="5" name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="form-control{% if form.description.errors %} is-invalid{% endif %}" placeholder="Description about this leave">{{ form.description.value|default_if_none:'' }}</textarea>
+
+                {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-12 d-flex flex-column">
+                <label for="{{ form.leave.id_for_label }}">{{ form.leave.label }}</label>
+                {% for leave in form.leave %}
+                    <div class=" border-1 mb-3 mt-1 p-3">
+                    {{ leave }}
+                    </div>
+
+                {% endfor %}
+                {% if form.leave.errors %}
+                {% for error in form.leave.errors %}
+                <div class="text-danger">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group switch">
+            <div class="col-md-12">
+                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                    <label for="{{ form.status.id_for_label }}">{{ form.status.label }}
+                        <input type="checkbox" class="" name="{{ form.status.name }}" id="{{ form.status.id_for_label }}" {% if form.status.value %}checked="" {% endif %}>
+                        <span></span>
+                    </label>
+
+                    {% if form.status.errors %}
+                    {% for error in form.status.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

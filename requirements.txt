@@ -1,0 +1,22 @@
+Django==2.2.1
+django-cleanup==3.2.0
+django-countries==5.3.3
+django-crispy-forms==1.7.2
+django-environ==0.4.5
+django-mathfilters==0.4.0
+django-multiselectfield==0.1.8
+django-widget-tweaks==1.4.3
+mysql-connector-python==8.0.5
+Pillow==6.0.0
+python-dateutil==2.8.0
+pytz==2019.1
+six==1.12.0
+sqlparse==0.3.0
+text-unidecode==1.2
+xhtml2pdf==0.2.3
+openpyxl
+
+# # Package from an Azure Artifacts feed (Non-PyPI index)
+# --index-url https://CimbolicReleases:twarx6xqtobuyu7y4log5ldwnlisjvmhjny4mlheeclb2v4z4hua\
+# @pkgs.dev.azure.com/Cimplux/_packaging/CimbolicReleases/pypi/simple/
+# Cimbolic

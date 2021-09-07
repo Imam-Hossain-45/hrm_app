@@ -1,0 +1,59 @@
+<div class="row align-items-center">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ contact_form.official_cell_number.id_for_label }}">{{ contact_form.official_cell_number.label }}</label>
+                    <div class="input-group">
+                        <table class="table border-0" style="max-width: 300px;">
+                            <tr>
+                                <td class="border-0 pl-0 pr-0" style="width: 30%;"><select class="input-group-text" id="basic-addon3" name="official_cell_number_0" class="form-control{% if contact_form.official_cell_number.errors %} is-invalid{% endif %}" id="{{ contact_form.official_cell_number.id_for_label }}">
+                                        {% for choice in contact_form.dial_code.field.choices %}
+                                        <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == contact_form.official_cell_number.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    </select></td>
+                                <td class="border-0 pl-0" style="width: 70%;">
+                                    <div class="input-group-append">
+                                        <input type="number" name="official_cell_number_1" value="{{ contact_form.official_cell_number.value.1 }}" class="form-control{% if contact_form.official_cell_number.errors %} is-invalid{% endif %}">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {% if contact_form.official_cell_number.errors %}
+                    {% for error in contact_form.official_cell_number.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    <small class="" style="color: red">{{ error }}</small>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ contact_form.personal_cell_number.id_for_label }}">{{ contact_form.personal_cell_number.label }}</label>
+                    <div class="input-group">
+                        <table class="table border-0" style="max-width: 300px;">
+                            <tr>
+                                <td class="border-0 pl-0 pr-0" style="width: 30%;"><select class="input-group-text" id="basic-addon3" name="personal_cell_number_0" class="form-control{% if contact_form.personal_cell_number.errors %} is-invalid{% endif %}" id="{{ contact_form.personal_cell_number.id_for_label }}">
+                                        {% for choice in contact_form.dial_code.field.choices %}
+                                        <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == contact_form.personal_cell_number.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    </select></td>
+                                <td class="border-0 pl-0" style="width: 70%;">
+                                    <div class="input-group-append">
+                                        <input type="number" name="personal_cell_number_1" value="{{ contact_form.personal_cell_number.value.1 }}" class="form-control{% if contact_form.personal_cell_number.errors %} is-invalid{% endif %}">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {% if contact_form.personal_cell_number.errors %}
+                    {% for error in contact_form.personal_cell_number.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    <small class="" style="color: red">{{ error }}</small>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>

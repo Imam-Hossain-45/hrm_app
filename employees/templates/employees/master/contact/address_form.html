@@ -1,0 +1,251 @@
+<h2 class="mt-5">Present Address</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ address_form.present_address.id_for_label }}">{{ address_form.present_address.label }}<span>*</span></label>
+            <textarea name="{{ address_form.present_address.name }}" class="form-control{% if address_form.present_address.errors %} is-invalid{% endif %}" id="{{ address_form.present_address.id_for_label }}">{{ address_form.present_address.value|default:'' }}</textarea>
+            {% if address_form.present_address.errors %}
+            {% for error in address_form.present_address.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.present_country.id_for_label }}">{{ address_form.present_country.label }}<span>*</span></label>
+            <select name="{{ address_form.present_country.name }}" class="form-control{% if address_form.present_country.errors %} is-invalid{% endif %}" id="{{ address_form.present_country.id_for_label }}">
+                {% for country in address_form.present_country %}
+                {{ country }}
+                {% endfor %}
+            </select>
+            {% if address_form.present_country.errors %}
+            {% for error in address_form.present_country.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.present_state.id_for_label }}">{{ address_form.present_state.label }}<span>*</span></label>
+            <select name="{{ address_form.present_state.name }}" class="form-control{% if address_form.present_state.errors %} is-invalid{% endif %}" id="{{ address_form.present_state.id_for_label }}">
+                {% include 'employees/master/contact/present_state.html' %}
+            </select>
+            {% if address_form.present_state.errors %}
+            {% for error in address_form.present_state.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="test"></div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.present_city.id_for_label }}">{{ address_form.present_city.label }}<span>*</span></label>
+            <select name="{{ address_form.present_city.name }}" class="form-control{% if address_form.present_city.errors %} is-invalid{% endif %}" id="{{ address_form.present_city.id_for_label }}">
+                {% include 'employees/master/contact/present_city.html' %}
+            </select>
+            {% if address_form.present_city.errors %}
+            {% for error in address_form.present_city.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.present_thana.id_for_label }}">{{ address_form.present_thana.label }}</label>
+            <input type="text" name="{{ address_form.present_thana.name }}" class="form-control{% if address_form.present_thana.errors %} is-invalid{% endif %}" id="{{ address_form.present_thana.id_for_label }}" {% if address_form.present_thana.value != None %}value="{{ address_form.present_thana.value }}" {% endif %}>
+            {% if address_form.present_thana.errors %}
+            {% for error in address_form.present_thana.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.present_postal_code.id_for_label }}">{{ address_form.present_postal_code.label }}</label>
+            <input type="text" name="{{ address_form.present_postal_code.name }}" class="form-control{% if address_form.present_postal_code.errors %} is-invalid{% endif %}" id="{{ address_form.present_postal_code.id_for_label }}" {% if address_form.present_postal_code.value != None %}value="{{ address_form.present_postal_code.value }}" {% endif %}>
+            {% if address_form.present_postal_code.errors %}
+            {% for error in address_form.present_postal_code.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ address_form.present_contact_person.id_for_label }}">{{ address_form.present_contact_person.label }}</label>
+                    <input type="text" name="{{ address_form.present_contact_person.name }}" class="form-control{% if address_form.present_contact_person.errors %} is-invalid{% endif %}" id="{{ address_form.present_contact_person.id_for_label }}" {% if address_form.present_contact_person.value != None %}value="{{ address_form.present_contact_person.value }}" {% endif %}>
+                    {% if address_form.present_contact_person.errors %}
+                    {% for error in address_form.present_contact_person.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ address_form.present_phone_number.id_for_label }}">{{ address_form.present_phone_number.label }}<span>*</span></label>
+                    <div class="input-group">
+                        <table class="table border-0" style="max-width: 300px; margin: 0;">
+                            <tr>
+                                <td class="border-0 pl-0 pr-0 v-middle" style="width: 30%;"><select class="input-group-text" id="basic-addon3" name="present_phone_number_0" class="form-control{% if address_form.present_phone_number.errors %} is-invalid{% endif %}" id="{{ address_form.present_phone_number.id_for_label }}">
+                                        {% for choice in address_form.dial_code.field.choices %}
+                                        <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == address_form.present_phone_number.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    </select></td>
+                                <td class="border-0 pl-0" style="width: 70%;">
+                                    <div class="input-group-append">
+                                        <input type="number" name="present_phone_number_1" value="{{ address_form.present_phone_number.value.1 }}" class="form-control{% if address_form.present_phone_number.errors %} is-invalid{% endif %}">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    {% if address_form.present_phone_number.errors %}
+                    {% for error in address_form.present_phone_number.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="d-flex align-items-center justify-content-between mt-5">
+    <h2>Permanent Address</h2>
+    <div class="form-group">
+        <div class="form-check">
+            <label class="form-check-label pl-1" for="{{ address_form.same_as_present_address.id_for_label }}">
+                <input type="checkbox" name="{{ address_form.same_as_present_address.name }}" id="{{ address_form.same_as_present_address.id_for_label }}" class="form-check-input{% if address_form.same_as_present_address.errors %} is-invalid{% endif %}">
+                {{ address_form.same_as_present_address.label }}</label>
+            {% if address_form.same_as_present_address.errors %}
+            {% for error in address_form.same_as_present_address.errors %}
+            <div>{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row permanent-address-wrap">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_address.id_for_label }}">{{ address_form.permanent_address.label }}</label>
+            <textarea name="{{ address_form.permanent_address.name }}" class="form-control{% if address_form.permanent_address.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_address.id_for_label }}">{{ address_form.permanent_address.value|default:'' }}</textarea>
+            {% if address_form.permanent_address.errors %}
+            {% for error in address_form.permanent_address.errors %}
+            <div>{{ error }}</div>
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_country.id_for_label }}">{{ address_form.permanent_country.label }}</label>
+            <select name="{{ address_form.permanent_country.name }}" class="form-control{% if address_form.permanent_country.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_country.id_for_label }}">
+                {% for country in address_form.permanent_country %}
+                {{ country }}
+                {% endfor %}
+            </select>
+            {% if address_form.permanent_country.errors %}
+            {% for error in address_form.permanent_country.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_state.id_for_label }}">{{ address_form.permanent_state.label }}</label>
+            <select name="{{ address_form.permanent_state.name }}" class="form-control{% if address_form.permanent_state.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_state.id_for_label }}">
+                {% include 'employees/master/contact/permanent_state.html' %}
+            </select>
+            {% if address_form.permanent_state.errors %}
+            {% for error in address_form.permanent_state.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_city.id_for_label }}">{{ address_form.permanent_city.label }}</label>
+            <select name="{{ address_form.permanent_city.name }}" class="form-control{% if address_form.permanent_city.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_city.id_for_label }}">
+                {% include 'employees/master/contact/permanent_city.html' %}
+            </select>
+            {% if address_form.permanent_city.errors %}
+            {% for error in address_form.permanent_city.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_thana.id_for_label }}">{{ address_form.permanent_thana.label }}</label>
+            <input type="text" name="{{ address_form.permanent_thana.name }}" class="form-control{% if address_form.permanent_thana.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_thana.id_for_label }}" {% if address_form.permanent_thana.value != None %}value="{{ address_form.permanent_thana.value }}" {% endif %}>
+            {% if address_form.permanent_thana.errors %}
+            {% for error in address_form.permanent_thana.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_postal_code.id_for_label }}">{{ address_form.permanent_postal_code.label }}</label>
+            <input type="text" name="{{ address_form.permanent_postal_code.name }}" class="form-control{% if address_form.permanent_postal_code.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_postal_code.id_for_label }}" {% if address_form.permanent_postal_code.value != None %}value="{{ address_form.permanent_postal_code.value }}" {% endif %}>
+            {% if address_form.permanent_postal_code.errors %}
+            {% for error in address_form.permanent_postal_code.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_contact_person.id_for_label }}">{{ address_form.permanent_contact_person.label }}</label>
+            <input type="text" name="{{ address_form.permanent_contact_person.name }}" class="form-control{% if address_form.permanent_contact_person.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_contact_person.id_for_label }}" {% if address_form.permanent_contact_person.value != None %}value="{{ address_form.permanent_contact_person.value }}" {% endif %}>
+            {% if address_form.permanent_contact_person.errors %}
+            {% for error in address_form.permanent_contact_person.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ address_form.permanent_phone_number.id_for_label }}">{{ address_form.permanent_phone_number.label }}</label>
+            <div class="input-group">
+                <table class="table border-0" style="max-width: 300px; margin: 0;">
+                    <tr>
+                        <td class="border-0 pl-0 pr-0 v-middle" style="width: 30%;"><select class="input-group-text" id="basic-addon3" name="permanent_phone_number_0" class="form-control{% if address_form.permanent_phone_number.errors %} is-invalid{% endif %}" id="{{ address_form.permanent_phone_number.id_for_label }}">
+                                {% for choice in address_form.dial_code.field.choices %}
+                                <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == address_form.permanent_phone_number.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                {% endfor %}
+                            </select></td>
+                        <td class="border-0 pl-0" style="width: 70%;">
+                            <div class="input-group-append">
+                                <input type="number" name="permanent_phone_number_1" value="{{ address_form.permanent_phone_number.value.1 }}" class="form-control{% if address_form.permanent_phone_number.errors %} is-invalid{% endif %}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {% if address_form.permanent_phone_number.errors %}
+            {% for error in address_form.permanent_phone_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

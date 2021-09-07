@@ -1,0 +1,67 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Change Profile Picture{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    {% if user.userprofile.profile_picture %}
+                        <img class="img-rounded" src="{{ user.userprofile.profile_picture.url }}" id="id_for_current_image"
+                             height="140" width="130">
+                        <p><label for="id_for_current_image">{{ user.first_name }} {{ user.last_name }}</label></p>
+
+                    {% endif %}
+                    <p></p>
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.profile_picture.id_for_label }}">{{ form.profile_picture.label }}</label>
+                                <input type="file" name="{{ form.profile_picture.name }}" id="{{ form.profile_picture.id_for_label }}"
+                                       class="form-control{% if form.profile_picture.errors %} is-invalid{% endif %}"
+                                       accept="image/*" required onchange="ShowSelectedImage.call(this)">
+                                {% if form.profile_picture.errors %}
+                                    {% for error in form.profile_picture.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <img src="" class="img-rounded" style="display:none" height="140" width="130" id="selected_image">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <a class="float-right" href="javascript:;" onclick="window.history.back()">Cancel</a>
+                                <button type="submit" class="btn btn-main float-right">Change</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function ShowSelectedImage() {
+            if (this.files && this.files[0]) {
+                var obj = new FileReader();
+                obj.onload = function (data) {
+                    var image = document.getElementById("selected_image");
+                    image.src = data.target.result;
+                    image.style.display = "block";
+                };
+                obj.readAsDataURL(this.files[0]);
+            }
+        }
+    </script>
+{% endblock %}

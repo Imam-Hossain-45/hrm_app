@@ -1,0 +1,128 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Employee Education Information > List{% endblock %}
+
+{% block content %}
+    {% include 'employees/master/layouts/sidebar.html' %}
+    {% include 'layouts/event.html' %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                {% if request.user.is_superuser or 'add_education' in permissions %}
+                    <div class="text-right">
+                        <a href="{% url 'employees:employee_education_create' pk %}" class="btn btn-main m-0">+
+                            Add</a>
+                    </div>
+                {% endif %}
+
+                <div class="card">
+                    <div class="card-header secondary card-box">
+                        <div class="card-title">
+                            <h2>All Education Qualification</h2>
+                        </div>
+                    </div>
+
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="datatable">
+                                        <thead>
+                                            <tr class="selectable">
+                                                <th scope="col">Degree</th>
+                                                <th scope="col">University/College/School/Institute</th>
+                                                <th scope="col">Discipline/Subject</th>
+                                                <th scope="col">Year of Completion</th>
+                                                <th scope="col">Result</th>
+                                                <th scope="col">Marks or Grade</th>
+                                                <th scope="col">Certificate</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for obj in education_list %}
+                                            <tr>
+                                                <td>{{ obj.degree }}</td>
+                                                <td>{{ obj.university }}</td>
+                                                <td>{{ obj.subject }}</td>
+                                                <td>{{ obj.year_of_completion }}</td>
+                                                {% if obj.result_of_gpa is not None %}
+                                                <td>{{ obj.result_of_gpa }}</td>
+                                                {% else %}
+                                                <td>{{ obj.result_of_division }}</td>
+                                                {% endif %}
+                                                {% if obj.grade is not None %}
+                                                <td>{{ obj.grade }}</td>
+                                                {% else %}
+                                                <td>{{ obj.marks }}</td>
+                                                {% endif %}
+                                                <td>{{ obj.certificate }}</td>
+                                                <td>
+                                                    {% if request.user.is_superuser or 'change_education' in permissions %}
+                                                    <a title="edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="{% url 'employees:employee_education_update' pk obj.id %}" title="Edit">
+                                                        <i class="la la-edit"></i>
+                                                    </a>
+                                                    {% endif %}
+                                                    {% if request.user.is_superuser or 'delete_education' in permissions %}
+                                                    <div class="modal fade" id="confirmDeleteModal{{ obj.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <form action="{% url 'employees:employee_education_delete' employee_pk=pk pk=obj.id %}" method="POST">
+                                                                {% csrf_token %}
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body confirm-delete">
+                                                                        Are you sure you want to delete "{{ obj.degree }}"?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                                            Cancel
+                                                                        </button>
+                                                                        <input type="submit" class="btn btn-danger" value="Delete" name="delete">
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <a title="delete" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="javascript:void(0)" class="confirm-delete" title="Delete" data-toggle="modal" data-target="#confirmDeleteModal{{ obj.id }}" id="deleteButton{{ obj.id }}">
+                                                        <i class="la la-times-circle-o"></i>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if education_list.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if education_list.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ education_list.previous_page_number }}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == education_list.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ education_list.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if education_list.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ education_list.next_page_number }}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

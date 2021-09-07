@@ -1,0 +1,133 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Leave Entry > List{% endblock %}
+{% load staticfiles %}
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_leaveentry' in permissions %}
+            <div class="text-right">
+                <a href="{% url 'beehive_admin:leave:leave_entry_new' %}" class="btn btn-main m-0">+
+                    New Leave Entry</a>
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <p>Leave > Operation</p>
+                        <h2>Leave Entry</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h2>Filter Employees</h2>
+            <form method="GET" novalidate class="mw-initial mb-5">
+                {% include 'leave/process/layout/search.html' %}
+                <div class="col-md-12">
+                    <div class="form-group text-right mt-3">
+                        <button type="submit" class="btn btn-main">Search Employee</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>List of Leaves</h2>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Start Date & Time</th>
+                                            <th scope="col">End Date & Time</th>
+                                            <th scope="col">Leave Type</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if objects %}
+                                            {% for obj in leave_application %}
+                                            <tr>
+                                                <td class="d-flex align-items-center">
+                                                    <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                                    <div>
+                                                        <h5 class="title">{{ obj.employee.get_title_display }} {{ obj.employee.first_name }} {{ obj.employee.middle_name }} {{ obj.employee.last_name }}</h5>
+                                                        <p>{{ obj.employee.employee_job_information.last.designation.name|default_if_none:'' }}</p>
+                                                    </div>
+                                                </td>
+                                                <td>{{ obj.start_date|date:'d/m/Y' }} {{ obj.start_time|date:'h:i A' }}</td>
+                                                <td>{{ obj.end_date|date:'d/m/Y' }} {{ obj.end_time|date:'h:i A' }}</td>
+                                                <td>{{ obj.leave_type }}</td>
+                                                <td>{{ obj.get_status_display }}</td>
+                                                {% if obj.status == 'pending' %}
+                                                <td>
+                                                    {% if request.user.is_superuser or 'change_leaveentry' in permissions %}
+                                                    <a href="{% url 'beehive_admin:leave:leave_entry_new_edit' obj.id obj.employee.id %}" title="Edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline">
+                                                        <i class="la la-edit"></i>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                                {% else %}
+                                                <td>
+                                                    {% if request.user.is_superuser or 'view_leaveentry' in permissions %}
+                                                    <a href="{% url 'beehive_admin:leave:leave_entry_details' obj.id obj.employee.id %}" title="View" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline">
+                                                        <i class="la la-eye"></i>
+                                                    </a>
+                                                    {% endif %}
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                            {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5">No data found.</td>
+                                        </tr>
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if leave_application.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if leave_application.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ leave_application.previous_page_number }}&{{path}}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == leave_application.number %}active{% endif %}" href="?page={{ pg }}&{{path}}">{{ pg }} {{ leave_application.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if leave_application.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ leave_application.next_page_number }}&{{path}}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

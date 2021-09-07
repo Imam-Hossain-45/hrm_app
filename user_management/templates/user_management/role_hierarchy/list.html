@@ -1,0 +1,73 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Role Hierarchy{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_rolehierarchy' in permissions %}
+            <div class="text-right">
+                <a href="{% url 'user_management:role_hierarchies_create' %}" class="btn btn-main m-0">+
+                    Add a new role
+                </a>
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <p>User Management</p>
+                        <h2>Role Hierarchy</h2>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Level</th>
+                                            <th scope="col">Allocated Role</th>
+                                            <th scope="col">Parent</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for rh in role_hierarchies %}
+                                            <tr>
+                                                <td>{{ rh.level }}</td>
+                                                <td>{{ rh.role }}</td>
+                                                <td>{{ rh.parent_role }}</td>
+                                                <td>{{ rh.get_status_display }}</td>
+                                                <td>
+                                                    {% if request.user.is_superuser or 'change_rolehierarchy' in permissions %}
+                                                        <a title="edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="{% url 'user_management:role_hierarchies_update' rh.id %}">
+                                                            <i class="la la-edit"></i>
+                                                        </a>
+                                                    {% endif %}
+
+                                                    {% if request.user.is_superuser or 'delete_rolehierarchy' in permissions %}
+                                                        <a title="delete" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline" href="{% url 'user_management:role_hierarchies_delete' rh.id %}">
+                                                            <i class="la la-times-circle-o"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

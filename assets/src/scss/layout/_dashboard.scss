@@ -1,0 +1,335 @@
+.dashboard-leave {
+
+  .title-wrapper {
+    width: 20%;
+  }
+
+  .card-header {
+    padding: 1rem 1.5rem;
+
+    h2 {
+      margin-right: 14px;
+    }
+  }
+
+  .list-wrapper {
+    width: 80%;
+  }
+
+  .nav-tabs {
+    flex-wrap: nowrap;
+    margin-bottom: 0;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: none;
+
+    .nav.nav-pills .nav-link,
+    .nav.nav-tabs .nav-link {
+      white-space: nowrap;
+    }
+  }
+}
+
+.dashboard {
+  .card {
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .card-success {
+    background: green;
+  }
+
+  .card-late {
+    background: red;
+
+    p.status-late {
+      background: rgba(0, 0, 0, .5);
+      text-align: center;
+      border-radius: 3px;
+      color: #fff;
+    }
+
+    .late-btn {
+      background: #fff;
+      color: #000;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+      border-radius: 3px;
+      width: 100%;
+      padding: 5px;
+      transition: all 0.3s ease-in;
+
+      &:hover {
+        background: rgb(226, 226, 226);
+      }
+    }
+  }
+}
+
+.content-section {
+  flex: 1;
+
+  .card {
+    height: 100%;
+  }
+
+  .card-footer {
+    background: transparent;
+    border: none;
+  }
+}
+
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem !important;
+  align-items: center;
+}
+
+.dash-blue {
+  background-color: #716aca !important;
+
+  h2,
+  p,
+  span,
+  h4 {
+    color: #fff !important;
+  }
+
+  h4 {
+    display: flex;
+
+    span {
+      font-size: 200%;
+      padding-left: 3px;
+      margin-top: -6px;
+    }
+  }
+}
+
+.dash-listing {
+  background: transparent !important;
+  padding: 0 !important;
+
+  .comment-wrap {
+    border: none !important;
+  }
+
+  .dash-title {
+    font-size: 1rem;
+  }
+
+  h2 span {
+    font-style: normal !important;
+    font-size: 80% !important;
+  }
+
+  .line-img {
+    max-height: 28px !important;
+  }
+}
+
+//Event calendar
+#event-calendar {
+  .calendar header .btn {
+    width: 22px;
+    height: 22px;
+    line-height: 20px;
+    padding: 0;
+  }
+
+  table {
+    margin: 0;
+
+    thead td {
+      font-size: 14px;
+    }
+  }
+}
+
+.present-div,
+.late-div {
+  display: none;
+  height: 100%;
+}
+
+.card-success,
+.card-late {
+  color: #fff;
+
+  .event-img {
+    max-width: 80px;
+  }
+
+  .big-text {
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 38px;
+
+
+  }
+
+  .sup {
+    vertical-align: super;
+    padding-left: 4px;
+  }
+
+  .text-success {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+}
+
+.dashboard {
+  .nav-item {
+    width: 32% !important;
+  }
+}
+
+
+/*==================== Admin Template =================*/
+.att-status-wrap {
+  flex-wrap: wrap;
+  padding: 0;
+
+  .att-status {
+    width: 50%;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+
+    h5 {
+      font-weight: 500;
+      color: #444;
+      margin-bottom: 0;
+    }
+
+    .bigger-text {
+      font-size: 44px;
+      font-weight: 700;
+    }
+
+    .green {
+      color: green;
+    }
+
+    .red {
+      color: red;
+    }
+
+    .brown {
+      color: brown;
+    }
+
+    .orange {
+      color: orange;
+    }
+  }
+}
+
+// Calendar
+.calendar header .btn:before {
+  top: 5px;
+  left: 4px;
+}
+
+.calendar .day {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.calendar .day:hover {
+  border: 2px solid rgba(255, 0, 0, 0.5);
+}
+
+.calendar td {
+  padding: .5em .1em;
+}
+
+.calendar .day.has-event:after {
+  top: -2px;
+  left: -2px;
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 0, 0, .4);
+  border-radius: 50%;
+}
+
+.calendar .event-container {
+  padding: 34px;
+}
+
+.calendar .event-container .event-date {
+  margin-bottom: 0;
+}
+
+.calendar .event-container .close {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 14px;
+  right: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
+// Noticeboard
+.comment-info:before {
+  position: absolute;
+  top: 0;
+  width: 5px;
+  height: 26px;
+  vertical-align: middle;
+  content: '';
+  border-radius: 4px;
+}
+
+#notice-board {
+  .comment-info {
+    position: relative;
+
+    .dash-title,
+    .dash-date {
+      padding-left: 20px;
+    }
+  }
+
+  .comment-info:before {
+    background: #6dc2ff;
+  }
+}
+
+#notice-show {
+  display: none;
+}
+
+#notification-board {
+  .comment-info {
+    position: relative;
+
+    .dash-title,
+    .dash-date {
+      padding-left: 20px;
+    }
+  }
+
+  .comment-info:before {
+    background: orange;
+  }
+}

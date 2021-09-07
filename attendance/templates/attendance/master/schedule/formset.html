@@ -1,0 +1,40 @@
+{% load index %}
+<div class="col-md-4">
+    <label
+        for="{{ form_data.break_start.id_for_label }}">{{ form_data.break_start.label }}</label>
+    <input type="text" name="{{ form_data.break_start.html_name }}"
+           id="{{ form_data.break_start.id_for_label }}"
+           class="datetimepicker form-control{% if form_data.break_start.errors %} is-invalid{% endif %}"
+           value="{% if form_data.break_start.value|get_time_type == 'str' %}{{ form_data.break_start.value }}{% else %}{{ form_data.break_start.value|time:"H:i" }}{% endif %}">
+
+    {% if form_data.break_start.errors %}
+        {% for error in form_data.break_start.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="col-md-4">
+    <label
+        for="{{ form_data.break_end.id_for_label }}">{{ form_data.break_end.label }}</label>
+    <input type="text" name="{{ form_data.break_end.html_name }}"
+           id="{{ form_data.break_end.id_for_label }}"
+           class="datetimepicker form-control{% if form_data.break_end.errors %} is-invalid{% endif %}"
+           value="{% if form_data.break_end.value|get_time_type == 'str' %}{{ form_data.break_end.value }}{% else %}{{ form_data.break_end.value|time:"H:i" }}{% endif %}">
+
+    {% if form_data.break_end.errors %}
+        {% for error in form_data.break_end.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="col-md-4 d-flex align-items-end">
+    <input type="checkbox" class="m-checkbox"
+           name="{{ form_data.DELETE.html_name }}"
+           id="{{ form_data.DELETE.id_for_label }}"
+           {% if form_data.DELETE.value %}checked{% endif %}><label
+    for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+    <input type="hidden" name="{{ form_data.id.html_name }}"
+           id="{{ form_data.id.id_for_label }}"
+           class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}"
+           value="{{ form_data.id.value|default:'' }}">
+</div>

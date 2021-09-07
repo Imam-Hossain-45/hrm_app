@@ -1,0 +1,139 @@
+{% if leave_master %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class="card-block border-1">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card dashboard-leave">
+                            <div class="card-header d-flex align-items-center justify-content-start p-4">
+                                <div class="title-wrapper">
+                                    <h2 class="">Leave Application</h2>
+                                </div>
+
+                                <div class="list-wrapper">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                                               aria-controls="all" aria-selected="false">All</a>
+                                        </li>
+                                        {% for leave in leave_master %}
+                                            <li class="nav-item">
+                                                <a class="nav-link " id="leave-{{ leave.id }}-tab" data-toggle="tab"
+                                                   href="#leave-{{ leave.id }}" role="tab"
+                                                   aria-controls="leave-{{ leave.id }}" aria-selected="true">{{ leave }}</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="all" role="tabpanel"
+                                     aria-labelledby="all-tab">
+                                    <table class="table form-table table-bordered table-sm">
+                                        <thead class="text-center">
+                                        <tr>
+                                            <th>Leave Name</th>
+                                            <th>Applied on</th>
+                                            <th>Applied by</th>
+                                            <th>Leave Date/Time</th>
+                                            <th>Reason</th>
+                                            {% if request.user.is_superuser or request.user.is_management or 'change_leaveavail' in permissions %}
+                                                <th>Action</th>
+                                            {% endif %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for pending in all_pending_leave %}
+                                            <tr>
+                                                <td>{{ pending.leave_type }}</td>
+                                                <td>{{ pending.created_at|date:"d M, h:i a" }}</td>
+                                                <td>{{ pending.employee }} {{ pending.employee.employee_job_information.last.designation|default_if_none:'' }}</td>
+                                                <td>
+                                                    <p>{{ pending.start_date|date:"d M" }}
+                                                        {% if pending.start_date != pending.end_date %} -
+                                                            {{ pending.end_date|date:"d M" }}{% endif %}</p>
+                                                    {% if pending.start_time != None and pending.end_time != None %}
+                                                        <p>{{ pending.start_time|date:"h:i a" }}
+                                                            - {{ pending.end_time|date:"h:i a" }}</p>{% endif %}
+                                                </td>
+                                                <td>{{ pending.reason_of_leave }}</td>
+                                                {% if request.user.is_superuser or request.user.is_management or 'change_leaveavail' in permissions %}
+                                                    <td>
+                                                        <a href="{% url 'beehive_admin:leave:leave_approval_form' pending.id %}"
+                                                           class="btn btn-main">Decline</a>
+                                                        <a href="{% url 'beehive_admin:leave:leave_approval_form' pending.id %}"
+                                                           class="btn btn-main">Accept</a>
+                                                        {#                                            <form action="" method="POST">#}
+                                                        {#                                                {% csrf_token %}#}
+                                                        {#                                                <input type="hidden" name="leave_entry_id" value="{{ pending.id }}">#}
+                                                        {#                                                <button type="submit" class="btn btn-main" name="decline_btn">Decline</button>#}
+                                                        {#                                                <button type="submit" class="btn btn-main" name="accept_btn">Accept</button>#}
+                                                        {#                                            </form>#}
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {% for leave in leave_master %}
+                                    <div class="tab-pane fade" id="leave-{{ leave.id }}" role="tabpanel" aria-labelledby="leave-{{ leave.id }}-tab">
+                                        <table class="table form-table table-bordered table-sm">
+                                            <thead class="text-center">
+                                            <tr>
+                                                <th>Leave Name</th>
+                                                <th>Applied on</th>
+                                                <th>Applied by</th>
+                                                <th>Leave Date/Time</th>
+                                                <th>Reason</th>
+                                                {% if request.user.is_superuser or request.user.is_management or 'change_leaveavail' in permissions %}
+                                                    <th>Action</th>
+                                                {% endif %}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for pending in all_pending_leave %}
+                                                {% if pending.leave_type.id == leave.id %}
+                                                    <tr>
+                                                        <td>{{ pending.leave_type }}</td>
+                                                        <td>{{ pending.created_at|date:"d M, h:i a" }}</td>
+                                                        <td>{{ pending.employee }} {{ pending.employee.employee_job_information.last.designation|default_if_none:'' }}</td>
+                                                        <td>
+                                                            <p>{{ pending.start_date|date:"d M" }}
+                                                                {% if pending.start_date != pending.end_date %} -
+                                                                    {{ pending.end_date|date:"d M" }}{% endif %}</p>
+                                                            {% if pending.start_time != None and pending.end_time != None %}
+                                                                <p>{{ pending.start_time|date:"h:i a" }}
+                                                                    - {{ pending.end_time|date:"h:i a" }}</p>{% endif %}
+                                                        </td>
+                                                        <td>{{ pending.reason_of_leave }}</td>
+                                                        {% if request.user.is_superuser or request.user.is_management or 'change_leaveavail' in permissions %}
+                                                            <td>
+                                                                <a href="{% url 'beehive_admin:leave:leave_approval_form' pending.id %}"
+                                                                   class="btn btn-main">Decline</a>
+                                                                <a href="{% url 'beehive_admin:leave:leave_approval_form' pending.id %}"
+                                                                   class="btn btn-main">Accept</a>
+                                                                {#                                            <form action="" method="POST">#}
+                                                                {#                                                {% csrf_token %}#}
+                                                                {#                                                <input type="hidden" name="leave_entry_id" value="{{ pending.id }}">#}
+                                                                {#                                                <button type="submit" class="btn btn-main" name="decline_btn">Decline</button>#}
+                                                                {#                                                <button type="submit" class="btn btn-main" name="accept_btn">Accept</button>#}
+                                                                {#                                            </form>#}
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

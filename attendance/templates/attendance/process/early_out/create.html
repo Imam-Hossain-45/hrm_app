@@ -1,0 +1,161 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Attendance > Early Out > {% if edit == True %}Edit{% else %}New{% endif %}{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    {% if edit == True %}<h2>Edit Early Out Entry</h2>{% else %}<h2>New Early Out Entry</h2>{% endif %}
+                </div>
+                <div class="card-block">
+                {% if edit != True %}
+                    <form method="GET" action="" class="mw-initial">
+                        <input type="search" name="query" class="form-control" placeholder="Search Employee by Name, ID." id='search' autocomplete="off">
+                        <div id="search-result" class="search-result" style="display: none">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul id="search_employee" class="search_employee"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% if error %}
+                    <p>{{ error }}</p>
+                    {% endif %}
+                {% endif %}
+                </div>
+            </div>
+            {% if info %}
+            <div class='card'>
+                <div class="card-block border-1">
+                    <div class="row">
+                        <div class="col-6" style="border-right: 1px solid #ccc;">
+                            <div class="employee-wrap p-4">
+                                <h2>{{ info.name }}</h2>
+                                <p>{{ info.designation|default_if_none:'' }}</p>
+                                <p>Employee ID: {{ info.employee_id }}</p>
+                                <p>Schedule Type: {{ info.schedule_type.get_schedule_type_display }}</p>
+                                <p>Company: {{ info.company|default_if_none:'' }}</p>
+                                <p>Division: {{ info.division|default_if_none:'' }}</p>
+                                <p>Department: {{ info.department|default_if_none:'' }}</p>
+                                <p>Business Unit: {{ info.business_unit|default_if_none:'' }}</p>
+                                <p>Project: {{ info.project|default_if_none:'' }}</p>
+                            </div>
+                        </div>
+                        {% if early_list %}
+                        <div class="col-6">
+                            <table class="table table-hover" id="datatable">
+                                <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">No. of early out applied</th>
+                                        <td>{{ early_list.applied }}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="col">Approved</th>
+                                        <td>{{ early_list.approved }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Declined</th>
+                                        <td>{{ early_list.declined }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Pending</th>
+                                        <td>{{ early_list.pending }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% if early_apply %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Last Early Out Applied</h2>
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="datatable">
+                            <thead>
+                                <tr class="selectable">
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Early Out Time</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ early_apply.out_date|date:'d/m/Y' }}</td>
+                                    <td>{{ early_apply.out_time|date:'h:i A' }}</td>
+                                    <td>{{ duration }}</td>
+                                    <td>{{ early_apply.status }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer secondary">
+                    <a href="{% url 'beehive_admin:attendance:early_out_individual_list' employee %}">Show
+                        All Early Out History</a>
+                </div>
+            </div>
+            {% endif %}
+            {% if form %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Apply for a Early Out</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'attendance/process/early_out/form.html' %}
+                        <div class="form-group w-100">
+                            <a class="btn btn-main" href="{% url 'beehive_admin:attendance:early_out_application_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main" name="apply">Apply</button>
+                            {% if request.user.is_superuser or request.user.management %}
+                                <button type="submit" class="btn btn-main" name="apply_approve">Apply and Approve
+                                </button>
+                                <button type="submit" class="btn btn-main" name="apply_deny">Apply and Deny
+                                </button>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function get_time(query, date){
+                $.ajax({
+                      type: "GET",
+                      url: "{% url 'beehive_admin:attendance:get_out_time' %}",
+                      dataType: "json",
+                      data: {query: query, 'date': date},
+                      success: function (result) {
+                          $("input[name='early_out_time']").val(result.out_time);
+                          $("input[name='attendance']").val(result.attendance_id);
+                      }
+                });
+            }
+
+           $("input[type='date']").on('change', function () {
+               get_time($("input[name='query_id']").val(), $(this).val());
+           });
+        });
+    </script>
+{% endblock %}

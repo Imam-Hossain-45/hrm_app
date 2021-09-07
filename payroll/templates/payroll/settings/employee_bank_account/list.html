@@ -1,0 +1,52 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Employee Bank Accounts List{% endblock %}
+
+{% load static %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class="text-right">
+                {% if request.user.is_superuser or 'add_employeebankaccount' in permissions %}
+                <a href="{% url 'beehive_admin:payroll:employee_bank_account_create' %}" class="btn btn-main">Create</a>
+                {% endif %}
+            </div>
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Employee Bank Accounts List</h2>
+                    <p>Employee Bank Accounts list for employee info</p>
+                    <div class="card-block">
+
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>Sl.</th>
+                                <th>Employee</th>
+                                <th>Bank</th>
+                                <th>Account Name</th>
+                                <th>Account No.</th>
+                                <th>Remarks</th>
+                                <th>Action</th>
+                            </thead>
+                            {% for employee_bank_account in employee_bank_accounts %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ employee_bank_account.employee }}</td>
+                                <td>{{ employee_bank_account.bank }}</td>
+                                <td>{{ employee_bank_account.account_name }}</td>
+                                <td>{{ employee_bank_account.account_no }}</td>
+                                <td>{{ employee_bank_account.remarks }}</td>
+                                <td><a href="{% url 'beehive_admin:payroll:employee_bank_account_update' pk=employee_bank_account.id %}">Edit</a> |
+                                    <a href="{% url 'beehive_admin:payroll:employee_bank_account_delete' pk=employee_bank_account.id %}">Delete</a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

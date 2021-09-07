@@ -1,0 +1,76 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}{{ user.first_name|default_if_none:user.email }} {{ user.last_name|default_if_none:'' }}{% endblock %}
+{% load static %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            {% if user.is_authenticated %}
+            {% if user.userprofile.profile_picture %}
+                <!--img-rounded, img-circle, img-thumbnail-->
+                <a href="{% url 'accounts:change_profile_picture' %}">
+                    <img class="rounded-circle" src="{{ user.userprofile.profile_picture.url }}"
+                         height="140" width="130">
+                </a>
+            {% endif %}
+            <p></p>
+            <h4><b><u>{{ user.first_name|default_if_none:user.email }} {{ user.last_name|default_if_none:'' }}</u></b></h4>
+            <p>
+                <a class="btn btn-info" href="{% url 'accounts:update_profile' %}">Edit Profile</a>
+                <a class="btn btn-info" href="{% url 'accounts:change_password' %}">Change Password</a>
+            </p>
+            <ul class="list-group"><p><b><u>Personal Info:</u></b></p>
+                <li class="list-group-item"><b>Name:</b>
+                    {{ user.first_name|default_if_none:'--' }} {{ user.last_name|default_if_none:'' }}</li>
+                <li class="list-group-item"><b>Gender: </b>{{ user.userprofile.gender }}</li>
+                <li class="list-group-item"><b>Blood Group: </b>{{ user.userprofile.blood_group }}</li>
+                <li class="list-group-item"><b>Religion: </b>{{ user.userprofile.religion }}</li>
+                <li class="list-group-item"><b>Date of Birth: </b>{{ user.userprofile.date_of_birth }}</li>
+                <li class="list-group-item"><b>NID: </b>
+                    {% if user.userprofile.nid %}
+                        <a href="{% get_media_prefix %}{{ user.userprofile.nid }}">
+                        {{ user.userprofile.nid }}</a>
+                    {% else %}
+                        Not Updated Yet
+                    {% endif %}
+                </li>
+            </ul>
+
+            <p></p>
+            <ul class="list-group"><p><b><u>Office Info:</u></b></p>
+                <li class="list-group-item"><b>Date of Joining: </b>{{ user.userprofile.date_of_joining }}</li>
+                <li class="list-group-item"><b>Division: </b>{{ user.userprofile.division }}</li>
+                <li class="list-group-item"><b>Department: </b>{{ user.userprofile.department }}</li>
+                <li class="list-group-item"><b>Designation: </b>{{ user.userprofile.designation }}</li>
+                <li class="list-group-item"><b>Grade: </b>{{ user.userprofile.grade }}</li>
+                <li class="list-group-item"><b>Pay Scale: </b>{{ user.userprofile.pay_scale }}</li>
+                <li class="list-group-item"><b>Category: </b>{{ user.userprofile.category }}</li>
+                <li class="list-group-item"><b>Job Status: </b>{{ user.userprofile.job_status }}</li>
+                <li class="list-group-item"><b>Report To: </b>{{ user.userprofile.report_to }}</li>
+                <li class="list-group-item"><b>Schedule: </b>{{ user.userprofile.schedule }}</li>
+                <li class="list-group-item"><b>Late Policy: </b>{{ user.userprofile.late_policy }}</li>
+                <li class="list-group-item"><b>Salary: </b>{{ user.userprofile.salary }}</li>
+                <li class="list-group-item"><b>Leave Group: </b>{{ user.userprofile.leave_group }}</li>
+                <li class="list-group-item"><b>Policy Group: </b>{{ user.userprofile.policy_group }}</li>
+                <li class="list-group-item"><b>RFID Number: </b>{{ user.userprofile.rfid }}</li>
+            </ul>
+
+            <p></p>
+            <ul class="list-group"><p><b><u>Contact Info:</u></b></p>
+                <li class="list-group-item"><b>Email: </b>{{ user.email }}</li>
+                <li class="list-group-item"><b>Work Phone: </b>{{ user.userprofile.work_phone }}</li>
+                <li class="list-group-item"><b>Personal Phone: </b>{{ user.userprofile.personal_phone }}</li>
+                <li class="list-group-item"><b>Address Line 1: </b>{{ user.userprofile.address_line1 }}</li>
+                <li class="list-group-item"><b>Address Line 2: </b>{{ user.userprofile.address_line2 }}</li>
+                <li class="list-group-item"><b>State: </b>{{ user.userprofile.state }}</li>
+                <li class="list-group-item"><b>City: </b>{{ user.userprofile.city }}</li>
+                <li class="list-group-item"><b>Zip Code: </b>{{ user.userprofile.zip_code }}</li>
+                <li class="list-group-item"><b>Country: </b>{{ user.userprofile.country }}</li>
+            </ul>
+            {% else %}
+                <p><a href="{% url 'accounts:LogIn' %}">Log In</a> first</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

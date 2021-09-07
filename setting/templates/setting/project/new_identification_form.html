@@ -1,0 +1,135 @@
+<div>
+    <input type="hidden" name="add_new" id="id_add_new" value="0">
+</div>
+{% for form_data in new_identification_form %}
+<div class="row pt-3 mt-5 form-two" style="border: 1px solid #ccc;">
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.title.id_for_label }}">{{ form_data.title.label }}</label>
+            <input type="text" name="{{ form_data.title.html_name }}" id="{{ form_data.title.id_for_label }}" class="form-control formset-field {% if form_data.title.errors %} is-invalid{% endif %}" {% if form_data.title.value != None %}value="{{ form_data.title.value }}" {% endif %}>
+
+            {% if form_data.title.errors %}
+            {% for error in form_data.title.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.short_description.id_for_label }}">{{ form_data.short_description.label }}</label>
+            <input type="text" name="{{ form_data.short_description.html_name }}" id="{{ form_data.short_description.id_for_label }}" class="form-control formset-field {% if form_data.short_description.errors %} is-invalid{% endif %}" {% if form_data.short_description.value != None %}value="{{ form_data.short_description.value }}" {% endif %}>
+
+            {% if form_data.short_description.errors %}
+            {% for error in form_data.short_description.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.document_number.id_for_label }}">{{ form_data.document_number.label }}</label>
+            <input type="text" name="{{ form_data.document_number.html_name }}" id="{{ form_data.document_number.id_for_label }}" class="form-control formset-field {% if form_data.document_number.errors %} is-invalid{% endif %}" {% if form_data.document_number.value != None %}value="{{ form_data.document_number.value }}" {% endif %}>
+
+            {% if form_data.document_number.errors %}
+            {% for error in form_data.document_number.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            <label for="{{ form_data.issue_date.id_for_label }}">{{ form_data.issue_date.label }}</label>
+            <input type="date" name="{{ form_data.issue_date.html_name }}" class="form-control formset-field {% if form_data.issue_date.errors %} is-invalid{% endif %}" id="{{ form_data.issue_date.id_for_label }}" value="{{ form_data.issue_date.value|default_if_none:'' }}">
+
+            {% if form_data.issue_date.errors %}
+            {% for error in form_data.issue_date.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            <label for="{{ form_data.expiry_date.id_for_label }}">{{ form_data.expiry_date.label }}</label>
+            <input type="date" name="{{ form_data.expiry_date.html_name }}" class="form-control formset-field {% if form_data.expiry_date.errors %} is-invalid{% endif %}" id="{{ form_data.expiry_date.id_for_label }}" value="{{ form_data.expiry_date.value|default_if_none:'' }}">
+
+            {% if form_data.expiry_date.errors %}
+            {{ error }}
+            {% for error in form_data.expiry_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.attachment_title.id_for_label }}">{{ form_data.attachment_title.label }}</label>
+            <input type="text" name="{{ form_data.attachment_title.html_name }}" id="{{ form_data.attachment_title.id_for_label }}" class="form-control formset-field {% if form_data.attachment_title.errors %} is-invalid{% endif %}" {% if form_data.attachment_title.value != None %}value="{{ form_data.attachment_title.value }}" {% endif %}>
+
+            {% if form_data.attachment_title.errors %}
+            {% for error in form_data.attachment_title.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.attachment_file.id_for_label }}">{{ form_data.attachment_file.label }}</label>
+            {% if form_data.attachment_file.value %}
+            <a href="{{ form_data.attachment_file.value.url }}">{{ form_data.attachment_file.value.url }}</a>
+            {% endif %}
+            <input type="file" name="{{ form_data.attachment_file.html_name }}" class="form-control formset-field {% if form_data.attachment_file.errors %} is-invalid{% endif %}" id="{{ form_data.attachment_file.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf">
+
+            {% if form_data.attachment_file.errors %}
+            {% for error in form_data.attachment_file.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+        <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+            <label for="{{ form_data.delete.id_for_label }}">{{ form_data.delete.label }}
+                <input type="checkbox" name="{{ form_data.delete.html_name }}" id="{{ form_data.delete.id_for_label }}" {% if form_data.delete.value %}checked{% endif %}>
+                <span></span>
+            </label>
+        </span>
+
+            {% if form_data.delete.errors %}
+            {% for error in form_data.delete.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div>
+            <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="form-control formset-field {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+        </div>
+    </div>
+</div>
+    <div class="new-row"></div>
+
+    <div class="clone-btn-wrapper company-add-btn" style="position: inherit;">
+        <div class="text-center ">
+            <a href="javascript:;" class="clone-row" style="display: inline-block">+</a>
+            <p style="display: inline-block">Add New Document</p>
+        </div>
+
+        <div class="text-center">
+            <a href="javascript:;" class="remove-row"><span>X</span>Remove</a>
+        </div>
+    </div>
+
+{% endfor %}
+
+{{ new_identification_form.management_form }}

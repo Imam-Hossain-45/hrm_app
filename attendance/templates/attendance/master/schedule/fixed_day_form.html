@@ -1,0 +1,190 @@
+{% load index %}
+<div class="form-group row w-100">
+    <div class="col-md-12">
+        <label for="{{ timetable_form.days.id_for_label }}">Select Days</label>
+        {% for key, value in timetable_form.days.field.choices %}
+        <label for="id_days_{{ forloop.counter0 }}_fixed">
+            <input type="checkbox" id="id_days_{{ forloop.counter0 }}_fixed" name="days" value="{{ key }}" {% if key in day %}checked{% endif %}>
+            {{ value }}</label>
+        {% endfor %}
+        {% if timetable_form.days.errors %}
+        {% for error in timetable_form.days.errors %}
+        <p style="color: red">{{ error }}</p>
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <p><strong>Select Time Duration</strong></p>
+    </div>
+</div>
+
+<div class="form-group row w-100">
+    <div class="col-md-3">
+        <label for="in_time_2">{{ timetable_form.in_time.label }}</label>
+        <input type="text" name="{{ timetable_form.in_time.name }}" id="in_time_2" class="datetimepicker form-control{% if timetable_form.in_time.errors %} is-invalid{% endif %}" value="{% if timetable_form.in_time.value|get_time_type == 'str' %}{{ timetable_form.in_time.value }}{% else %}{{ timetable_form.in_time.value|time:"H:i" }}{% endif %}">
+
+        {% if timetable_form.in_time.errors %}
+        {% for error in timetable_form.in_time.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="col-md-6 form-one">
+        <div class="row form-two">
+            {% for form_data in fixed_formset %}
+            <div class="col-md-5">
+                <label for="{{ form_data.break_start.id_for_label }}">{{ form_data.break_start.label }}</label>
+                <input type="text" name="{{ form_data.break_start.html_name }}" id="{{ form_data.break_start.id_for_label }}" class="datetimepicker form-control{% if form_data.break_start.errors %} is-invalid{% endif %}" value="{% if form_data.break_start.value|get_time_type == 'str' %}{{ form_data.break_start.value }}{% else %}{{ form_data.break_start.value|time:"H:i" }}{% endif %}">
+
+                {% if form_data.break_start.errors %}
+                {% for error in form_data.break_start.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="col-md-5">
+                <label for="{{ form_data.break_end.id_for_label }}">{{ form_data.break_end.label }}</label>
+                <input type="text" name="{{ form_data.break_end.html_name }}" id="{{ form_data.break_end.id_for_label }}" class="datetimepicker form-control{% if form_data.break_end.errors %} is-invalid{% endif %}" value="{% if form_data.break_end.value|get_time_type == 'str' %}{{ form_data.break_end.value }}{% else %}{{ form_data.break_end.value|time:"H:i" }}{% endif %}">
+
+                {% if form_data.break_end.errors %}
+                {% for error in form_data.break_end.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-md-2 d-none align-items-end">
+                <input type="checkbox" class="m-checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+            </div>
+            {% endfor %}
+            {{ fixed_formset.management_form }}{{ fixed_formset.non_form_errors }}
+        </div>
+        <div class="new-row"></div>
+        <div class="clone-btn-wrapper" style="left: 400px; bottom: 4px;">
+            <div class="text-center">
+                <a href="javascript:;" class="clone-row clone-dt"></a>
+            </div>
+            <div class="text-center">
+                <a href="javascript:;" class="remove-row"></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label for="">{{ timetable_form.out_time.label }}</label>
+        <input type="text" name="{{ timetable_form.out_time.name }}" class="datetimepicker form-control{% if timetable_form.out_time.errors %} is-invalid{% endif %}" value="{% if timetable_form.out_time.value|get_time_type == 'str' %}{{ timetable_form.out_time.value }}{% else %}{{ timetable_form.out_time.value|time:"H:i" }}{% endif %}">
+
+        {% if timetable_form.out_time.errors %}
+        {% for error in timetable_form.out_time.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="col-md-12">
+        <hr>
+        <p><strong>Total Working Hour</strong></p>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-group row w-100">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="">{{ form.total_working_hour_per_day.label }}</label>
+
+                        <input type="text" name="{{ form.total_working_hour_per_day.name }}" class="form-control{% if form.total_working_hour_per_day.errors %} is-invalid{% endif %}" value="{{ form.total_working_hour_per_day.value|default_if_none:0 }}">
+
+                        {% if form.total_working_hour_per_day.errors %}
+                        {% for error in form.total_working_hour_per_day.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label style="visibility: hidden" for="">&nbsp;</label>
+                        <select type="text" name="{{ form.total_working_hour_per_day_unit.name }}" class="form-control{% if form.total_working_hour_per_day_unit.errors %} is-invalid{% endif %}">
+                            {% for total_working_hour_per_day_unit in form.total_working_hour_per_day_unit %}
+                            {{ total_working_hour_per_day_unit }}
+                            {% endfor %}
+                        </select>
+
+                        {% if form.total_working_hour_per_day_unit.errors %}
+                        {% for error in form.total_working_hour_per_day_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="">{{ form.total_working_hour_per_week.label }}</label>
+
+                        <input type="text" name="{{ form.total_working_hour_per_week.name }}" class="form-control{% if form.total_working_hour_per_week.errors %} is-invalid{% endif %}" value="{{ form.total_working_hour_per_week.value|default_if_none:0 }}">
+
+                        {% if form.total_working_hour_per_week.errors %}
+                        {% for error in form.total_working_hour_per_week.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label style="visibility: hidden" for="">&nbsp;</label>
+
+                        <select type="text" name="{{ form.total_working_hour_per_week_unit.name }}" class="form-control{% if form.total_working_hour_per_week_unit.errors %} is-invalid{% endif %}">
+                            {% for total_working_hour_per_week_unit in form.total_working_hour_per_week_unit %}
+                            {{ total_working_hour_per_week_unit }}
+                            {% endfor %}
+                        </select>
+
+                        {% if form.total_working_hour_per_week_unit.errors %}
+                        {% for error in form.total_working_hour_per_week_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="">{{ form.total_working_hour_per_month.label }}</label>
+
+                        <input type="text" name="{{ form.total_working_hour_per_month.name }}" class="form-control{% if form.total_working_hour_per_month.errors %} is-invalid{% endif %}" value="{{ form.total_working_hour_per_month.value|default_if_none:0 }}">
+
+                        {% if form.total_working_hour_per_month.errors %}
+                        {% for error in form.total_working_hour_per_month.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-4">
+                        <label style="visibility: hidden" for="">&nbsp;</label>
+
+                        <select type="text" name="{{ form.total_working_hour_per_month_unit.name }}" class="form-control{% if form.total_working_hour_per_month_unit.errors %} is-invalid{% endif %}">
+                            {% for total_working_hour_per_month_unit in form.total_working_hour_per_month_unit %}
+                            {{ total_working_hour_per_month_unit }}
+                            {% endfor %}
+                        </select>
+
+                        {% if form.total_working_hour_per_month_unit.errors %}
+                        {% for error in form.total_working_hour_per_month_unit.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

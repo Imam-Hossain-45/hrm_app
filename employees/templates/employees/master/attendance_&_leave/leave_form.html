@@ -1,0 +1,14 @@
+<div class="form-group w-100">
+        <label for="{{ leave_form.leave_group.id_for_label }}">{{ leave_form.leave_group.label }}</label>
+        <select name="{{ leave_form.leave_group.name }}" id="{{ leave_form.leave_group.id_for_label }}"
+                class="form-control{% if leave_form.leave_group.errors %} is-invalid{% endif %}">
+            {% for leave_group in leave_form.leave_group %}
+                {{ leave_group }}
+            {% endfor %}
+        </select>
+    {% if leave_form.leave_group.errors %}
+        {% for error in leave_form.leave_group.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>

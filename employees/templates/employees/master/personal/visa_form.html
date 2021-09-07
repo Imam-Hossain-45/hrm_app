@@ -1,0 +1,65 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ visa_form.visa_type.id_for_label }}">{{ visa_form.visa_type.label }}<span>*</span></label>
+            <input type="text" name="{{ visa_form.visa_type.name }}" class="form-control{% if visa_form.visa_type.errors %} is-invalid{% endif %}" id="{{ visa_form.visa_type.id_for_label }}" {% if visa_form.visa_type.value != None %}value="{{ visa_form.visa_type.value }}" {% endif %}>
+            {% if visa_form.visa_type.errors %}
+            {% for error in visa_form.visa_type.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ visa_form.visa_number.id_for_label }}">{{ visa_form.visa_number.label }}<span>*</span></label>
+            <input type="text" name="{{ visa_form.visa_number.name }}" class="form-control{% if visa_form.visa_number.errors %} is-invalid{% endif %}" id="{{ visa_form.visa_number.id_for_label }}" {% if visa_form.visa_number.value != None %}value="{{ visa_form.visa_number.value }}" {% endif %}>
+            {% if visa_form.visa_number.errors %}
+            {% for error in visa_form.visa_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ visa_form.work_permit_no.id_for_label }}">{{ visa_form.work_permit_no.label }}<span>*</span></label>
+            <input type="text" name="{{ visa_form.work_permit_no.name }}" class="form-control{% if visa_form.work_permit_no.errors %} is-invalid{% endif %}" id="{{ visa_form.work_permit_no.id_for_label }}" {% if visa_form.work_permit_no.value != None %}value="{{ visa_form.work_permit_no.value }}" {% endif %}>
+            {% if visa_form.work_permit_no.errors %}
+            {% for error in visa_form.work_permit_no.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ visa_form.work_permit_expiry_date.id_for_label }}">{{ visa_form.work_permit_expiry_date.label }}</label>
+            <input type="date" name="{{ visa_form.work_permit_expiry_date.name }}" class="form-control{% if visa_form.work_permit_expiry_date.errors %} is-invalid{% endif %}" id="{{ visa_form.work_permit_expiry_date.id_for_label }}"  value="{% if visa_form.work_permit_expiry_date.value|get_date_type == 'str' %}{{ visa_form.work_permit_expiry_date.value }}{% else %}{{ visa_form.work_permit_expiry_date.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if visa_form.work_permit_expiry_date.errors %}
+            {% for error in visa_form.work_permit_expiry_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ visa_form.work_permit_doc.id_for_label }}">{{ visa_form.work_permit_doc.label }}</label>
+            {% if visa_form.work_permit_doc.value %}
+            Currently: <a href="{{ visa_form.work_permit_doc.value.url }}">{{ visa_form.work_permit_doc.value.url }}</a><br>
+            <input id="work_permit_doc-clear_id" name="work_permit_doc-clear" type="checkbox" style="display: inline-block;">
+            <label for="work_permit_doc-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ visa_form.work_permit_doc.name }}" class="form-control{% if visa_form.work_permit_doc.errors %} is-invalid{% endif %}" id="{{ visa_form.work_permit_doc.id_for_label }}" accept="image/">
+            {% if visa_form.work_permit_doc.errors %}
+            {% for error in visa_form.work_permit_doc.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

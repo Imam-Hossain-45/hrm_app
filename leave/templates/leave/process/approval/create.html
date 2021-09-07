@@ -1,0 +1,135 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Leave > Leave Entry >New{% endblock %}
+{% load staticfiles %}
+{% block content %}
+
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card mb-5'>
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>Leave Approval</h2>
+                    </div>
+                </div>
+                <div class="card-block border-1">
+                    {% if employee_info %}
+                    <div class="row">
+                        <div class="col-6" style="border-right: 1px solid #ccc;">
+                            <div class="employee-wrap d-flex p-4">
+                                <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                <div>
+                                    <h2>{{ employee_info.name }}</h2>
+                                    <p>{{ employee_info.designation }}</p>
+                                    <p>Employee ID: {{ employee_info.employee_id }}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-6 p-4">
+                            <p>Company: {{ employee_info.company }}</p>
+                            <p>Division: {{ employee_info.division }}</p>
+                            <p>Department: {{ employee_info.department }}</p>
+                            <p>Business Unit: {{ employee_info.business_unit }}</p>
+                            <p>Project: {{ employee_info.project }}</p>
+                        </div>
+                    </div>
+
+                    {% endif %}
+                </div>
+            </div>
+            <div class='card'>
+                <!-- <div class="card-header secondary"> -->
+                <!-- <h2>Apply for a Leave</h2> -->
+                <!-- </div> -->
+                <div class="card-block border-1 p-4">
+                    {% if leave_info %}
+                    <div>
+                        <table class="table table-late-entry mb-3">
+                            <tr>
+                                <td style="width: 30%;">
+                                    <p>Leave Type : </p>
+                                </td>
+                                <td style="width: 70%;">
+                                    <p>{{ leave_info.name }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%;">
+                                    <p>Leave Duration : </p>
+                                </td>
+                                <td style="width: 70%;">
+                                    <p>{{ leave_info.credit }} ({{ leave_info.start_date }}
+                                        {% if leave_info.start_time %} {{ leave_info.start_time|time:'h:i A' }}{% endif %} -
+                                        {{ leave_info.end_date }}{% if leave_info.end_time %}
+                                        {{ leave_info.end_time|time:'h:i A' }}{% endif %})</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%;">
+                                    <p>Leave Application Date : </p>
+                                </td>
+                                <td style="width: 70%;">
+                                    <p>{{ leave_info.apply_date|date:'M d, Y h:i A' }}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 30%;">
+                                    <p>Reason of Leave : </p>
+                                </td>
+                                <td style="width: 70%;">
+                                    <p>{{ leave_info.reason }}</p>
+                                </td>
+                            </tr>
+                            {% if leave_info.attachment %}
+                            <tr>
+                                <td style="width: 30%;">
+                                    <p>Attachment : </p>
+                                </td>
+                                <td style="width: 70%;">
+                                    <p>{{ leave_info.attachment }} <a href="{{ leave_info.attachment_url }}">View</a></p>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                    {% endif %}
+                    <form method="POST" class="mw-initial" novalidate>
+                        {% csrf_token %}
+                        {% include 'leave/process/approval/form.html' %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-main" name="save_comment">Save</button>
+                        </div>
+                    </form>
+
+                    {% if comment %}
+                    <div class="comment-wrapper">
+                        {% for obj in comment %}
+                        <div class="comment-wrap d-flex">
+                            <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                            <div class="comment-info">
+                                <h2>{{ obj.user }}{% if obj.user.user_job_information.latest.designationt %}, {{ obj.user.user_job_information.latest.designation }}{% endif %}, {{ obj.created_at }} </h2>
+                                <p>{{ obj.comment }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" class="mw-initial" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group w-100 text-right mt-5">
+                            <a class="btn btn-main b-none" href="{% url 'beehive_admin:leave:leave_approval_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main" name="decline">Decline</button>
+                            <button type="submit" class="btn btn-main" name="approve">Approve
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

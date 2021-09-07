@@ -1,0 +1,175 @@
+{% for form_data in physical_address_form %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.address_line_1.id_for_label }}">{{ form_data.address_line_1.label }}</label>
+            <input type="text" name="{{ form_data.address_line_1.html_name }}" id="{{ form_data.address_line_1.id_for_label }}" class="formset-field form-control {% if form_data.address_line_1.errors %} is-invalid{% endif %}" {% if form_data.address_line_1.value != None %}value="{{ form_data.address_line_1.value }}" {% endif %}>
+
+            {% if form_data.address_line_1.errors %}
+            {% for error in form_data.address_line_1.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.address_line_2.id_for_label }}">{{ form_data.address_line_2.label }}</label>
+            <input type="text" name="{{ form_data.address_line_2.html_name }}" id="{{ form_data.address_line_2.id_for_label }}" class="formset-field form-control {% if form_data.address_line_2.errors %} is-invalid{% endif %}" {% if form_data.address_line_2.value != None %}value="{{ form_data.address_line_2.value }}" {% endif %}>
+
+            {% if form_data.address_line_2.errors %}
+            {% for error in form_data.address_line_2.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.country.id_for_label }}">{{ form_data.country.label }}</label>
+            <select name="{{ form_data.country.html_name }}" id="{{ form_data.country.id_for_label }}" class="form-control{% if form_data.country.errors %} is-invalid{% endif %}" required>
+
+                {% if form_data.country.value %}
+                {% for choice in form_data.country.field.choices %}
+                {% if form_data.country.value == choice.0 %}
+                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                {% else %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                {% for choice in form_data.country.field.choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+
+            {% if form_data.country.errors %}
+            {% for error in form_data.country.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.state.id_for_label }}">{{ form_data.state.label }}</label>
+            <input type="text" name="{{ form_data.state.html_name }}" id="{{ form_data.state.id_for_label }}" class="formset-field form-control {% if form_data.state.errors %} is-invalid{% endif %}" {% if form_data.state.value != None %}value="{{ form_data.state.value }}" {% endif %}>
+
+            {% if form_data.state.errors %}
+            {% for error in form_data.state.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.city.id_for_label }}">{{ form_data.city.label }}</label>
+            <input type="text" name="{{ form_data.city.html_name }}" id="{{ form_data.city.id_for_label }}" class="formset-field form-control {% if form_data.city.errors %} is-invalid{% endif %}" {% if form_data.city.value != None %}value="{{ form_data.city.value }}" {% endif %}>
+
+            {% if form_data.city.errors %}
+            {% for error in form_data.city.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.area.id_for_label }}">{{ form_data.area.label }}</label>
+            <input type="text" name="{{ form_data.area.html_name }}" id="{{ form_data.area.id_for_label }}" class="formset-field form-control {% if form_data.area.errors %} is-invalid{% endif %}" {% if form_data.area.value != None %}value="{{ form_data.area.value }}" {% endif %}>
+
+            {% if form_data.area.errors %}
+            {% for error in form_data.area.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.postal_code.id_for_label }}">{{ form_data.postal_code.label }}</label>
+            <input type="text" name="{{ form_data.postal_code.html_name }}" id="{{ form_data.postal_code.id_for_label }}" class="formset-field form-control {% if form_data.postal_code.errors %} is-invalid{% endif %}" {% if form_data.postal_code.value != None %}value="{{ form_data.postal_code.value }}" {% endif %}>
+
+            {% if form_data.postal_code.errors %}
+            {% for error in form_data.postal_code.errors %}
+            {{ error }}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group w-100">
+            <label for="{{ form_data.description.id_for_label }}">Address {{ form_data.description.label }}</label>
+            <textarea name="{{ form_data.description.html_name }}" class="form-control{% if form_data.description.errors %} is-invalid{% endif %} mw-initial" id="{{ form_data.description.id_for_label }}" cols="30" rows="5">{{ form_data.description.value|default_if_none:'' }}</textarea>
+
+            {% if form_data.description.errors %}
+            {% for error in form_data.description.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form_data.status.id_for_label }}">{{ form_data.status.label }}</label>
+            <select name="{{ form_data.status.html_name }}" id="{{ form_data.status.id_for_label }}" class="form-control{% if form_data.status.errors %} is-invalid{% endif %}" required>
+                {% if form_data.status.value %}
+                {% for choice in form_data.status.field.choices %}
+                {% if form_data.status.value == choice.0 %}
+                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                {% else %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                {% for choice in form_data.status.field.choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+
+            {% if form_data.status.errors %}
+            {% for error in form_data.status.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% if form_type == 'update' %}
+    <div class="form-group switch">
+        <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+            <label for="{{ form_data.delete.id_for_label }}">{{ form_data.delete.label }}
+                <input type="checkbox" name="{{ form_data.delete.html_name }}" id="{{ form_data.delete.id_for_label }}" {% if form_data.delete.value %}checked{% endif %}>
+                <span></span>
+            </label>
+        </span>
+
+        {% if form_data.delete.errors %}
+        {% for error in form_data.delete.errors %}
+        <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div>
+        <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+    </div>
+
+</div>
+{% endfor %}
+
+{{ physical_address_form.management_form }}
+
+{#<div class="form-group w-100 text-right">#}
+{#    <a class="btn btn-main  b-none" href="{% url 'beehive_admin:setting:project_list' %}">Cancel</a>#}
+{#    <a href="javascript:;" class="btn btn-main next-one">Next</a>#}
+{#</div>#}

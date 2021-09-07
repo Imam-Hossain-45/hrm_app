@@ -1,0 +1,61 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Salaries{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    {% if request.user.is_superuser or 'add_salary' in permissions %}
+                    <p class="text-right"><a href="{% url 'beehive_admin:payroll:salary_create' %}" class="btn btn-main">Create</a></p>
+                    {% endif %}
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Gross</th>
+                                    <th>Created On</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for salary in salaries %}
+                                <tr>
+                                    <td>{{ salary }}</td>
+                                    <td>{{ salary.created_at }}</td>
+                                    <td>
+                                        {% if request.user.is_superuser or 'view_salary' in permissions %}
+                                        <a href="{% url 'beehive_admin:payroll:salary_detail' salary.id %}">View</a>
+                                        {% endif %}
+
+                                        {% if request.user.is_superuser or 'view_salary' in permissions and 'change_salary' in permissions %}
+                                        |
+                                        {% endif %}
+
+                                        {% if request.user.is_superuser or 'change_salary' in permissions %}
+                                        <a href="{% url 'beehive_admin:payroll:salary_update' salary.id %}">Edit</a>
+                                        {% endif %}
+
+                                        {% if request.user.is_superuser or 'change_salary' in permissions and 'delete_salary' in permissions %}
+                                        |
+                                        {% endif %}
+
+                                        {% if request.user.is_superuser or 'delete_salary' in permissions %}
+                                        <a href="{% url 'beehive_admin:payroll:salary_delete' salary.id %}">Delete</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

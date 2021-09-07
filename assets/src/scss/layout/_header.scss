@@ -1,0 +1,36 @@
+.m-header--fixed .m-header {
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.m-quick-sidebar {
+  width: 350px !important;
+}
+
+.nav-tabs .nav-link {
+  border: none;
+}
+
+.m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-nav__link-icon {
+  color: #282828 !important;
+}
+
+.m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-nav__link-icon>i:before {
+  background-color: linear-gradient(180deg, #282828 25%, #636363 50%, #828282 75%, #9c9c9c 100%) !important;
+  background-color: -webkit-linear-gradient(180deg, #282828 25%, #636363 50%, #828282 75%, #9c9c9c 100%);
+  filter: brightness(0);
+}
+
+.m-dropdown.m-dropdown--header-bg-fill .m-dropdown__header .m-dropdown__header-title,
+.m-dropdown.m-dropdown--header-bg-fill .m-dropdown__header .m-dropdown__header-subtitle {
+  color: #282828;
+}
+
+.m-topbar .m-topbar__nav.m-nav>.m-nav__item.m-topbar__user-profile.m-topbar__user-profile--img.m-dropdown--arrow .m-dropdown__arrow {
+  color: #fff;
+}
+
+.m-brand .m-brand__tools .m-brand__toggler span,
+.m-brand .m-brand__tools .m-brand__toggler.m-brand__toggler--left span:after,
+.m-brand .m-brand__tools .m-brand__toggler.m-brand__toggler--left span:before {
+  background: #282828;
+}

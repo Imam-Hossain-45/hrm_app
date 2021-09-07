@@ -1,0 +1,307 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ job_form.company.id_for_label }}">{{ job_form.company.label }}<span>*</span></label>
+            <select name="{{ job_form.company.name }}" class="form-control{% if job_form.company.errors %} is-invalid{% endif %}" id="{{ job_form.company.id_for_label }}">
+                {% for company in job_form.company %}
+                {{ company }}
+                {% endfor %}
+            </select>
+            {% if job_form.company.errors %}
+            {% for error in job_form.company.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ job_form.business_unit.id_for_label }}">{{ job_form.business_unit.label }}</label>
+            <select name="{{ job_form.business_unit.name }}" class="form-control{% if job_form.business_unit.errors %} is-invalid{% endif %}" id="{{ job_form.business_unit.id_for_label }}">
+                {% for business_unit in job_form.business_unit %}
+                {{ business_unit }}
+                {% endfor %}
+            </select>
+            {% if job_form.business_unit.errors %}
+            {% for error in job_form.business_unit.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ job_form.division.id_for_label }}">{{ job_form.division.label }}</label>
+            <select name="{{ job_form.division.name }}" class="form-control{% if job_form.division.errors %} is-invalid{% endif %}" id="{{ job_form.division.id_for_label }}">
+                {% for division in job_form.division %}
+                {{ division }}
+                {% endfor %}
+            </select>
+            {% if job_form.division.errors %}
+            {% for error in job_form.division.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ job_form.department.id_for_label }}">{{ job_form.department.label }}</label>
+            <select name="{{ job_form.department.name }}" class="form-control{% if job_form.department.errors %} is-invalid{% endif %}" id="{{ job_form.department.id_for_label }}">
+                {% for department in job_form.department %}
+                {{ department }}
+                {% endfor %}
+            </select>
+            {% if job_form.department.errors %}
+            {% for error in job_form.department.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ job_form.project.id_for_label }}">{{ job_form.project.label }}</label>
+            <select name="{{ job_form.project.name }}" class="form-control{% if job_form.project.errors %} is-invalid{% endif %}" id="{{ job_form.project.id_for_label }}">
+                {% for project in job_form.project %}
+                {{ project }}
+                {% endfor %}
+            </select>
+            {% if job_form.project.errors %}
+            {% for error in job_form.project.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-12 border-top mt-3">
+        <div class="row pt-3 pb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ job_form.designation.id_for_label }}">{{ job_form.designation.label }}</label>
+                    <select name="{{ job_form.designation.name }}" class="form-control{% if job_form.designation.errors %} is-invalid{% endif %}" id="{{ job_form.designation.id_for_label }}">
+                        {% for designation in job_form.designation %}
+                        {{ designation }}
+                        {% endfor %}
+                    </select>
+                    {% if job_form.designation.errors %}
+                    {% for error in job_form.designation.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ job_form.report_to.id_for_label }}">{{ job_form.report_to.label }}</label>
+                    <select name="{{ job_form.report_to.name }}" class="form-control{% if job_form.report_to.errors %} is-invalid{% endif %}" id="{{ job_form.report_to.id_for_label }}">
+                        {% for report_to in job_form.report_to %}
+                        {{ report_to }}
+                        {% endfor %}
+                    </select>
+                    {% if job_form.report_to.errors %}
+                    {% for error in job_form.report_to.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ job_form.additional_report_to.id_for_label }}">{{ job_form.additional_report_to.label }}</label>
+                    <select name="{{ job_form.additional_report_to.name }}" class="form-control{% if job_form.additional_report_to.errors %} is-invalid{% endif %}" id="{{ job_form.additional_report_to.id_for_label }}">
+                        {% for additional_report_to in job_form.additional_report_to %}
+                        {{ additional_report_to }}
+                        {% endfor %}
+                    </select>
+                    {% if job_form.additional_report_to.errors %}
+                    {% for error in job_form.additional_report_to.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 border-top mt-3">
+        <div class="row pt-3 pb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ job_form.pay_group.id_for_label }}">{{ job_form.pay_group.label }}</label>
+                    <input type="text" name="{{ job_form.pay_group.name }}" class="form-control{% if job_form.pay_group.errors %} is-invalid{% endif %}" id="{{ job_form.pay_group.id_for_label }}" value="{{ job_form.pay_group.value|default_if_none:'' }}">
+                    {% if job_form.pay_group.errors %}
+                    {% for error in job_form.pay_group.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ job_form.pay_scale.id_for_label }}">{{ job_form.pay_scale.label }}</label>
+                    <select name="{{ job_form.pay_scale.name }}" class="form-control{% if job_form.pay_scale.errors %} is-invalid{% endif %}" id="{{ job_form.pay_scale.id_for_label }}">
+                        {% for pay_scale in job_form.pay_scale %}
+                        {{ pay_scale }}
+                        {% endfor %}
+                    </select>
+                    {% if job_form.pay_scale.errors %}
+                    {% for error in job_form.pay_scale.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="{{ job_form.pay_grade.id_for_label }}">{{ job_form.pay_grade.label }}</label>
+                    <select name="{{ job_form.pay_grade.name }}" class="form-control{% if job_form.pay_grade.errors %} is-invalid{% endif %}" id="{{ job_form.pay_grade.id_for_label }}">
+                        {% for pay_grade in job_form.pay_grade %}
+                        {{ pay_grade }}
+                        {% endfor %}
+                    </select>
+                    {% if job_form.pay_grade.errors %}
+                    {% for error in job_form.pay_grade.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card-header secondary">
+            <h2>Employment</h2>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-3">
+        <div class="row pt-3 pb-3">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ job_form.employment_type.id_for_label }}">{{ job_form.employment_type.label }}</label>
+                    <select name="{{ job_form.employment_type.name }}" class="form-control{% if job_form.employment_type.errors %} is-invalid{% endif %}" id="{{ job_form.employment_type.id_for_label }}">
+                        {% for employment_type in job_form.employment_type %}
+                        {{ employment_type }}
+                        {% endfor %}
+                    </select>
+                    {% if job_form.employment_type.errors %}
+                    {% for error in job_form.employment_type.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group calendar">
+                    <label for="{{ job_form.date_of_offer.id_for_label }}">{{ job_form.date_of_offer.label }}</label>
+                    <input type="date" name="{{ job_form.date_of_offer.name }}" class="form-control{% if job_form.date_of_offer.errors %} is-invalid{% endif %}" id="{{ job_form.date_of_offer.id_for_label }}" value="{% if job_form.date_of_offer.value|get_date_type == 'str' %}{{ job_form.date_of_offer.value }}{% else %}{{ job_form.date_of_offer.value|date:'Y-m-d' }}{% endif %}">
+                    <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                    {% if job_form.date_of_offer.errors %}
+                    {% for error in job_form.date_of_offer.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group calendar">
+                    <label for="{{ job_form.date_of_joining.id_for_label }}">{{ job_form.date_of_joining.label }}<span>*</span></label>
+                    <input type="date" name="{{ job_form.date_of_joining.name }}" class="form-control{% if job_form.date_of_joining.errors %} is-invalid{% endif %}" id="{{ job_form.date_of_joining.id_for_label }}" value="{% if job_form.date_of_joining.value|get_date_type == 'str' %}{{ job_form.date_of_joining.value }}{% else %}{{ job_form.date_of_joining.value|date:'Y-m-d' }}{% endif %}">
+                    <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                    {% if job_form.date_of_joining.errors %}
+                    {% for error in job_form.date_of_joining.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% if employment_form %}
+    <div class="col-md-12 border-top mt-3">
+        <div class="row pt-3 pb-3">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group w-100">
+                            <label for="{{ employment_form.confirmation_after.id_for_label }}">{{ employment_form.confirmation_after.label }}</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="number" name="{{ employment_form.confirmation_after.name }}" class="form-control{% if employment_form.confirmation_after.errors %} is-invalid{% endif %}" id="{{ employment_form.confirmation_after.id_for_label }}" value="{{ employment_form.confirmation_after.value|default_if_none:'' }}">
+                                    {% if employment_form.confirmation_after.errors %}
+                                    {% for error in employment_form.confirmation_after.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <select name="{{ employment_form.confirmation_after_unit.name }}" class="form-control{% if employment_form.confirmation_after_unit.errors %} is-invalid{% endif %}" id="{{ employment_form.confirmation_after_unit.id_for_label }}">
+                                        {% for confirmation_after_unit in employment_form.confirmation_after_unit %}
+                                        {{ confirmation_after_unit }}
+                                        {% endfor %}
+                                    </select>
+                                    {% if employment_form.confirmation_after_unit.errors %}
+                                    {% for error in employment_form.confirmation_after_unit.errors %}
+                                    <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group calendar">
+                            <label for="{{ employment_form.confirmation_date.id_for_label }}">{{ employment_form.confirmation_date.label }}</label>
+                            <input type="date" name="{{ employment_form.confirmation_date.name }}" class="form-control{% if employment_form.confirmation_date.errors %} is-invalid{% endif %}" id="{{ employment_form.confirmation_date.id_for_label }}" value="{% if employment_form.confirmation_date.value|get_date_type == 'str' %}{{ employment_form.confirmation_date.value }}{% else %}{{ employment_form.confirmation_date.value|date:'Y-m-d' }}{% endif %}">
+                            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                            {% if employment_form.confirmation_date.errors %}
+                            {% for error in employment_form.confirmation_date.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group calendar">
+                            <label for="{{ employment_form.date_of_actual_confirmation.id_for_label }}">{{ employment_form.date_of_actual_confirmation.label }}</label>
+                            <input type="date" name="{{ employment_form.date_of_actual_confirmation.name }}" class="form-control{% if employment_form.date_of_actual_confirmation.errors %} is-invalid{% endif %}" id="{{ employment_form.date_of_actual_confirmation.id_for_label }}" value="{% if employment_form.date_of_actual_confirmation.value|get_date_type == 'str' %}{{ employment_form.date_of_actual_confirmation.value }}{% else %}{{ employment_form.date_of_actual_confirmation.value|date:'Y-m-d' }}{% endif %}">
+                            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                            {% if employment_form.date_of_actual_confirmation.errors %}
+                            {% for error in employment_form.date_of_actual_confirmation.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="col-md-12 border-top mt-3">
+        <div class="form-group pt-3 pb-3">
+            <label for="{{ job_form.job_status.id_for_label }}">{{ job_form.job_status.label }}</label>
+            <select name="{{ job_form.job_status.name }}" class="form-control{% if job_form.job_status.errors %} is-invalid{% endif %}" id="{{ job_form.job_status.id_for_label }}">
+                {% for job_status in job_form.job_status %}
+                {{ job_status }}
+                {% endfor %}
+            </select>
+            {% if job_form.job_status.errors %}
+            {% for error in job_form.job_status.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+</div>

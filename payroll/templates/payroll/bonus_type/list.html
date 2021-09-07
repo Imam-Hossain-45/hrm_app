@@ -1,0 +1,45 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Bonus Types List{% endblock %}
+
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    {% if request.user.is_superuser or 'add_bonustype' in permissions %}
+                    <p class="text-right"><a href="{% url 'beehive_admin:payroll:bonus_type_create' %}" class="btn btn-main">Create</a></p>
+                    {% endif %}
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Sl.</th>
+                            <th>Bonus Type</th>
+                            <th>Festival Bonus</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </thead>
+                        {% for bonus_type in bonus_types %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ bonus_type.name }}</td>
+                            {% if bonus_type.is_festival %}
+                            <td>Yes</td>
+                            {% else %}
+                            <td>No</td>
+                            {% endif %}
+                            <td>{{ bonus_type.description }}</td>
+                            <td><a href="{% url 'beehive_admin:payroll:bonus_type_update' pk=bonus_type.id %}">Edit</a> |
+                                <a href="{% url 'beehive_admin:payroll:bonus_type_delete' pk=bonus_type.id %}">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Organizational Structure List{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_organizationalstructure' in permissions %}
+            <div class="text-right">
+                {#                        <a href="{% url 'beehive_admin:setting:organizational_structure_create' %}" class="btn btn-main m-0">+#}
+                {#                            Add a new organizational structure#}
+                {#                        </a>#}
+            </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title text-center">
+                        <h2>Build your organizational structures</h2>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {#                                <div class="table-responsive">#}
+                                {#                                    <table class="table table-hover" id="datatable">#}
+                                {#                                        <thead>#}
+                                {#                                        <tr class="selectable">#}
+                                {#                                            <th scope="col">Item</th>#}
+                                {#                                            <th scope="col">Parent</th>#}
+                                {#                                            <th scope="col">Action</th>#}
+                                {#                                        </tr>#}
+                                {#                                        </thead>#}
+                                {#                                        <tbody>#}
+                                {#                                        {% for item in orgs %}#}
+                                {#                                            <tr>#}
+                                {#                                                <td>{{ item.get_item_display }}</td>#}
+                                {#                                                <td>{{ item.parent_item }}</td>#}
+                                {#                                                <td class="v-middle">#}
+                                {#                                                    {% if request.user.is_superuser or 'change_organizationalstructure' in permissions %}#}
+                                {#                                                        <a title="edit" class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline"#}
+                                {#                                                           href="{% url 'beehive_admin:setting:organizational_structure_update' item.id %}">#}
+                                {#                                                            <i class="la la-edit"></i>#}
+                                {#                                                        </a>#}
+                                {#                                                    {% endif %}#}
+                                {##}
+                                {#                                                    {% if request.user.is_superuser or 'delete_organizationalstructure' in permissions %}#}
+                                {#                                                        <a title="delete" class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline"#}
+                                {#                                                           href="{% url 'beehive_admin:setting:organizational_structure_delete' item.id %}">#}
+                                {#                                                            <i class="la la-times-circle-o"></i>#}
+                                {#                                                        </a>#}
+                                {#                                                    {% endif %}#}
+                                {#                                                </td>#}
+                                {#                                            </tr>#}
+                                {#                                        {% endfor %}#}
+                                {#                                        </tbody>#}
+                                {#                                    </table>#}
+                                {#                                </div>#}
+
+
+                                <div id="sortable-div" class="col-sm-12 col-xs-12 col-md-10 offset-md-1 addSub">
+                                    <div id="dragdrop" class="top-container">
+                                        <div class="clearfix">
+                                            <div class="dragbleList">
+                                                <ul id="sortable-one" class="sortable-list sortable-top mt-3">
+                                                    {% for item in unused_items %}
+                                                    <li id="item2" class="sortable-item">{{ item.1 }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="dragdrop" class="middle-container">
+                                        <div class="clearfix">
+                                            <div class="list-block-wrap"></div>
+                                            <ul id="sortable-two" class="sortable-list sortable-middle mt-5">
+                                                {% if orgs %}
+                                                {% for org in orgs %}
+                                                <li id="item1" class="sortable-item">{{ org }}</li>
+                                                {#<a href="javascript:;" class="remove-item">Remove</a>#}
+                                                {% endfor %}
+                                                {% else %}
+                                                <li id="item1" class="sortable-item" style="cursor: not-allowed;">Company</li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="sort-id" class="sortable-two list"></div>
+                                <input type="hidden" name="org-structure" class="form-control org-input" value="">
+                            </div>
+                            <div class="form-group w-100 text-center mt-5">
+                                <a class="btn btn-main b-none" href="{% url 'beehive_admin:setting:organizational_structure_list' %}">Cancel</a>
+                                <button type="submit" class="btn btn-main">Create Structure</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

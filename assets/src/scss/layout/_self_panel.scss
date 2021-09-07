@@ -1,0 +1,15 @@
+.self-leave {
+  .calendar i {
+    left: 120px !important;
+  }
+}
+
+.leave-status-wrap .btn-main {
+  font-size: 13px !important;
+  font-weight: 500;
+  padding: .25rem .75rem;
+
+  &:hover {
+    cursor: auto;
+  }
+}

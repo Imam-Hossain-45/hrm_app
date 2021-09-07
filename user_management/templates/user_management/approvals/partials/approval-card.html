@@ -1,0 +1,27 @@
+{% load static %}
+
+<div class="comment-wrap d-flex">
+    {% if approval.profile_picture %}
+        <img class="comment-img" src="{{ approval.profile_picture.url }}" alt="{{ approval.applied_by }}">
+    {% endif %}
+
+    <div class="comment-info">
+        <a href="{% url 'beehive_admin:leave:leave_approval_form' approval.application_id %}">
+            <h2 class="dash-title">
+                {{ approval.applied_by }}
+                <span>
+                    has applied for {{ approval.duration }} of
+                    {{ approval.applied_for }}
+                    {% if approval.application_start_date == approval.application_end_date %}
+                        on {{ approval.application_start_date }}
+                    {% elif approval.application_start_date != approval.application_end_date %}
+                        from {{ approval.application_start_date }}
+                        to {{ approval.application_end_date }}
+                    {% endif %}
+                </span>
+            </h2>
+        </a>
+
+        <p>{{ approval.created_at }}</p>
+    </div>
+</div>

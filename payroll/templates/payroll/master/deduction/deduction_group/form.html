@@ -1,0 +1,159 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+            <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}" class="form-control{% if form.name.errors %} is-invalid{% endif %}" placeholder="Ex: Deduction Component Group 1" value="{{ form.name.value|default_if_none:'' }}">
+
+            {% if form.name.errors %}
+            {% for error in form.name.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ form.short_code.id_for_label }}">{{ form.short_code.label }}</label>
+            <input type="text" name="{{ form.short_code.name }}" id="{{ form.short_code.id_for_label }}" class="form-control{% if form.short_code.errors %} is-invalid{% endif %}" placeholder="Ex: DG1" value="{{ form.short_code.value|default_if_none:'' }}">
+
+            {% if form.short_code.errors %}
+            {% for error in form.short_code.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+            <textarea type="text" name="{{ form.description.name }}" id="{{ form.description.id_for_label }}" class="form-control{% if form.description.errors %} is-invalid{% endif %}" placeholder="Ex: My Description">{{ form.description.value|default_if_none:'' }}</textarea>
+
+            {% if form.description.errors %}
+            {% for error in form.description.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+            <select name="{{ form.status.name }}" id="{{ form.status.id_for_label }}" class="form-control{% if form.status.errors %} is-invalid{% endif %}" required>
+                {% if form.status.value %}
+                {% for choice in form.status.field.choices %}
+                {% if form.status.value == choice.0 %}
+                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                {% else %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                {% for choice in form.status.field.choices %}
+                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+
+            {% if form.status.errors %}
+            {% for error in form.status.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="title-text">Select Deduction Components</h2>
+    </div>
+</div>
+
+<div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <h2>Absent Components</h2>
+        </div>
+    </div>
+
+    <input style="" type="radio" name="{{form.absent_component.name}}_options" value="None" id="id_{{form.absent_component.name}}_none" {% if selected_absent_component == "None" %} checked {% endif %}>
+    <label for="id_{{form.absent_component.name}}_none">None</label><br>
+
+    {% for choice in form.absent_component.field.choices %}
+    {% if choice.0 %}
+    <input style="" type="radio" name="{{form.absent_component.name}}_options" value="{{ choice.0 }}" id="id_{{form.absent_component.name}}_{{ choice.0 }}" {% if selected_absent_component == choice.0 %} checked {% endif %}>
+    <label for="id_{{form.absent_component.name}}_{{ choice.0 }}">{{ choice.1 }}</label><br>
+    {% endif %}
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <h2>Late Components</h2>
+        </div>
+    </div>
+
+    <input style="" type="radio" name="{{form.late_component.name}}_options" value="None" id="id_{{form.late_component.name}}_none" {% if selected_late_component == "None" %} checked {% endif %}>
+    <label for="id_{{form.late_component.name}}_none">None</label><br>
+
+    {% for choice in form.late_component.field.choices %}
+    {% if choice.0 %}
+    <input style="" type="radio" name="{{form.late_component.name}}_options" value="{{ choice.0 }}" id="id_{{form.late_component.name}}_{{ choice.0 }}" {% if selected_late_component == choice.0 %} checked {% endif %}>
+    <label for="id_{{form.late_component.name}}_{{ choice.0 }}">{{ choice.1 }}</label><br>
+    {% endif %}
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <h2>Early Out Components</h2>
+        </div>
+    </div>
+
+    <input style="" type="radio" name="{{form.early_out_component.name}}_options" value="None" id="id_{{form.early_out_component.name}}_none" {% if selected_early_out_component == "None" %} checked {% endif %}>
+    <label for="id_{{form.early_out_component.name}}_none">None</label><br>
+
+    {% for choice in form.early_out_component.field.choices %}
+    {% if choice.0 %}
+    <input style="" type="radio" name="{{form.early_out_component.name}}_options" value="{{ choice.0 }}" id="id_{{form.early_out_component.name}}_{{ choice.0 }}" {% if selected_early_out_component == choice.0 %} checked {% endif %}>
+    <label for="id_{{form.early_out_component.name}}_{{ choice.0 }}">{{ choice.1 }}</label><br>
+    {% endif %}
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <h2>UnderWork Components</h2>
+        </div>
+    </div>
+
+    <input style="" type="radio" name="{{form.under_work_component.name}}_options" value="None" id="id_{{form.under_work_component.name}}_none" {% if selected_under_work_component == "None" %} checked {% endif %}>
+    <label for="id_{{form.under_work_component.name}}_none">None</label><br>
+
+    {% for choice in form.under_work_component.field.choices %}
+    {% if choice.0 %}
+    <input style="" type="radio" name="{{form.under_work_component.name}}_options" value="{{ choice.0 }}" id="id_{{form.under_work_component.name}}_{{ choice.0 }}" {% if selected_under_work_component == choice.0 %} checked {% endif %}>
+    <label for="id_{{form.under_work_component.name}}_{{ choice.0 }}">{{ choice.1 }}</label><br>
+    {% endif %}
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr>
+            <h2>Other Components</h2>
+        </div>
+    </div>
+
+    <input style="" type="radio" name="{{form.other_component.name}}_options" value="None" id="id_{{form.other_component.name}}_none" {% if selected_other_component == "None" %} checked {% endif %}>
+    <label for="id_{{form.other_component.name}}_none">None</label><br>
+
+    {% for choice in form.other_component.field.choices %}
+    {% if choice.0 %}
+    <input style="" type="radio" name="{{form.other_component.name}}_options" value="{{ choice.0 }}" id="id_{{form.other_component.name}}_{{ choice.0 }}" {% if selected_other_component == choice.0 %} checked {% endif %}>
+    <label for="id_{{form.other_component.name}}_{{ choice.0 }}">{{ choice.1 }}</label><br>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<input type="hidden" name="next" value="{{ request.path }}">

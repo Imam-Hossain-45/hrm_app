@@ -1,0 +1,45 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Calendar > Add{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Calendar</h2>
+                    <p>Calendar</p>
+                </div>
+                <div class="card-block">
+                    <form method="post" novalidate>
+                        {% include 'attendance/master/calendar/form.html' %}
+
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main  b-none" href="{% url 'beehive_admin:attendance:master_calendar_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $("[name='parent_calendar']").on('change', function () {
+                $.ajax({
+                    url: ".",
+                    data: {'parent_id': $(this).val()},
+                    success: function (result) {
+                        $(".parent_form").html(result);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

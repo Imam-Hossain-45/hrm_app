@@ -1,0 +1,28 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Claim > Category > New{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>CLAIM CATEGORY</h2>
+                    <p>Create a new claimable category.</p>
+                </div>
+                <div class="card-block">
+                    <form method="POST">
+                        {% include 'payroll/claim/category/form.html' %}
+
+                        <div class='form-group w-100 text-right'>
+                            <button type="submit" class="btn btn-main">Submit</button>
+                            <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:claim_category_list' %}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

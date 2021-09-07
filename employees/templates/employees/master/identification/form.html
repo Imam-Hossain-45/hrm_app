@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form.employee_code.id_for_label }}">{{ form.employee_code.label }}<span>*</span></label>
+            <input type="text" name="{{ form.employee_code.name }}" class="form-control{% if form.employee_code.errors %} is-invalid{% endif %}" id="{{ form.employee_code.id_for_label }}" value="{{ form.employee_code.value|default_if_none:'' }}">
+            {% if form.employee_code.errors %}
+            {% for error in form.employee_code.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group w-100">
+            <label for="{{ form.title.id_for_label }}">{{ form.title.label }}<span>*</span></label>
+            <select name="{{ form.title.name }}" class="form-control{% if form.title.errors %} is-invalid{% endif %}" id="{{ form.title.id_for_label }}" required="">
+                {% for choice in form.title %}
+                {{ choice }}
+                {% endfor %}
+            </select>
+            {% if form.title.errors %}
+            {% for error in form.title.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group w-100">
+            <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}<span>*</span></label>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" name="{{ form.first_name.name }}" class="form-control{% if form.first_name.errors %} is-invalid{% endif %}" placeholder="First Name" id="{{ form.first_name.id_for_label }}" value="{{ form.first_name.value|default_if_none:'' }}">
+                    {% if form.first_name.errors %}
+                    {% for error in form.first_name.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="{{ form.middle_name.name }}" class="form-control{% if form.middle_name.errors %} is-invalid{% endif %}" placeholder="Middle Name" id="{{ form.middle_name.id_for_label }}" value="{{ form.middle_name.value|default_if_none:'' }}">
+                    {% if form.middle_name.errors %}
+                    {% for error in form.middle_name.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="{{ form.last_name.name }}" class="form-control{% if form.last_name.errors %} is-invalid{% endif %}" placeholder="Last Name" id="{{ form.last_name.id_for_label }}" value="{{ form.last_name.value|default_if_none:'' }}">
+                    {% if form.last_name.errors %}
+                    {% for error in form.last_name.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="form-group w-100">
+            <label for="{{ form.display_name.id_for_label }}">{{ form.display_name.label }}</label>
+            <input type="text" name="{{ form.display_name.name }}" class="form-control{% if form.display_name.errors %} is-invalid{% endif %}" id="{{ form.display_name.id_for_label }}" value="{{ form.display_name.value|default_if_none:'' }}">
+            {% if form.display_name.errors %}
+            {% for error in form.display_name.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group w-100">
+            <label for="{{ form.employee_id.id_for_label }}">{{ form.employee_id.label }}<span>*</span></label>
+            <input type="text" name="{{ form.employee_id.name }}" class="form-control{% if form.employee_id.errors %} is-invalid{% endif %}" id="{{ form.employee_id.id_for_label }}" value="{{ form.employee_id.value|default_if_none:'' }}">
+            {% if form.employee_id.errors %}
+            {% for error in form.employee_id.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group w-100">
+            <label for="{{ form.gender.id_for_label }}">{{ form.gender.label }}<span>*</span></label>
+            <select name="{{ form.gender.name }}" class="form-control{% if form.gender.errors %} is-invalid{% endif %}" id="{{ form.gender.id_for_label }}">
+                {% for gender in form.gender %}
+                {{ gender }}
+                {% endfor %}
+            </select>
+            {% if form.gender.errors %}
+            {% for error in form.gender.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class='form-group image-form-group w-100' style="position: relative;">
+            <p>{{ form.profile_picture.label }}</p>
+            <label for="id_{{ form.profile_picture.name }}">Upload</label>
+            {% if form.profile_picture.value %}
+
+            <img class="img-box" src="{{ form.profile_picture.value.url }}" width="120px" height="120px" />
+            <!-- <p>Currently:</p> -->
+            <div class="img-update-box">
+                <input id="profile_picture-clear_id" name="profile_picture-clear" type="checkbox" style="display: inline-block;">
+                <label for="profile_picture-clear_id" style="display: inline-block;border: none;height: auto;width: auto;cursor: pointer; margin-left: 25px;margin-top: -14px;">Clear</label>
+                <!-- <p>Change:</p> -->
+            </div>
+
+
+            {% endif %}
+            <img id="image" alt="image" width="120px" height="120px" style="display: none" />
+            <input type="file" id="id_{{ form.profile_picture.name }}" accept="image/*" name="{{ form.profile_picture.name }}" class="{{ form.profile_picture.name }}" onchange="document.getElementById('image').src = window.URL.createObjectURL(this.files[0]),document.getElementById('image').style.display = 'block'"><span>Change</span>
+
+            {% if form.profile_picture.errors %}
+            {% for error in form.profile_picture.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

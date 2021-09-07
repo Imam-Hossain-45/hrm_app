@@ -1,0 +1,314 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Operation{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        {% include 'layouts/event.html' %}
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Payroll Process</h2>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }}</label>
+                                        <input type="text" name="{{ form.employee.name }}"
+                                               id="{{ form.employee.id_for_label }}"
+                                               class="form-control{% if form.employee.errors %} is-invalid{% endif %}"
+                                               placeholder="ID of the Employee" value="{{ form.employee.value|default_if_none:'' }}">
+
+                                        {% if form.employee.errors %}
+                                            {% for error in form.employee.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.company.id_for_label }}">{{ form.company.label }}</label>
+                                        <select name="{{ form.company.name }}" id="{{ form.company.id_for_label }}" class="form-control{% if form.company.errors %} is-invalid{% endif %}" required>
+                                            {% if form.company.value %}
+                                                {% for choice in form.company.field.choices %}
+                                                    {% if form.company.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        {% if form.company.value == choice.0|stringformat:"i" %}
+                                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                        {% else %}
+                                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.company.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.company.errors %}
+                                            {% for error in form.company.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.division.id_for_label }}">{{ form.division.label }}</label>
+                                        <select name="{{ form.division.name }}" id="{{ form.division.id_for_label }}" class="form-control{% if form.division.errors %} is-invalid{% endif %}" required>
+                                            {% if form.division.value %}
+                                                {% for choice in form.division.field.choices %}
+                                                    {% if form.division.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        {% if form.division.value == choice.0|stringformat:"i" %}
+                                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                        {% else %}
+                                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.division.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.division.errors %}
+                                            {% for error in form.division.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.department.id_for_label }}">{{ form.department.label }}</label>
+                                        <select name="{{ form.department.name }}" id="{{ form.department.id_for_label }}" class="form-control{% if form.department.errors %} is-invalid{% endif %}" required>
+                                            {% if form.department.value %}
+                                                {% for choice in form.department.field.choices %}
+                                                    {% if form.department.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        {% if form.department.value == choice.0|stringformat:"i" %}
+                                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                        {% else %}
+                                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.department.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.department.errors %}
+                                            {% for error in form.department.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.business_unit.id_for_label }}">{{ form.business_unit.label }}</label>
+                                        <select name="{{ form.business_unit.name }}" id="{{ form.business_unit.id_for_label }}" class="form-control{% if form.business_unit.errors %} is-invalid{% endif %}" required>
+                                            {% if form.business_unit.value %}
+                                                {% for choice in form.business_unit.field.choices %}
+                                                    {% if form.business_unit.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        {% if form.business_unit.value == choice.0|stringformat:"i" %}
+                                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                        {% else %}
+                                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.business_unit.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.business_unit.errors %}
+                                            {% for error in form.business_unit.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.branch.id_for_label }}">{{ form.branch.label }}</label>
+                                        <select name="{{ form.branch.name }}" id="{{ form.branch.id_for_label }}" class="form-control{% if form.branch.errors %} is-invalid{% endif %}" required>
+                                            {% if form.branch.value %}
+                                                {% for choice in form.branch.field.choices %}
+                                                    {% if form.branch.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        {% if form.branch.value == choice.0|stringformat:"i" %}
+                                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                        {% else %}
+                                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.branch.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.branch.errors %}
+                                            {% for error in form.branch.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.schedule.id_for_label }}">{{ form.schedule.label }}</label>
+                                        <select name="{{ form.schedule.name }}" id="{{ form.schedule.id_for_label }}" class="form-control{% if form.schedule.errors %} is-invalid{% endif %}" required>
+                                            {% if form.schedule.value %}
+                                                {% for choice in form.schedule.field.choices %}
+                                                    {% if form.schedule.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        {% if form.schedule.value == choice.0|stringformat:"i" %}
+                                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                        {% else %}
+                                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.schedule.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.schedule.errors %}
+                                            {% for error in form.schedule.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100 calendar">
+                                        <label for="{{ form.start_date.id_for_label }}">{{ form.start_date.label }}</label>
+                                        <input type="date" name="{{ form.start_date.name }}" class="form-control{% if form.start_date.errors %} is-invalid{% endif %}" id="{{ form.start_date.id_for_label }}" value="{{ form.start_date.value|default_if_none:'' }}">
+                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+                                        {% if form.start_date.errors %}
+                                            {% for error in form.start_date.errors %}
+                                                {{ error }}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group w-100 calendar">
+                                        <label for="{{ form.end_date.id_for_label }}">{{ form.end_date.label }}</label>
+                                        <input type="date" name="{{ form.end_date.name }}" class="form-control{% if form.end_date.errors %} is-invalid{% endif %}" id="{{ form.end_date.id_for_label }}" value="{{ form.end_date.value|default_if_none:'' }}">
+                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+                                        {% if form.end_date.errors %}
+                                            {% for error in form.end_date.errors %}
+                                                {{ error }}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group w-100 text-right mt-5">
+                                        <button type="submit" class="btn btn-main">Process Payroll</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if unsuccessful_processed_list %}
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                    <h2>Error have found while processing {{ form.start_date.value }} to {{ form.end_date.value }}, for the employees:</h2>
+                </div>
+            </div>
+
+            {% for employee in unsuccessful_processed_list %}
+                <li>
+                    {{ employee }}
+                </li>
+            {% endfor %}
+        {% endif %}
+
+        {% if successful_processed_list %}
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                    <h2>Salary from {{ form.start_date.value }} to {{ form.end_date.value }}</h2>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Payable Salary (BDT)</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for employee_salary in successful_processed_list %}
+                        <tr>
+                            <td>{{ employee_salary.employee }}</td>
+                            <td>{{ employee_salary.net_earning }}</td>
+                            <td>{{ employee_salary.get_status_display }}</td>
+                            <td class="text-center">
+                                {% if request.user.is_superuser or 'view_employeesalary' in permissions or 'change_employeesalary' in permissions or 'view_payslipcomponent' in permissions or 'change_payslipcomponent' in permissions %}
+                                    <a class="btn btn-main" href="{% url 'beehive_admin:payroll:employee_salary_adjust_list' employee_salary.id %}">Adjust</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

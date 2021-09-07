@@ -1,0 +1,146 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Personal Information{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Employee Master</p>
+                    <h2>Address and Contact</h2>
+                </div>
+                <div class="card-block">
+
+                    <form method="POST" novalidate autocomplete="off">
+                        <div class="card-header secondary border-0">
+                            <h2>Contact Number</h2>
+                        </div>
+                        {% csrf_token %}
+                        {% include 'employees/master/contact/contact_form.html' %}
+                        <div class="col-md-12">
+                            <div class="form-group w-100 text-right">
+                                <button type='reset' class="btn btn-main b-none">Cancel</button>
+                                <button type="submit" class="btn btn-main pull-right" name="form1">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class='card'>
+
+            <div class="card-block">
+                <form method="POST" novalidate autocomplete="off">
+                    <div class="card-header secondary">
+                        <h2>Email Address</h2>
+                    </div>
+                    {% csrf_token %}
+                    {% include 'employees/master/contact/email_form.html' %}
+                    <div class="col-md-12">
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form2">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class='card'>
+
+        <div class="card-block">
+            <form method="POST" novalidate autocomplete="off">
+                <div class="card-header secondary">
+                    <h2>Emergency Contact</h2>
+                </div>
+                {% csrf_token %}
+                {% include 'employees/master/contact/emergency_form.html' %}
+                <div class="form-group w-100 text-right mt-5">
+                    <button type='reset' class="btn btn-main b-none">Cancel</button>
+                    <button type="submit" class="btn btn-main pull-right" name="form3">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class='card'>
+
+        <div class="card-block">
+            <form method="POST" novalidate autocomplete="off">
+                <div class="card-header secondary">
+                    <h2>Address</h2>
+                </div>
+                {% csrf_token %}
+                {% include 'employees/master/contact/address_form.html' %}
+                <div class="form-group w-100 text-right">
+                    <button type='reset' class="btn btn-main b-none">Cancel</button>
+                    <button type="submit" class="btn btn-main pull-right" name="form4">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $("[name='present_country']").on('change', function () {
+            $.ajax({
+                url: ".",
+                data: {
+                    'present_country_id': $(this).val()
+                },
+                success: function (result) {
+                    $("[name='present_state']").html(result);
+                }
+            });
+        });
+        $("[name='present_state']").on('change', function () {
+            $.ajax({
+                url: ".",
+                data: {
+                    'present_state_id': $(this).val()
+                },
+                success: function (result) {
+                    $("[name='present_city']").html(result);
+                }
+            });
+        });
+        $("[name='permanent_country']").on('change', function () {
+            $.ajax({
+                url: ".",
+                data: {
+                    'permanent_country_id': $(this).val()
+                },
+                success: function (result) {
+                    $("[name='permanent_state']").html(result);
+                }
+            });
+        });
+        $("[name='permanent_state']").on('change', function () {
+            $.ajax({
+                url: ".",
+                data: {
+                    'permanent_state_id': $(this).val()
+                },
+                success: function (result) {
+                    $("[name='permanent_city']").html(result);
+                }
+            });
+        });
+
+    });
+
+</script>
+{% endblock %}

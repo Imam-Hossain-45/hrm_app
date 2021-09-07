@@ -1,0 +1,233 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.user_type.id_for_label }}">{{ form.user_type.label }}</label>
+                <select name="{{ form.user_type.name }}" id="{{ form.user_type.id_for_label }}"
+                        class="form-control">
+                    {% for option in form.user_type.field.choices %}
+                        <option value="{{ option.0 }}"
+                                {% if form.user_type.value and form.user_type.value == option.0 %}selected{% endif %}>{{ option.1 }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if form.user_type.errors %}
+                    {% for error in form.user_type.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 employee-select-box">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.employee.id_for_label }}">{{ form.employee.label }}</label>
+                <select name="{{ form.employee.name }}" id="{{ form.employee.id_for_label }}"
+                        class="form-control">
+                    {% for option in form.employee.field.choices %}
+                        <option value="{{ option.0 }}"
+                                {% if form.employee.value and form.employee.value == option.0 %}selected{% endif %}>{{ option.1 }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if form.employee.errors %}
+                    {% for error in form.employee.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                <input type="email" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                       class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+                       value="{{ form.name.value|default:'' }}">
+
+                {% comment %}<input type="email" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                       class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+                       value="{% if user.user_type == 'employee-user' %}{{ user.employee }}{% else %}{{ form.name.value|default:'' }}{% endif %}"
+                       {% if user.user_type == 'employee-user' %}disabled{% endif %}>{% endcomment %}
+
+                {% if form.name.errors %}
+                    {% for error in form.name.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <div class="form-group calendar">
+                    <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                    <label for="{{ form.date_of_birth.id_for_label }}">{{ form.date_of_birth.label }}</label>
+                    <input type="date" name="{{ form.date_of_birth.name }}" id="{{ form.date_of_birth.id_for_label }}"
+                           class="form-control{% if form.date_of_birth.errors %} is-invalid{% endif %}"
+                           value="
+                                   {% if form.date_of_birth.value %}{{ form.date_of_birth.value|date:'d/m/Y' }}{% endif %}">
+
+                    {% if form.date_of_birth.errors %}
+                        {% for error in form.date_of_birth.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                <input type="text" name="{{ form.phone.name }}" id="{{ form.phone.id_for_label }}"
+                       class="form-control{% if form.phone.errors %} is-invalid{% endif %}"
+                       value="{{ form.phone.value|default:'' }}">
+
+                {% if form.phone.errors %}
+                    {% for error in form.phone.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row border-1 pt-3 mb-3">
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                <input type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}"
+                       class="form-control{% if form.email.errors %} is-invalid{% endif %}"
+                       value="{{ form.email.value|default:'' }}">
+
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+
+                {% if not update %}
+                    <input type="password" name="{{ form.password.name }}" id="{{ form.password.id_for_label }}"
+                           class="form-control{% if form.password.errors %} is-invalid{% endif %}"
+                           value="{{ form.password.value|default:'' }}">
+
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    <p><a href="#" class="reset-password" data-toggle="modal"
+                          data-target="#userManagementPasswordReset"><i class="la la-key"></i> Reset Password</a></p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="{{ form.dashboard.id_for_label }}">{{ form.dashboard.label }}</label>
+                <select name="{{ form.dashboard.name }}" id="{{ form.dashboard.id_for_label }}"
+                        class="form-control{% if form.dashboard.errors %} is-invalid{% endif %}">
+                    {% for option in form.dashboard.field.choices %}
+                        <option value="{{ option.0 }}"
+                                {% if form.dashboard.value and form.dashboard.value == option.0 %}selected{% endif %}>{{ option.1 }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if form.dashboard.errors %}
+                    {% for error in form.dashboard.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="col-md-6">
+                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                    <label for="{{ form.self_panel.id_for_label }}">{{ form.self_panel.label }}
+                        <input type="checkbox" name="{{ form.self_panel.name }}" value="{% if form.self_panel.value %}0{% else %}1{% endif %}"
+                               id="{{ form.self_panel.id_for_label }}" {% if form.self_panel.value == True %}checked{% endif %}>
+                        <span></span>
+                    </label>
+                </span>
+
+                {% if form.self_panel.errors %}
+                    {% for error in form.self_panel.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                    <label for="{{ form.send_credential.id_for_label }}">{{ form.send_credential.label }}
+                        <input type="checkbox" name="{{ form.send_credential.name }}"
+                               id="{{ form.send_credential.id_for_label }}">
+                        <span></span>
+                    </label>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{#<div class="form-group row">#}
+{#    <div class="col-md-6">#}
+{#        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>#}
+{#        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"#}
+{#               class="form-control{% if form.name.errors %} is-invalid{% endif %}"#}
+{#               value="{{ form.name.value|default:'' }}" maxlength="255" required>#}
+{##}
+{#        {% if form.name.errors %}#}
+{#            {% for error in form.name.errors %}#}
+{#                <div class="invalid-feedback">{{ error }}</div>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{#    </div>#}
+{##}
+{#    <div class="col-md-6">#}
+{#        <label for="{{ form.code.id_for_label }}">{{ form.code.label }}</label>#}
+{#        <input type="text" name="{{ form.code.name }}" id="{{ form.code.id_for_label }}"#}
+{#               class="form-control{% if form.code.errors %} is-invalid{% endif %}"#}
+{#               value="{{ form.code.value|default:'' }}" maxlength="255" required>#}
+{##}
+{#        {% if form.code.errors %}#}
+{#            {% for error in form.code.errors %}#}
+{#                <div class="invalid-feedback">{{ error }}</div>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<div class="form-group row">#}
+{#    <div class="col-md-12">#}
+{#        <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>#}
+{#        <input type="text" name="{{ form.description.name }}" id="{{ form.description.id_for_label }}"#}
+{#               class="w-100 form-control{% if form.description.errors %} is-invalid{% endif %}"#}
+{#               value="{{ form.description.value|default:'' }}" maxlength="255" required>#}
+{##}
+{#        {% if form.description.errors %}#}
+{#            {% for error in form.description.errors %}#}
+{#                <div class="invalid-feedback">{{ error }}</div>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<h2 class="text-bold">Access Sertting</h2>#}
+

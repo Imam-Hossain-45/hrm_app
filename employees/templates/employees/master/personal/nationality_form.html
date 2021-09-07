@@ -1,0 +1,82 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ nationality_form.nationality.id_for_label }}">{{ nationality_form.nationality.label }}<span>*</span></label>
+            <input type="text" name="{{ nationality_form.nationality.name }}" class="form-control{% if nationality_form.nationality.errors %} is-invalid{% endif %}" id="{{ nationality_form.nationality.id_for_label }}" {% if nationality_form.nationality.value != None %}value="{{ nationality_form.nationality.value }}" {% endif %}>
+            {% if nationality_form.nationality.errors %}
+            {% for error in nationality_form.nationality.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ nationality_form.passport_number.id_for_label }}">{{ nationality_form.passport_number.label }}</label>
+            <input type="text" name="{{ nationality_form.passport_number.name }}" class="form-control{% if nationality_form.passport_number.errors %} is-invalid{% endif %}" id="{{ nationality_form.passport_number.id_for_label }}" {% if nationality_form.passport_number.value != None %}value="{{ nationality_form.passport_number.value }}" {% endif %}>
+            {% if nationality_form.passport_number.errors %}
+            {% for error in nationality_form.passport_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ nationality_form.nid_or_ssn_number.id_for_label }}">{{ nationality_form.nid_or_ssn_number.label }}</label>
+            <input type="text" name="{{ nationality_form.nid_or_ssn_number.name }}" class="form-control{% if nationality_form.nid_or_ssn_number.errors %} is-invalid{% endif %}" id="{{ nationality_form.nid_or_ssn_number.id_for_label }}" {% if nationality_form.nid_or_ssn_number.value != None %}value="{{ nationality_form.nid_or_ssn_number.value }}" {% endif %}>
+            {% if nationality_form.nid_or_ssn_number.errors %}
+            {% for error in nationality_form.nid_or_ssn_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ nationality_form.passport_expiry_date.id_for_label }}">{{ nationality_form.passport_expiry_date.label }}</label>
+            <input type="date" name="{{ nationality_form.passport_expiry_date.name }}" class="form-control{% if nationality_form.passport_expiry_date.errors %} is-invalid{% endif %}" id="{{ nationality_form.passport_expiry_date.id_for_label }}"  value="{% if nationality_form.passport_expiry_date.value|get_date_type == 'str' %}{{ nationality_form.passport_expiry_date.value }}{% else %}{{ nationality_form.passport_expiry_date.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if nationality_form.passport_expiry_date.errors %}
+            {% for error in nationality_form.passport_expiry_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ nationality_form.nid.id_for_label }}">{{ nationality_form.nid.label }}</label>
+            {% if nationality_form.nid.value %}
+            Currently: <a href="{{ nationality_form.nid.value.url }}">{{ nationality_form.nid.value.url }}</a><br>
+            <input id="nid-clear_id" name="nid-clear" type="checkbox" style="display: inline-block;">
+            <label for="nid-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ nationality_form.nid.name }}" class="form-control{% if nationality_form.nid.errors %} is-invalid{% endif %}" id="{{ nationality_form.nid.id_for_label }}" accept="image/">
+            {% if nationality_form.nid.errors %}
+            {% for error in nationality_form.nid.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ nationality_form.passport.id_for_label }}">{{ nationality_form.passport.label }}</label>
+            {% if nationality_form.passport.value %}
+            Currently: <a href="{{ nationality_form.passport.value.url }}">{{ nationality_form.passport.value.url }}</a><br>
+            <input id="passport-clear_id" name="passport-clear" type="checkbox" style="display: inline-block;">
+            <label for="passport-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ nationality_form.passport.name }}" class="form-control{% if nationality_form.passport.errors %} is-invalid{% endif %}" id="{{ nationality_form.passport.id_for_label }}" accept="image/">
+            {% if nationality_form.passport.errors %}
+            {% for error in nationality_form.passport.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

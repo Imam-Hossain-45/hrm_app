@@ -1,0 +1,135 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Personal Information{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Employee Master</p>
+                    <h2>Personal</h2>
+                </div>
+                <div class="card-block">
+                    <div class="card-header secondary border-0">
+                        <h2>Date of Birth</h2>
+                    </div>
+                    <form method="POST" class="mw-initial" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/personal/DOB_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form1">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Nationality</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/personal/nationality_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form2">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Tax Information</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/personal/tax_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form3">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Visa and Work Permit</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/personal/visa_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form4">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Driving Information</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/personal/driving_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form5">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Others</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/personal/others_form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form6">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Favourite</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/personal/favourite_form.html' %}
+                        <div class="form-group w-100 text-right mt-5">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main pull-right" name="form7">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

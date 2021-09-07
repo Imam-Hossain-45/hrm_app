@@ -1,0 +1,10 @@
+{% if request.user.is_superuser or request.user.dashboard == 'admin' %}
+<!-- Admin -->
+{% include 'dashboard/admin.html' %}
+{% elif request.user.dashboard == 'management' %}
+<!-- Management -->
+{% include 'dashboard/management.html' %}
+{% elif request.user.dashboard == 'employee' %}
+<!-- Employee -->
+{% include 'dashboard/employee.html' %}
+{% endif %}

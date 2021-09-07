@@ -1,0 +1,38 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Salary Adjustment > List{% endblock %}
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <p class="text-right">
+                        <a href="{% url 'beehive_admin:payroll:salary_adjustment_create' %}" class="btn btn-main">Add New</a>
+                    </p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Employee Name</th>
+                            <th>Amount</th>
+                            <th>Remarks</th>
+                            <th>Action</th>
+                        </thead>
+                        {% for obj in object_list %}
+                        <tr>
+                            <td>{{ obj.employee }}</td>
+                            <td>{{ obj.amount }}</td>
+                            <td>{{ obj.remarks }}</td>
+                            <td>
+                                <a href="{% url 'beehive_admin:payroll:salary_adjustment_update' obj.pk %}">Update</a>
+                                <a href="{% url 'beehive_admin:payroll:salary_adjustment_delete' obj.pk %}">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

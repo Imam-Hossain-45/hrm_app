@@ -1,0 +1,88 @@
+<table class="table table-hover table-bordered form-one">
+    <thead class="text-left">
+        <tr>
+            <th>Name<span>*</span></th>
+            <th>Relationship<span>*</span></th>
+            <th>Address</th>
+            <th>Contact<span>*</span></th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="form-two">
+        {% for form_data in emergency_form %}
+        <tr class="item">
+            <td>
+                <input type="text" name="{{ form_data.name.html_name }}" id="{{ form_data.name.id_for_label }}" class="formset-field form-control {% if form_data.name.errors %} is-invalid{% endif %}" {% if form_data.name.value != None %}value="{{ form_data.name.value }}" {% endif %}>
+                {% if form_data.name.errors %}
+                {% for error in form_data.name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.relationship.html_name }}" id="{{ form_data.relationship.id_for_label }}" class="formset-field form-control {% if form_data.relationship.errors %} is-invalid{% endif %}" {% if form_data.relationship.value != None %}value="{{ form_data.relationship.value }}" {% endif %}>
+                {% if form_data.relationship.errors %}
+                {% for error in form_data.relationship.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.address.html_name }}" id="{{ form_data.address.id_for_label }}" class="formset-field form-control {% if form_data.address.errors %} is-invalid{% endif %}">{% if form_data.address.value != None %}
+                {{ form_data.address.value }}{% endif %}
+                {% if form_data.address.errors %}
+                {% for error in form_data.address.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <div class="input-group" style="flex-wrap: nowrap;">
+                    <table class="table border-0" style="max-width: 300px; margin: 0;">
+                        <tr>
+                            <td class="border-0 pl-0 pr-0 v-middle" style="width: 30%;"><select class="input-group-text" id="basic-addon3" name="{{ form_data.contact.html_name }}_0" class="form-control{% if form_data.contact.errors %} is-invalid{% endif %}" id="{{ form_data.contact.id_for_label }}">
+                                    {% for choice in form_data.dial_code.field.choices %}
+                                    <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == form_data.contact.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select></td>
+                            <td class="border-0 pl-0" style="width: 70%;">
+                                <div class="input-group-append">
+                                    <input type="number" name="{{ form_data.contact.html_name }}_1" value="{{ form_data.contact.value.1 }}" class="form-control{% if form_data.contact.errors %} is-invalid{% endif %}">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                {% if form_data.contact.errors %}
+                {% for error in form_data.contact.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.email.html_name }}" id="{{ form_data.email.id_for_label }}" class="formset-field form-control {% if form_data.email.errors %} is-invalid{% endif %}" {% if form_data.email.value != None %}value="{{ form_data.email.value }}" {% endif %}>
+                {% if form_data.email.errors %}
+                {% for error in form_data.email.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="v-middle" style=" width: 10%;">
+                <input type="checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="clone-btn-wrapper d-flex" style="position: initial;">
+    <div class="ml-auto">
+        <a href="javascript:;" class="clone-row emergency-contact-add"></a>
+    </div>
+
+    <div class="">
+        <a href="javascript:;" class="remove-row emergency-contact-rem"></a>
+    </div>
+</div>
+{{ emergency_form.management_form }}

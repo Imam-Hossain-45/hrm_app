@@ -1,0 +1,191 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.payment_mode_for_mixed.id_for_label }}">{{ disburse_form.payment_mode_for_mixed.label }}</label>
+                <select name="{{ disburse_form.payment_mode_for_mixed.name }}"
+                        class="form-control{% if disburse_form.payment_mode_for_mixed.errors %} is-invalid{% endif %}">
+                    {% for x, y in disburse_form.fields.payment_mode_for_mixed.choices %}
+                        <option value="{{ x }}"
+                                {% if disburse.payment_mode_for_mixed == x %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if disburse_form.payment_mode_for_mixed.errors %}
+                    {% for error in disburse_form.payment_mode_for_mixed.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mixed_bank_section" {% if disburse.payment_mode_for_mixed != 'bank' %}style="display: none" {% endif %}>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_bank_name.id_for_label }}">{{ disburse_form.mixed_bank_name.label }}</label>
+                <select name="{{ disburse_form.mixed_bank_name.name }}"
+                        class="form-control{% if disburse_form.mixed_bank_name.errors %} is-invalid{% endif %}">
+                    {% for x, y in disburse_form.fields.mixed_bank_name.choices %}
+                        <option value="{{ x }}"
+                                {% if disburse.employee_bank_name == x %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if disburse_form.mixed_bank_name.errors %}
+                    {% for error in disburse_form.mixed_bank_name.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_bank_account_name.id_for_label }}">{{ disburse_form.mixed_bank_account_name.label }}</label>
+                <input type="text" name="{{ disburse_form.mixed_bank_account_name.name }}"
+                       class="form-control{% if disburse_form.mixed_bank_account_name.errors %} is-invalid{% endif %}"
+                       value="{{ disburse.employee_bank_AC_name|default_if_none:'' }}">
+                {% if disburse_form.mixed_bank_account_name.errors %}
+                    {% for error in disburse_form.mixed_bank_account_name.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mixed_bank_section" {% if disburse.payment_mode_for_mixed != 'bank' %}style="display: none" {% endif %}>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_branch_code.id_for_label }}">{{ disburse_form.mixed_branch_code.label }}</label>
+                <input type="text" name="{{ disburse_form.mixed_branch_code.name }}"
+                       class="form-control{% if disburse_form.mixed_branch_code.errors %} is-invalid{% endif %}"
+                       value="{{ disburse.bank_branch_code|default_if_none:'' }}">
+                {% if disburse_form.mixed_branch_code.errors %}
+                    {% for error in disburse_form.mixed_branch_code.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_ac_no.id_for_label }}">{{ disburse_form.mixed_ac_no.label }}</label>
+                <input multiple type="number" name="{{ disburse_form.mixed_ac_no.name }}"
+                       class="form-control{% if disburse_form.mixed_ac_no.errors %} is-invalid{% endif %}"
+                       value="{{ disburse.bank_AC_no|default_if_none:'' }}">
+                {% if disburse_form.mixed_ac_no.errors %}
+                    {% for error in disburse_form.mixed_ac_no.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mixed_bank_section" {% if disburse.payment_mode_for_mixed != 'bank' %}style="display: none" {% endif %}>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_routing_no.id_for_label }}">{{ disburse_form.mixed_routing_no.label }}</label>
+                <input type="text" name="{{ disburse_form.mixed_routing_no.name }}"
+                       class="form-control{% if disburse_form.mixed_routing_no.errors %} is-invalid{% endif %}"
+                       value="{{ disburse.routing_number|default_if_none:'' }}">
+                {% if disburse_form.mixed_routing_no.errors %}
+                    {% for error in disburse_form.mixed_routing_no.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mixed_fintech_section"
+     {% if disburse.payment_mode_for_mixed != 'fintech' %}style="display: none" {% endif %}>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_service.id_for_label }}">{{ disburse_form.mixed_service.label }}</label>
+                <select name="{{ disburse_form.mixed_service.name }}"
+                        class="form-control{% if disburse_form.mixed_service.errors %} is-invalid{% endif %}">
+                    {% for x, y in disburse_form.fields.mixed_service.choices %}
+                        <option value="{{ x }}"
+                                {% if disburse.fintech_service == x %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if disburse_form.mixed_service.errors %}
+                    {% for error in disburse_form.mixed_service.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_mobile_number.id_for_label }}">{{ disburse_form.mixed_mobile_number.label }}</label>
+                <input type="text" name="{{ disburse_form.mixed_mobile_number.name }}"
+                       class="form-control{% if disburse_form.mixed_mobile_number.errors %} is-invalid{% endif %}"
+                       value="{{ disburse.mobile_number|default_if_none:'' }}">
+                {% if disburse_form.mixed_mobile_number.errors %}
+                    {% for error in disburse_form.mixed_mobile_number.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mixed_cheque_section"
+     {% if disburse.payment_mode_for_mixed != 'cheque' %}style="display: none" {% endif %}>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.mixed_cheque_number.id_for_label }}">{{ disburse_form.mixed_cheque_number.label }}</label>
+                <input type="number" name="{{ disburse_form.mixed_cheque_number.name }}"
+                       class="form-control{% if disburse_form.mixed_cheque_number.errors %} is-invalid{% endif %}"
+                       value="{{ disburse.cheque_number|default_if_none:'' }}">
+                {% if disburse_form.mixed_cheque_number.errors %}
+                    {% for error in disburse_form.mixed_cheque_number.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <label
+                    for="{{ disburse_form.disbursed_amount.id_for_label }}">{{ disburse_form.disbursed_amount.label }}</label>
+                <input type="text" name="{{ disburse_form.disbursed_amount.name }}"
+                       class="form-control{% if disburse_form.disbursed_amount.errors %} is-invalid{% endif %}"
+                       value="{{ disburse.disbursed_amount|default_if_none:'' }}">
+                {% if disburse_form.disbursed_amount.errors %}
+                    {% for error in disburse_form.disbursed_amount.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

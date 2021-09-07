@@ -1,0 +1,83 @@
+<div class="form-group row w-100">
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ form.schedule_type.id_for_label }}">{{ form.schedule_type.label }}</label>
+            <select name="{{ form.schedule_type.name }}"
+                    class="form-control{% if form.schedule_type.errors %} is-invalid{% endif %}"
+                    id="{{ form.schedule_type.id_for_label }}" required=""
+                    onchange="scheduleType();">
+                {% for schedule_type in form.schedule_type %}
+                    {{ schedule_type }}
+                {% endfor %}
+            </select>
+
+            {% if form.schedule_type.errors %}
+                {% for error in form.schedule_type.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6 roster_type" {% if form.schedule_type.value == 'roster' %}style='display: block'
+         {% else %}style="display:none;" {% endif %}>
+        <div class="form-group w-100">
+            <label for="{{ form.roster_type.id_for_label }}">{{ form.roster_type.label }}</label>
+            <select name="{{ form.roster_type.name }}"
+                    class="form-control{% if form.roster_type.errors %} is-invalid{% endif %}"
+                    id="{{ form.roster_type.id_for_label }}" required=""
+                    onchange="rosterType()">
+                {% for type in form.roster_type %}
+                    {{ type }}
+                {% endfor %}
+            </select>
+
+            {% if form.roster_type.errors %}
+                {% for error in form.roster_type.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="card card-block regular-fixed-time"
+     {% if form.schedule_type.value == 'regular-fixed-time' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/regular_fixed_time_form.html' %}
+</div>
+<div class="card card-block fixed-day" {% if form.schedule_type.value == 'fixed-day' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/fixed_day_form.html' %}
+</div>
+<div class="card card-block hourly" {% if form.schedule_type.value == 'hourly' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/hourly_schedule_form.html' %}
+</div>
+
+<div class="card card-block weekly" {% if form.schedule_type.value == 'weekly' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/weekly_schedule_form.html' %}
+</div>
+<div class="card card-block day" {% if form.schedule_type.value == 'day' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/day_schedule_form.html' %}
+</div>
+
+<div class="card card-block freelancing" {% if form.schedule_type.value == 'freelancing' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/freelancing_form.html' %}
+</div>
+
+<div class="card card-block roster-fixed" {% if form.roster_type.value == 'fixed-roster' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/fixed_roster_form.html' %}
+</div>
+<div class="card card-block roster-variable"
+     {% if form.roster_type.value == 'variable-roster' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+    {% include 'attendance/master/schedule/variable_roster_form.html' %}
+</div>
+<div class="card card-block flexible" {% if form.schedule_type.value == 'flexible' %}style='display: block'
+     {% else %}style="display:none;" {% endif %}>
+     {% include 'attendance/master/schedule/flexible_form.html' %}
+</div>

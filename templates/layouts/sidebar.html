@@ -1,0 +1,1141 @@
+<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-dark m-aside-menu--submenu-skin-dark " m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500">
+    <ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
+        <li class="m-menu__item {% if request.path == '/' %}m-menu__item--active{% endif %}" aria-haspopup="true">
+            <!-- m-menu__item--active -->
+            <a href="{% url 'index' %}" class="m-menu__link ">
+                <span class="m-menu__link-title">
+                    <span class="m-menu__link-wrap">
+                        <span class="m-menu__link-text">
+                            Dashboard
+                        </span>
+                        <span class="m-menu__link-badge">
+                            {#                            <span class="m-badge m-badge--danger">#}
+                            {#                                #}
+                            {#                            </span>#}
+                        </span>
+                    </span>
+                </span>
+            </a>
+        </li>
+
+        <!-- Employee master-->
+        {% if request.user.is_superuser or 'view_employeeidentification' in permissions or 'add_employeeidentification' in permissions or 'change_employeeidentification' in permissions or 'delete_employeeidentification' in permissions %}
+        <li class="m-menu__item  m-menu__item--submenu {% if '/employee/master/' in request.path %}m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="{% url 'employees:employee_master_list' %}" class="m-menu__link">
+                <i class="m-menu__link-icon flaticon-user"></i>
+                <span class="m-menu__link-text">
+                    Employee Management
+                </span>
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- Attendance -->
+        {% if request.user.is_superuser or 'add_holidaygroup' in permissions or 'change_holidaygroup' in permissions or 'delete_holidaygroup' in permissions or 'view_holidaygroup' in permissions or 'add_holidaymaster' in permissions or 'change_holidaymaster' in permissions or 'delete_holidaymaster' in permissions or 'view_holidaymaster' in permissions or 'add_calendarmaster' in permissions or 'change_calendarmaster' in permissions or 'delete_calendarmaster' in permissions or 'view_calendarmaster' in permissions or 'add_schedulemaster' in permissions or 'change_schedulemaster' in permissions or 'delete_schedulemaster' in permissions or 'view_schedulemaster' in permissions or 'add_overtimerule' in permissions or 'change_overtimerule' in permissions or 'delete_overtimerule' in permissions or 'view_overtimerule' in permissions or 'add_schedulerecord' in permissions or 'change_schedulerecord' in permissions or 'delete_schedulerecord' in permissions or 'view_schedulerecord' in permissions or 'add_dailyattendance' in permissions or 'change_dailyattendance' in permissions or 'delete_dailyattendance' in permissions or 'view_dailyattendance' in permissions or 'add_attendance' in permissions or 'change_attendance' in permissions or 'delete_attendance' in permissions or 'view_attendance' in permissions or 'add_attendancedata' in permissions or 'change_attendancedata' in permissions or 'delete_attendancedata' in permissions or 'view_attendancedata' in permissions or 'add_lateapplication' in permissions or 'change_lateapplication' in permissions or 'delete_lateapplication' in permissions or 'view_lateapplication' in permissions or 'add_lateapprovalcomment' in permissions or 'change_lateapprovalcomment' in permissions or 'delete_lateapprovalcomment' in permissions or 'view_lateapprovalcomment' in permissions or 'add_earlyapplication' in permissions or 'change_earlyapplication' in permissions or 'delete_earlyapplication' in permissions or 'view_earlyapplication' in permissions or 'add_earlyapprovalcomment' in permissions or 'change_earlyapprovalcomment' in permissions or 'delete_earlyapprovalcomment' in permissions or 'view_earlyapprovalcomment' in permissions %}
+        <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                <span class="m-menu__link-text">
+                    Attendance
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul id="attendance" class="m-menu__subnav">
+                    <li class="m-menu__item  m-menu__item--parent" aria-haspopup="true">
+                        <span class="m-menu__link">
+                            <span class="m-menu__link-text">
+                                Operation
+                            </span>
+                        </span>
+                    </li>
+
+                    {% if request.user.is_superuser or 'add_holidaymaster' in permissions or 'change_holidaymaster' in permissions or 'delete_holidaymaster' in permissions or 'view_holidaymaster' in permissions or 'add_holidaygroup' in permissions or 'change_holidaygroup' in permissions or 'delete_holidaygroup' in permissions or 'view_holidaygroup' in permissions or 'add_calendarmaster' in permissions or 'change_calendarmaster' in permissions or 'delete_calendarmaster' in permissions or 'view_calendarmaster' in permissions or 'add_schedulemaster' in permissions or 'change_schedulemaster' in permissions or 'delete_schedulemaster' in permissions or 'view_schedulemaster' in permissions or 'add_overtimerule' in permissions or 'change_overtimerule' in permissions or 'delete_overtimerule' in permissions or 'view_overtimerule' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/master/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Master
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="attendance_Master" class="m-menu__subnav">
+                                {% if request.user.is_superuser or 'add_holidaymaster' in permissions or 'change_holidaymaster' in permissions or 'delete_holidaymaster' in permissions or 'view_holidaymaster' in permissions or 'add_holidaygroup' in permissions or 'change_holidaygroup' in permissions or 'delete_holidaygroup' in permissions or 'view_holidaygroup' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/master/holiday' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Holiday Master
+                                        </span>
+                                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+
+                                    <div class="m-menu__submenu ">
+                                        <span class="m-menu__arrow"></span>
+                                        <ul id="holiday_Master" class="m-menu__subnav">
+                                            {% if request.user.is_superuser or 'add_holidaymaster' in permissions or 'change_holidaymaster' in permissions or 'delete_holidaymaster' in permissions or 'view_holidaymaster' in permissions %}
+                                            <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/master/holiday/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                                <a href="{% url 'beehive_admin:attendance:holiday_master_list' %}" class="m-menu__link">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Holiday Creation
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if request.user.is_superuser or 'add_holidaygroup' in permissions or 'change_holidaygroup' in permissions or 'delete_holidaygroup' in permissions or 'view_holidaygroup' in permissions %}
+                                            <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/master/holiday-group/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                                <a href="{% url 'beehive_admin:attendance:holiday_group_list' %}" class="m-menu__link">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Holiday Group
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+
+                                <!-- Calender -->
+                                {% if request.user.is_superuser or 'add_calendarmaster' in permissions or 'change_calendarmaster' in permissions or 'delete_calendarmaster' in permissions or 'view_calendarmaster' in permissions or 'add_schedulemaster' in permissions or 'change_schedulemaster' in permissions or 'delete_schedulemaster' in permissions or 'view_schedulemaster' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/master/calendar/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:attendance:master_calendar_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Calendar Master
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                <!-- Overtime -->
+                                {% if request.user.is_superuser or 'add_overtimerule' in permissions or 'change_overtimerule' in permissions or 'delete_overtimerule' in permissions or 'view_overtimerule' in permissions %}
+                                <li class="m-menu__item m-menu__item--submenu {% if '/admin/attendance/master/overtime/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:attendance:overtime_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i>
+                                        <span class="m-menu__link-text">Overtime (OT) Master</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                <!-- Schedule -->
+                                {% if request.user.is_superuser or 'add_schedulemaster' in permissions or 'change_schedulemaster' in permissions or 'delete_schedulemaster' in permissions or 'view_schedulemaster' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/master/schedule/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:attendance:master_schedule_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Schedule Master
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Scheduling -->
+                    {% if request.user.is_superuser or 'add_schedulerecord' in permissions or 'change_schedulerecord' in permissions or 'delete_schedulerecord' in permissions or 'view_schedulerecord' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/scheduling/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="{% url 'beehive_admin:attendance:attendance_scheduling' %}" class="m-menu__link">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Scheduling
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if request.user.is_superuser or 'add_attendance' in permissions or 'change_attendance' in permissions or 'delete_attendance' in permissions or 'view_attendance' in permissions or 'add_attendancedata' in permissions or 'change_attendancedata' in permissions or 'delete_attendancedata' in permissions or 'view_attendancedata' in permissions or 'add_lateapplication' in permissions or 'change_lateapplication' in permissions or 'delete_lateapplication' in permissions or 'view_lateapplication' in permissions or 'add_lateapprovalcomment' in permissions or 'change_lateapprovalcomment' in permissions or 'delete_lateapprovalcomment' in permissions or 'view_lateapprovalcomment' in permissions or 'add_earlyapplication' in permissions or 'change_earlyapplication' in permissions or 'delete_earlyapplication' in permissions or 'view_earlyapplication' in permissions or 'add_earlyapprovalcomment' in permissions or 'change_earlyapprovalcomment' in permissions or 'delete_earlyapprovalcomment' in permissions or 'view_earlyapprovalcomment' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/attendance/process/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Operation
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="attendance_operation" class="m-menu__subnav">
+                                {% if request.user.is_superuser or 'add_attendancedata' in permissions or 'change_attendancedata' in permissions or 'delete_attendancedata' in permissions or 'view_attendancedata' in permissions %}
+                                <li class="m-menu__item {% if '/admin/attendance/process/manual_entry/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:attendance:manual_attendance_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Manual Attendance Entry
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if request.user.is_superuser or 'add_attendancedata' in permissions or 'change_attendancedata' in permissions or 'delete_attendancedata' in permissions or 'view_attendancedata' in permissions %}
+                                <li class="m-menu__item {% if '/admin/attendance/process/upload_attendance/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:attendance:upload_attendance' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Upload Attendance Data
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if request.user.is_superuser or 'add_lateapplication' in permissions or 'change_lateapplication' in permissions or 'delete_lateapplication' in permissions or 'view_lateapplication' in permissions %}
+                                <li class="m-menu__item {% if '/admin/attendance/process/late_entry/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:attendance:late_entry_application_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Late Entry Application
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if request.user.is_superuser or 'add_lateapplication' in permissions or 'change_lateapplication' in permissions or 'delete_lateapplication' in permissions or 'view_lateapplication' in permissions or 'add_lateapprovalcomment' in permissions or 'change_lateapprovalcomment' in permissions or 'delete_lateapprovalcomment' in permissions or 'view_lateapprovalcomment' in permissions %}
+                                <li class="m-menu__item {% if '/admin/attendance/process/late_entry_approval/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:attendance:late_approval_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Late Entry Approval
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if request.user.is_superuser or 'add_earlyapplication' in permissions or 'change_earlyapplication' in permissions or 'delete_earlyapplication' in permissions or 'view_earlyapplication' in permissions %}
+                                <li class="m-menu__item {% if '/admin/attendance/process/early_out/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:attendance:early_out_application_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Early Out Application
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if request.user.is_superuser or 'add_earlyapplication' in permissions or 'change_earlyapplication' in permissions or 'delete_earlyapplication' in permissions or 'view_earlyapplication' in permissions or 'add_earlyapprovalcomment' in permissions or 'change_earlyapprovalcomment' in permissions or 'delete_earlyapprovalcomment' in permissions or 'view_earlyapprovalcomment' in permissions %}
+                                <li class="m-menu__item {% if '/admin/attendance/process/early_out_approval/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:attendance:early_approval_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Early Out Approval
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Attendance Report -->
+                    {% if request.user.is_superuser %}
+                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="{% url 'beehive_admin:attendance:attendance_report' %}" class="m-menu__link">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Report
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        <!-- Leave  -->
+        {% if request.user.is_superuser or 'view_leavemaster' in permissions or 'add_leavemaster' in permissions or 'change_leavemaster' in permissions or 'delete_leavemaster' in permissions or 'view_leavegroup' in permissions or 'add_leavegroup' in permissions or 'change_leavegroup' in permissions or 'delete_leavegroup' in permissions or 'view_leaveentry' in permissions or 'add_leaveentry' in permissions or 'change_leaveentry' in permissions or 'delete_leaveentry' in permissions %}
+        <li class="m-menu__item  m-menu__item--submenu {% if '/admin/leave/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-time-3"></i>
+                <span class="m-menu__link-text">
+                    Leave
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul id="leave_bar" class="m-menu__subnav">
+                    <!-- Leave Master -->
+                    {% if request.user.is_superuser or 'view_leavemaster' in permissions or 'add_leavemaster' in permissions or 'change_leavemaster' in permissions or 'delete_leavemaster' in permissions or 'view_leavegroup' in permissions or 'add_leavegroup' in permissions or 'change_leavegroup' in permissions or 'delete_leavegroup' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/leave/master/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Master
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="leave_master" class="m-menu__subnav">
+                                {% if request.user.is_superuser or 'view_leavemaster' in permissions or 'add_leavemaster' in permissions or 'change_leavemaster' in permissions or 'delete_leavemaster' in permissions %}
+                                <li class="m-menu__item {% if '/admin/leave/master/creation/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:leave:leave_master_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Leave Creation
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% if request.user.is_superuser or 'view_leavegroup' in permissions or 'add_leavegroup' in permissions or 'change_leavegroup' in permissions or 'delete_leavegroup' in permissions %}
+                                <li class="m-menu__item {% if '/admin/leave/master/group/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:leave:leave_group_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Leave Group
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Leave Operation -->
+                    {% if request.user.is_superuser or 'view_leaveentry' in permissions or 'add_leaveentry' in permissions or 'change_leaveentry' in permissions or 'delete_leaveentry' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/leave/process/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Operation
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="leave_operation" class="m-menu__subnav">
+                                {% if request.user.is_superuser or 'view_leaveentry' in permissions or 'add_leaveentry' in permissions or 'change_leaveentry' in permissions or 'delete_leaveentry' in permissions %}
+                                <li class="m-menu__item {% if '/admin/leave/process/entry/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:leave:leave_entry_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Leave Entry
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if request.user.is_superuser or 'change_leaveentry' in permissions and request.user.management %}
+                                <li class="m-menu__item {% if '/admin/leave/process/leave_approval/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:leave:leave_approval_list' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Leave Approval
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Leave Report -->
+                    {% if request.user.is_superuser %}
+                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="{% url 'beehive_admin:leave:leave_report' %}" class="m-menu__link">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Report
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        <!-- Payroll/Salary -->
+        {% if request.user.is_superuser or 'view_component' in permissions or 'add_component' in permissions or 'change_component' in permissions or 'delete_component' in permissions or 'view_salarygroup' in permissions or 'add_salarygroup' in permissions or 'change_salarygroup' in permissions or 'delete_salarygroup' in permissions or 'view_deductioncomponent' in permissions or 'add_deductioncomponent' in permissions or 'change_deductioncomponent' in permissions or 'delete_deductioncomponent' in permissions  or 'view_deductiongroup' in permissions or 'add_deductiongroup' in permissions or 'change_deductiongroup' in permissions or 'delete_deductiongroup' in permissions or 'view_bonuscomponent' in permissions or 'add_bonuscomponent' in permissions or 'change_bonuscomponent' in permissions or 'delete_bonuscomponent' in permissions or 'view_bonusgroup' in permissions or 'add_bonusgroup' in permissions or 'change_bonusgroup' in permissions or 'delete_bonusgroup' in permissions or 'view_employeesalary' in permissions or 'add_employeesalary' in permissions or 'change_employeesalary' in permissions or 'delete_employeesalary' in permissions or 'change_salarypaymentmethod' in permissions or 'view_salarypaymentmethod' in permissions or 'add_salarypaymentmethod' in permissions or 'change_salarypaymentmethod' in permissions or 'delete_salarypaymentmethod' in permissions or 'view_employeevariablesalary' in permissions %}
+        <li class="m-menu__item  m-menu__item--submenu {% if '/admin/payroll/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-diagram"></i>
+                <span class="m-menu__link-text">
+                    Payroll
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul id="payroll" class="m-menu__subnav">
+
+                    {% if request.user.is_superuser or 'view_component' in permissions or 'add_component' in permissions or 'change_component' in permissions or 'delete_component' in permissions or 'view_salarygroup' in permissions or 'add_salarygroup' in permissions or 'change_salarygroup' in permissions or 'delete_salarygroup' in permissions or 'view_deductioncomponent' in permissions or 'add_deductioncomponent' in permissions or 'change_deductioncomponent' in permissions or 'delete_deductioncomponent' in permissions or 'view_deductiongroup' in permissions or 'add_deductiongroup' in permissions or 'change_deductiongroup' in permissions or 'delete_deductiongroup' in permissions or 'view_bonuscomponent' in permissions or 'add_bonuscomponent' in permissions or 'change_bonuscomponent' in permissions or 'delete_bonuscomponent' in permissions or 'view_bonusgroup' in permissions or 'add_bonusgroup' in permissions or 'change_bonusgroup' in permissions or 'delete_bonusgroup' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/payroll/master/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Master
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="payroll-master-operation" class="m-menu__subnav">
+                                <!-- Salary Master -->
+                                {% if request.user.is_superuser or 'view_component' in permissions or 'add_component' in permissions or 'change_component' in permissions or 'delete_component' in permissions or 'view_salarygroup' in permissions or 'add_salarygroup' in permissions or 'change_salarygroup' in permissions or 'delete_salarygroup' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/payroll/master/salary' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Salary Master
+                                        </span>
+                                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+
+                                    <div class="m-menu__submenu ">
+                                        <span class="m-menu__arrow"></span>
+                                        <ul id="salary_Master" class="m-menu__subnav">
+                                            {% if request.user.is_superuser or 'view_component' in permissions or 'add_component' in permissions or 'change_component' in permissions or 'delete_component' in permissions %}
+                                            <li class="m-menu__item {% if '/admin/payroll/master/salary-components/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                                <a href="{% url 'beehive_admin:payroll:component_list' %}" class="m-menu__link ">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Salary Component Creation
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if request.user.is_superuser or 'view_salarygroup' in permissions or 'add_salarygroup' in permissions or 'change_salarygroup' in permissions or 'delete_salarygroup' in permissions %}
+                                            <li class="m-menu__item {% if '/admin/payroll/master/salary-group/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                                <a href="{% url 'beehive_admin:payroll:salary_group_list' %}" class="m-menu__link ">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Salary Group
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+
+                                <!-- Deduction Master -->
+                                {% if request.user.is_superuser or 'view_deductioncomponent' in permissions or 'add_deductioncomponent' in permissions or 'change_deductioncomponent' in permissions or 'delete_deductioncomponent' in permissions or 'view_deductiongroup' in permissions or 'add_deductiongroup' in permissions or 'change_deductiongroup' in permissions or 'delete_deductiongroup' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/payroll/master/deduction' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Deduction Master
+                                        </span>
+                                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+
+                                    <div class="m-menu__submenu ">
+                                        <span class="m-menu__arrow"></span>
+                                        <ul id="deduction_Master" class="m-menu__subnav">
+                                            {% if request.user.is_superuser or 'view_deductioncomponent' in permissions or 'add_deductioncomponent' in permissions or 'change_deductioncomponent' in permissions or 'delete_deductioncomponent' in permissions %}
+                                            <li class="m-menu__item {% if '/admin/payroll/master/deduction-components/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                                <a href="{% url 'beehive_admin:payroll:deduction_component_list' %}" class="m-menu__link ">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Deduction Components
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if request.user.is_superuser or 'view_deductiongroup' in permissions or 'add_deductiongroup' in permissions or 'change_deductiongroup' in permissions or 'delete_deductiongroup' in permissions %}
+                                            <li class="m-menu__item {% if '/admin/payroll/master/deduction-groups/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                                <a href="{% url 'beehive_admin:payroll:deduction_group_list' %}" class="m-menu__link ">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Deduction Group
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+
+                                <!-- Bonus Master -->
+                                {% if request.user.is_superuser or 'view_bonuscomponent' in permissions or 'add_bonuscomponent' in permissions or 'change_bonuscomponent' in permissions or 'delete_bonuscomponent' in permissions or 'view_bonusgroup' in permissions or 'add_bonusgroup' in permissions or 'change_bonusgroup' in permissions or 'delete_bonusgroup' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/payroll/master/bonus' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Bonus Master
+                                        </span>
+                                        <i class="m-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+
+                                    <div class="m-menu__submenu ">
+                                        <span class="m-menu__arrow"></span>
+                                        <ul id="bonus_Master" class="m-menu__subnav">
+                                            {% if request.user.is_superuser or 'view_bonuscomponent' in permissions or 'add_bonuscomponent' in permissions or 'change_bonuscomponent' in permissions or 'delete_bonuscomponent' in permissions %}
+                                            <li class="m-menu__item {% if '/admin/payroll/master/bonus-components/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                                <a href="{% url 'beehive_admin:payroll:bonus_component_list' %}" class="m-menu__link ">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Bonus Components
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+
+                                            {% if request.user.is_superuser or 'view_bonusgroup' in permissions or 'add_bonusgroup' in permissions or 'change_bonusgroup' in permissions or 'delete_bonusgroup' in permissions %}
+                                            <li class="m-menu__item {% if '/admin/payroll/master/bonus-groups/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                                <a href="{% url 'beehive_admin:payroll:bonus_group_list' %}" class="m-menu__link ">
+                                                    <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                                        <span></span>
+                                                    </i>
+                                                    <span class="m-menu__link-text">
+                                                        Bonus Group
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Payroll Operation -->
+                    {% if request.user.is_superuser or 'view_employeesalary' in permissions or 'add_employeesalary' in permissions or 'change_employeesalary' in permissions or 'delete_employeesalary' in permissions or 'change_salarypaymentmethod' in permissions or 'view_salarypaymentmethod' in permissions or 'add_salarypaymentmethod' in permissions or 'change_salarypaymentmethod' in permissions or 'delete_salarypaymentmethod' in permissions or 'view_employeevariablesalary' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/payroll/process/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Operation
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="payroll-operations-operation" class="m-menu__subnav">
+                                <li class="m-menu__item {% if request.path == '/admin/payroll/process/salary/' %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:payroll:salary_process_employee_selection' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Payroll Process
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item {% if '/admin/payroll/process/salary/adjustment/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:payroll:salary_adjustment' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Payroll Adjustment
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item {% if '/admin/payroll/process/salary/confirmation/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:payroll:salary_confirmation' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Payroll Confirmation
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item {% if '/admin/payroll/process/salary/disbursement/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:payroll:salary_disbursement' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Payroll Disbursement
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Payroll Report -->
+                    {% if request.user.is_superuser %}
+                    <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Report
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="payroll-report-operation" class="m-menu__subnav">
+                                <li class="m-menu__item " aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:payroll:report_payslip' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Pay Slip
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item " aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:payroll:report_pay_suggestions' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Pay Suggestion
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="m-menu__item " aria-haspopup="true">
+                                    <a href="{% url 'beehive_admin:payroll:report_pay_sheet' %}" class="m-menu__link ">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Pay Sheet
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        <!-- User management  -->
+        {% if request.user.is_superuser or 'view_usergroup' in permissions or 'add_usergroup' in permissions or 'change_usergroup' in permissions or 'delete_usergroup' in permissions or 'view_user' in permissions or 'add_user' in permissions or 'change_user' in permissions or 'delete_user' in permissions or 'view_rolehierarchy' in permissions or 'add_rolehierarchy' in permissions or 'change_rolehierarchy' in permissions or 'delete_rolehierarchy' in permissions %}
+        <li class="m-menu__item  m-menu__item--submenu {% if '/user-management/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-time-3"></i>
+                <span class="m-menu__link-text">
+                    User Management
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul id="user_management" class="m-menu__subnav">
+                    {% if request.user.is_superuser or 'view_usergroup' in permissions or 'add_usergroup' in permissions or 'change_usergroup' in permissions or 'delete_usergroup' in permissions %}
+                    <li class="m-menu__item {% if '/user-management/roles/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                        <a href="{% url 'user_management:roles_list' %}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Role Creation</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if request.user.is_superuser or 'view_user' in permissions or 'add_user' in permissions or 'change_user' in permissions or 'delete_user' in permissions %}
+                    <li class="m-menu__item {% if '/user-management/users/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                        <a href="{% url 'user_management:users_list' %}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">User Creation</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if request.user.is_superuser or 'view_rolehierarchy' in permissions or 'add_rolehierarchy' in permissions or 'change_rolehierarchy' in permissions or 'delete_rolehierarchy' in permissions %}
+                    <li class="m-menu__item {% if '/user-management/role_hierarchies/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                        <a href="{% url 'user_management:role_hierarchies_list' %}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Role Hierarchy</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if request.user.is_superuser or 'view_workflow' in permissions or 'add_workflow' in permissions or 'change_workflow' in permissions or 'delete_workflow' in permissions %}
+                    <li class="m-menu__item {% if '/user-management/workflows/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true">
+                        <a href="{% url 'user_management:workflows_list' %}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Workflow</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% comment %}{% if request.user.is_superuser %}
+                    <li class="m-menu__item " aria-haspopup="true">
+                        <a href="{% url 'user_management:workflows_list' %}" class="m-menu__link ">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">Workflow</span>
+                        </a>
+                    </li>
+                    {% endif %}{% endcomment %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        <!-- Advance Settings -->
+        {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions or 'view_industry' in permissions or 'add_industry' in permissions or 'change_industry' in permissions or 'delete_industry' in permissions or 'view_company' in permissions or 'add_company' in permissions or 'change_company' in permissions or 'delete_company' in permissions or 'view_businessunit' in permissions or 'add_businessunit' in permissions or 'change_businessunit' in permissions or 'delete_businessunit' in permissions or 'view_branch' in permissions or 'add_branch' in permissions or 'change_branch' in permissions or 'delete_branch' in permissions or 'view_division' in permissions or 'add_division' in permissions or 'change_division' in permissions or 'delete_division' in permissions or 'view_department' in permissions or 'add_department' in permissions or 'change_department' in permissions or 'delete_department' in permissions or 'view_project' in permissions or 'add_project' in permissions or 'change_project' in permissions or 'delete_project' in permissions or 'view_designation' in permissions or 'add_designation' in permissions or 'change_designation' in permissions or 'delete_designation' in permissions %}
+        <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-cogwheel-2"></i>
+                <span class="m-menu__link-text">
+                    Advance Settings
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul id="settings" class="m-menu__subnav">
+                    <!-- Organization Structure Settings -->
+                    {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions or 'view_company' in permissions or 'add_company' in permissions or 'change_company' in permissions or 'delete_company' in permissions or 'view_businessunit' in permissions or 'add_businessunit' in permissions or 'change_businessunit' in permissions or 'delete_businessunit' in permissions or 'view_branch' in permissions or 'add_branch' in permissions or 'change_branch' in permissions or 'delete_branch' in permissions or 'view_division' in permissions or 'add_division' in permissions or 'change_division' in permissions or 'delete_division' in permissions or 'view_department' in permissions or 'add_department' in permissions or 'change_department' in permissions or 'delete_department' in permissions or 'view_project' in permissions or 'add_project' in permissions or 'change_project' in permissions or 'delete_project' in permissions or 'view_designation' in permissions or 'add_designation' in permissions or 'change_designation' in permissions or 'delete_designation' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Organization Structure
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="org_structure_settings" class="m-menu__subnav">
+                                <!-- Organizational Structure -->
+                                {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/organizational-structure/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:organizational_structure_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Create Organizational Structure
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                {% if 'company' in org_items_list %}
+                                <!-- Company -->
+                                {% if request.user.is_superuser or 'view_company' in permissions or 'add_company' in permissions or 'change_company' in permissions or 'delete_company' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/company/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:company_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Company
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+
+                                {% if 'business-unit' in org_items_list %}
+                                <!-- Business Unit -->
+                                {% if request.user.is_superuser or 'view_businessunit' in permissions or 'add_businessunit' in permissions or 'change_businessunit' in permissions or 'delete_businessunit' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/business-units/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:business_unit_list' %}" class="m-menu__link m-menu__toggle">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Business Unit
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+
+                                {% if 'branch' in org_items_list %}
+                                <!-- Branch-->
+                                {% if request.user.is_superuser or 'view_branch' in permissions or 'add_branch' in permissions or 'change_branch' in permissions or 'delete_branch' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/branch/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:branch_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Branch
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+
+                                {% if 'division' in org_items_list %}
+                                <!-- Division -->
+                                {% if request.user.is_superuser or 'view_division' in permissions or 'add_division' in permissions or 'change_division' in permissions or 'delete_division' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/divisions/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:division_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Division
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+
+                                {% if 'department' in org_items_list %}
+                                <!-- Department -->
+                                {% if request.user.is_superuser or 'view_department' in permissions or 'add_department' in permissions or 'change_department' in permissions or 'delete_department' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/departments/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:department_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Department
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endif %}
+
+                                <!-- Designation -->
+                                {% if request.user.is_superuser or 'view_designation' in permissions or 'add_designation' in permissions or 'change_designation' in permissions or 'delete_designation' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/designations/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:designation_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Designation
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                                <!-- Project -->
+                                {% if request.user.is_superuser or 'view_project' in permissions or 'add_project' in permissions or 'change_project' in permissions or 'delete_project' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/organization/projects/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:project_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Project
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+
+                    <!-- Other Settings -->
+                    {% if request.user.is_superuser or 'view_industry' in permissions or 'add_industry' in permissions or 'change_industry' in permissions or 'delete_industry' in permissions %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/industry/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Other Settings
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="other_settings" class="m-menu__subnav">
+                                <!-- Industry -->
+                                {% if request.user.is_superuser or 'view_industry' in permissions or 'add_industry' in permissions or 'change_industry' in permissions or 'delete_industry' in permissions %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/admin/setting/industry/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'beehive_admin:setting:industry_list' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Industry
+                                        </span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        <!-- Self panel -->
+        {% if request.user.self_panel %}
+        <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                <i class="m-menu__link-icon flaticon-cogwheel-2"></i>
+                <span class="m-menu__link-text">
+                    Self Panel
+                </span>
+                <i class="m-menu__ver-arrow la la-angle-right"></i>
+            </a>
+
+            <div class="m-menu__submenu ">
+                <span class="m-menu__arrow"></span>
+                <ul id="settings" class="m-menu__subnav">
+                    <!-- Attendance -->
+                    {% comment %} {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions or 'view_company' in permissions or 'add_company' in permissions or 'change_company' in permissions or 'delete_company' in permissions or 'view_businessunit' in permissions or 'add_businessunit' in permissions or 'change_businessunit' in permissions or 'delete_businessunit' in permissions or 'view_branch' in permissions or 'add_branch' in permissions or 'change_branch' in permissions or 'delete_branch' in permissions or 'view_division' in permissions or 'add_division' in permissions or 'change_division' in permissions or 'delete_division' in permissions or 'view_department' in permissions or 'add_department' in permissions or 'change_department' in permissions or 'delete_department' in permissions or 'view_project' in permissions or 'add_project' in permissions or 'change_project' in permissions or 'delete_project' in permissions or 'view_designation' in permissions or 'add_designation' in permissions or 'change_designation' in permissions or 'delete_designation' in permissions %} {% endcomment %}
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/attendance/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Attendance
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="self_panel" class="m-menu__subnav">
+                                <!-- Organizational Structure -->
+                                {% comment %} {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions %} {% endcomment %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/attendance/remotely/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'self_panel:remote_attendance' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Rremote Check In/Out
+                                        </span>
+                                    </a>
+                                </li>
+                                {% comment %} {% endif %} {% endcomment %}
+
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/attendance/status/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'self_panel:attendance_status' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Attendance Status
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/leave/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Leave
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="self_panel" class="m-menu__subnav">
+                                <!-- Organizational Structure -->
+                                {% comment %} {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions %} {% endcomment %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/leave/apply/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'self_panel:leave_apply' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Leave Apply
+                                        </span>
+                                    </a>
+                                </li>
+                                {% comment %} {% endif %} {% endcomment %}
+
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/leave/status/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'self_panel:leave_status' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Leave Status
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {% comment %} {% endif %} {% endcomment %}
+
+                    <!-- Late -->
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/late/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Late
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="self_panel" class="m-menu__subnav">
+                                <!-- Organizational Structure -->
+                                {% comment %} {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions %} {% endcomment %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/late/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'self_panel:late_status' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Late Application
+                                        </span>
+                                    </a>
+                                </li>
+                                {% comment %} {% endif %} {% endcomment %}
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- Early out -->
+                    <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/early-out/' in request.path %} m-menu__item--open m-menu__item--expanded{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                        <a href="javascript:;" class="m-menu__link m-menu__toggle">
+                            <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                <span></span>
+                            </i>
+                            <span class="m-menu__link-text">
+                                Early Out
+                            </span>
+                            <i class="m-menu__ver-arrow la la-angle-right"></i>
+                        </a>
+
+                        <div class="m-menu__submenu ">
+                            <span class="m-menu__arrow"></span>
+                            <ul id="self_panel" class="m-menu__subnav">
+                                <!-- Organizational Structure -->
+                                {% comment %} {% if request.user.is_superuser or 'view_organizationalstructure' in permissions or 'add_organizationalstructure' in permissions or 'change_organizationalstructure' in permissions or 'delete_organizationalstructure' in permissions %} {% endcomment %}
+                                <li class="m-menu__item  m-menu__item--submenu {% if '/self-service/early-out/' in request.path %} m-menu__item--active{% endif %}" aria-haspopup="true" m-menu-submenu-toggle="hover">
+                                    <a href="{% url 'self_panel:early_out_status' %}" class="m-menu__link">
+                                        <i class="m-menu__link-bullet m-menu__link-bullet--dot">
+                                            <span></span>
+                                        </i>
+                                        <span class="m-menu__link-text">
+                                            Early Out Application
+                                        </span>
+                                    </a>
+                                </li>
+                                {% comment %} {% endif %} {% endcomment %}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        {% endif %}
+
+        <!-- BIRT Report Demo -->
+        {% if request.user.is_superuser %}
+        <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover">
+            <a href="{% url 'beehive_admin:reporting:birt-demo-report' %}" class="m-menu__link">
+                <i class="m-menu__link-icon flaticon-graph"></i>
+                <span class="m-menu__link-text">
+                    BIRT Report Demo
+                </span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>

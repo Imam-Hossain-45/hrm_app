@@ -1,0 +1,46 @@
+@font-face {
+    font-family: "Flaticon";
+    src: url("../fonts/flaticon/Flaticon.eot");
+    src: url("../fonts/flaticon/Flaticon.woff") format("woff"),
+        url("../fonts/flaticon/Flaticon.otf") format("opentype"),
+        url("../fonts/flaticon/Flaticon.svg") format("svg");
+}
+
+@font-face {
+    font-family: "LineAwesome";
+    src: url("../fonts/line-awesome/line-awesome.eot");
+    src: url("../fonts/line-awesome/line-awesome.woff") format("woff"),
+        url("../fonts/line-awesome/line-awesome.otf") format("opentype"),
+        url("../fonts/line-awesome/line-awesome.svg") format("svg");
+}
+
+@font-face {
+    font-family: "Metronic";
+    src: url("../fonts/metronic/Metronic.eot");
+    src: url("../fonts/metronic/Metronic.woff") format("woff"),
+        url("../fonts/metronic/Metronic.otf") format("opentype"),
+        url("../fonts/metronic/Metronic.svg") format("svg");
+}
+
+@font-face {
+    font-family: "FontAwesome";
+    src: url("../fonts/metronic/Metronic.eot");
+    src: url("../fonts/metronic/Metronic.woff") format("woff"),
+        url("../fonts/metronic/Metronic.otf") format("opentype"),
+        url("../fonts/metronic/Metronic.svg") format("svg");
+}
+
+@font-face {
+    font-family: 'Muli Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Muli Regular'), url('../fonts/muli/Muli-Regular.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Muli Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Muli Bold'), url('../fonts/muli/Muli-Bold.woff') format('woff');
+}

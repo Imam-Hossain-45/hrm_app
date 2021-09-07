@@ -1,0 +1,107 @@
+{#{{ family_form }}#}
+<table class="table table-hover">
+    <thead class="text-center">
+        <tr>
+            <th>Certificate Title<span>*</span></th>
+            <th>Country</th>
+            <th>Institute<span>*</span></th>
+            <th>Institute Address</th>
+            <th>Duration<span>*</span></th>
+            <th>Certificate</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="form-two">
+        {% for form_data in professional_form %}
+        <tr class="item">
+            <td>
+                <input type="text" name="{{ form_data.certificate_title.html_name }}" id="{{ form_data.certificate_title.id_for_label }}" class="formset-field form-control {% if form_data.certificate_title.errors %} is-invalid{% endif %}" {% if form_data.certificate_title.value != None %}value="{{ form_data.certificate_title.value }}" {% endif %}>
+                {% if form_data.certificate_title.errors %}
+                {% for error in form_data.certificate_title.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <select name="{{ form_data.country.html_name }}" id="{{ form_data.country.id_for_label }}" class="formset-field form-control {% if form_data.country.errors %} is-invalid{% endif %}">
+                    {% for country in form_data.country %}
+                    {{ country }}
+                    {% endfor %}
+                </select>
+                {% if form_data.country.errors %}
+                {% for error in form_data.country.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.institute.html_name }}" id="{{ form_data.institute.id_for_label }}" class="formset-field form-control {% if form_data.institute.errors %} is-invalid{% endif %}" {% if form_data.institute.value != None %}value="{{ form_data.institute.value }}" {% endif %}>
+                {% if form_data.institute.errors %}
+                {% for error in form_data.institute.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+
+            <td>
+                <input type="text" name="{{ form_data.institute_address.html_name }}" id="{{ form_data.institute_address.id_for_label }}" class="formset-field form-control {% if form_data.institute_address.errors %} is-invalid{% endif %}">{% if form_data.institute_address.value != None %}
+                {{ form_data.institute_address.value }}{% endif %}
+                {% if form_data.institute_address.errors %}
+                {% for error in form_data.institute_address.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="d-flex">
+                <input type="number" name="{{ form_data.duration.html_name }}" id="{{ form_data.duration.id_for_label }}" class="formset-field form-control {% if form_data.duration.errors %} is-invalid{% endif %}" {% if form_data.duration.value != None %}value="{{ form_data.duration.value }}" {% endif %}>
+                {% if form_data.duration.errors %}
+                {% for error in form_data.duration.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+                <select name="{{ form_data.duration_unit.html_name }}" id="{{ form_data.duration_unit.id_for_label }}" class="formset-field form-control {% if form_data.duration_unit.errors %} is-invalid{% endif %}">
+                    {% for duration_unit in form_data.duration_unit %}
+                    {{ duration_unit }}
+                    {% endfor %}
+                </select>
+                {% if form_data.duration_unit.errors %}
+                {% for error in form_data.duration_unit.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                {% if form_data.certificate.value %}
+                Currently:
+                <a href="{{ form_data.certificate.value.url }}">{{ form_data.certificate.value.url }}</a>
+                <br>
+                <input id="{{ form_data.certificate.id_for_label }}-clear_id" name="{{ form_data.certificate.html_name }}-clear" type="checkbox" style="display: inline-block;">
+                <label for="{{ form_data.certificate.id_for_label }}-clear_id" style="display: inline-block;">Clear</label>
+                <br>Change:
+                {% endif %}
+                <input type="file" name="{{ form_data.certificate.html_name }}" class="form-control{% if form_data.certificate.errors %} is-invalid{% endif %}" id="{{ form_data.certificate.id_for_label }}" accept="image/">
+                {% if form_data.certificate.errors %}
+                {% for error in form_data.certificate.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="v-middle m-100">
+                <input type="checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="clone-btn-wrapper d-flex" style="position: initial;">
+    <div class="ml-auto">
+        <a href="javascript:;" class="clone-row emergency-contact-add"></a>
+    </div>
+
+    <div class="">
+        <a href="javascript:;" class="remove-row emergency-contact-rem"></a>
+    </div>
+</div>
+{{ professional_form.management_form }}

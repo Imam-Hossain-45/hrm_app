@@ -1,0 +1,114 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Late Entry Approval > List{% endblock %}
+{% load staticfiles %}
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'add_lateapplication' in permissions %}
+            <div class="text-right">
+                <a href="{% url 'beehive_admin:attendance:late_entry_new' %}" class="btn btn-main m-0">+
+                    New late Entry</a>
+            </div>
+            {% endif %}
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <p>Late Entry Approval</p>
+                        <h2>Late Entry Approval</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h2>Filter Employees</h2>
+            <form method="GET" novalidate class="mw-initial mb-5">
+                {% include 'leave/process/layout/search.html' %}
+                <div class="col-md-12">
+                    <div class="form-group text-right mt-3">
+                        <button type="submit" class="btn btn-main">Search Employee</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>Pending Late Entry Applications</h2>
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Applied For(Date & Time)</th>
+                                            <th scope="col">Late Duration</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% if objects %}
+                                            {% for obj in pending_application %}
+                                            <tr class='clickable-row' data-href="{% url 'beehive_admin:attendance:late_approval_form' obj.id %}">
+                                                <td class="d-flex align-items-center">
+                                                    <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                                    <a href="{% url 'beehive_admin:attendance:late_approval_form' obj.id %}">
+                                                        <h5 class="title">{{ obj.name }}</h5>
+                                                        <p>{{ obj.designation.designation.name }}</p>
+                                                    </a>
+                                                </td>
+                                                <td><a href="{% url 'beehive_admin:attendance:late_approval_form' obj.id %}">{{ obj.date|date:'d/m/Y' }}<span class="pl-3">{{ obj.in_time|date:'h:i A' }}</span></a></td>
+                                                <td><a href="{% url 'beehive_admin:attendance:late_approval_form' obj.id %}">{{ obj.late_duration }}</a></td>
+                                                <td><a href="{% url 'beehive_admin:attendance:late_approval_form' obj.id %}">{{ obj.status }}</a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="5">No data found.</td>
+                                            </tr>
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if pending_application.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if pending_application.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ pending_application.previous_page_number }}&{{path}}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == pending_application.number %}active{% endif %}" href="?page={{ pg }}&{{path}}">{{ pg }} {{ pending_application.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if pending_application.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ pending_application.next_page_number }}&{{path}}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

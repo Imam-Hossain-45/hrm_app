@@ -1,0 +1,227 @@
+/*=============================== Setting ======================*/
+#sortable {
+  width: 100%;
+  padding: 1.5rem;
+  margin: auto;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  li {
+    padding: 10px 0;
+    border: 1px solid #ccc;
+    width: 320px;
+    margin: 5px 0;
+    text-align: center;
+    cursor: pointer;
+
+    span {
+      position: absolute;
+    }
+  }
+}
+
+#sortable-one {
+  min-height: 100px;
+}
+
+#sortable-two {
+  min-height: 200px;
+}
+
+.sortable-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+
+  li {
+    padding: 10px 30px !important;
+    border: 1px solid #282828;
+    cursor: pointer;
+    font-weight: 700;
+  }
+}
+
+.list-block-wrap {
+  height: 105px;
+  margin-top: 3rem;
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+}
+
+.sortable-middle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  li {
+    padding: 16px 40px !important;
+    margin-bottom: 3rem;
+    border: 1px solid #282828;
+    position: relative;
+    cursor: pointer;
+    font-weight: 700;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      right: 0;
+      width: 1px;
+      height: 44px;
+      background: #282828;
+    }
+
+    &:last-child:after {
+      content: none;
+    }
+  }
+}
+
+.list-remove:before {
+  content: "Remove";
+  position: absolute;
+  top: 2px;
+  right: -19px;
+  padding: 2px 4px;
+  font-size: 11px;
+  font-weight: 400;
+  color: red;
+  text-decoration: none;
+  background: #fff;
+  border: 1px dotted #444;
+  opacity: 0;
+}
+
+#sortable-one .remove-item {
+  display: none;
+}
+
+#sortable-two li:first-child {
+  .remove-item {
+    display: none;
+  }
+}
+
+.remove-item {
+  opacity: 0;
+}
+
+#sortable-two .remove-item {
+  font-size: 11px;
+  position: absolute;
+  top: 2px;
+  right: -19px;
+  background: #fff;
+  border: 1px dotted #444;
+  padding: 2px 4px;
+  text-decoration: none;
+  color: #ff0000;
+  font-weight: normal;
+}
+
+/*============================= Company =========================*/
+.company-add-btn {
+  position: inherit;
+  text-align: right;
+  justify-content: flex-end !important;
+  align-items: flex-end !important;
+}
+
+
+
+/*=============================== Employee========================*/
+.overtime-wrap,
+.deduction-wrap {
+  display: none;
+}
+
+.link-text {
+  color: #716aca;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: none;
+    color: #5b56a7;
+  }
+}
+
+/*=============================== User Management ========================*/
+.user-box {
+  .ui.fluid.dropdown {
+    max-width: initial !important;
+  }
+}
+
+/*============================== Payroll ==============================*/
+.bonus-group-field {
+  .form-group {
+    display: flex;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+.deduct-form {
+  .form-two {
+    padding: 1.5rem 0;
+    border-top: 1px solid #ccc;
+  }
+}
+
+/**================================= Business Unit =============================*/
+.business-unit-tab {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-around;
+
+  .nav-item {
+    background: transparent;
+    //border-right: 1px solid #ccc;
+    width: 49%;
+    margin: auto;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  .nav-link {
+    background: transparent;
+    color: #6f727d;
+    text-align: center;
+
+    &.active {
+      background: #f1f1f1;
+      color: #000 !important;
+    }
+  }
+}
+
+/*========================Leave ============================*/
+.verticle-nav {
+  width: 20%;
+  border-right: 1px solid #ccc;
+  padding-top: 2rem;
+
+  .nav-link.active {
+    background: #f1f1f1;
+    color: #282828 !important;
+    border-radius: 0;
+  }
+}
+
+.option-one,
+.option-two,
+.option-three,
+.option-four {
+  //display: none;
+}

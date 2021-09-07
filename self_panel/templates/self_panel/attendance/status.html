@@ -1,0 +1,123 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Attendance{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Self panel > Attendance</p>
+                    <h2>Attendance Status</h2>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form class="mw-initial" method="GET">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group calendar">
+                                            <label for="from-date">From Date</label>
+                                            <input type="date" name="from_date" id="from-date" class="form-control" value="{% if request.GET.from_date %}{{ request.GET.from_date }}{% endif %}">
+                                            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group calendar">
+                                            <label for="to-date">To Date</label>
+                                            <input type="date" name="to_date" id="to-date" class="form-control" value="{% if request.GET.to_date %}{{ request.GET.to_date }}{% endif %}">
+                                            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 text-right mt-3">
+                                        <button type="submit" class="btn btn-main">Go to Attendance</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>In Time</th>
+                                            <th>Out Time</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        {% for item in attendance_data %}
+                                        {% if item.date %}
+                                        <tr>
+                                            <td>{{ item.date }}</td>
+                                            <td>{{ item.in_time }}</td>
+                                            <td>{{ item.out_time }}</td>
+                                            <td>
+                                                {% if item.is_working_day and item.is_present %}
+                                                {% if not item.early and not item.is_leave and not item.late and not item.under_work %}
+                                                Present
+                                                {% elif not item.early and not item.is_leave and not item.late and item.under_work %}
+                                                Present - Underwork
+                                                {% elif not item.early and not item.is_leave and item.late and not item.under_work %}
+                                                Present - Late
+                                                {% elif not item.early and not item.is_leave and item.late and item.under_work %}
+                                                Present - Late - Underwork
+                                                {% elif not item.early and item.is_leave and not item.late and not item.under_work %}
+                                                Present - Leave
+                                                {% elif not item.early and item.is_leave and not item.late and item.under_work %}
+                                                Present - Leave - Underwork
+                                                {% elif not item.early and item.is_leave and item.late and not item.under_work %}
+                                                Present - Leave - Late
+                                                {% elif not item.early and item.is_leave and item.late and item.under_work %}
+                                                Present - Leave - Late - Underwork
+                                                {% elif item.early and not item.is_leave and not item.late and not item.under_work %}
+                                                Present - Early Out
+                                                {% elif item.early and not item.is_leave and not item.late and item.under_work %}
+                                                Present - Early Out - Underwork
+                                                {% elif item.early and not item.is_leave and item.late and not item.under_work %}
+                                                Present - Early Out - Late
+                                                {% elif item.early and not item.is_leave and item.late and item.under_work %}
+                                                Present - Early Out - Late - Underwork
+                                                {% elif item.early and item.is_leave and not item.late and not item.under_work %}
+                                                Present - Early Out - Leave'
+                                                {% elif item.early and item.is_leave and not item.late and item.under_work %}
+                                                Present - Early Out - Leave - Underwork
+                                                {% elif item.early and item.is_leave and item.late and not item.under_work %}
+                                                Present - Early Out - Leave - Late
+                                                {% elif item.early and item.is_leave and item.late and item.under_work %}
+                                                Present - Early Out - Leave - Late - Underwork
+                                                {% endif %}
+                                                {% elif item.is_holiday %}
+                                                Holiday
+                                                {% elif item.is_weekend %}
+                                                Weekend
+                                                {% elif item.is_leave %}
+                                                Leave
+                                                {% else %}
+                                                Absent
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

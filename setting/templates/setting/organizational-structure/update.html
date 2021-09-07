@@ -1,0 +1,31 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Update organizational structure{% endblock %}
+
+{% block content %}
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Organizational structure Description</h2>
+                    <p>Organizational structure name, description and status.</p>
+                </div>
+                <div class="card-block">
+                    <form method="post" novalidate>
+
+                        {% csrf_token %}
+
+                        {% include 'setting/organizational-structure/form.html' %}
+
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main b-none" href="{% url 'beehive_admin:setting:organizational_structure_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

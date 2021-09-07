@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ tax_form.tin_number.id_for_label }}">{{ tax_form.tin_number.label }}</label>
+            <input type="text" name="{{ tax_form.tin_number.name }}" class="form-control{% if tax_form.tin_number.errors %} is-invalid{% endif %}" id="{{ tax_form.tin_number.id_for_label }}" {% if tax_form.tin_number.value != None %}value="{{ tax_form.tin_number.value }}" {% endif %}>
+            {% if tax_form.tin_number.errors %}
+            {% for error in tax_form.tin_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ tax_form.TIN.id_for_label }}">{{ tax_form.TIN.label }}</label>
+            {% if tax_form.TIN.value %}
+            Currently: <a href="{{ tax_form.TIN.value.url }}">{{ tax_form.TIN.value.url }}</a><br>
+            <input id="TIN-clear_id" name="TIN-clear" type="checkbox" style="display: inline-block;">
+            <label for="TIN-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ tax_form.TIN.name }}" class="form-control{% if tax_form.TIN.errors %} is-invalid{% endif %}" id="{{ tax_form.TIN.id_for_label }}" accept="image/">
+            {% if tax_form.TIN.errors %}
+            {% for error in tax_form.TIN.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

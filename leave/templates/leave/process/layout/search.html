@@ -1,0 +1,120 @@
+{% load tag_library %}
+    <input type="search" name="query" class="form-control" placeholder="Search Employee by Name, ID."
+           id='employee_search' value="{{ employee.name }} {{ employee.employee_id }} {{ employee.designation }}"
+           autocomplete="off">
+    <div id="search-result" class="search-result" style="display: none">
+        <div class="row">
+            <div class="col-md-12">
+                <ul id="search_employee" class="search_employee"></ul>
+            </div>
+        </div>
+    </div>
+<!--</form>-->
+<!--<form method="GET" novalidate class="mw-initial mb-5">-->
+    <div class="row">
+        <input type="hidden" id="query" name="employee" value="{{ employee.id }}">
+        <div class="col-md-6">
+            <div class="form-group calendar">
+                <label for="{{ search_form.from_date.id_for_label }}">{{ search_form.from_date.label }}</label>
+                <input type="date" name="{{ search_form.from_date.name }}" id="{{ search_form.from_date.id_for_label }}"
+                       class="form-control{% if search_form.from_date.errors %} is-invalid{% endif %}"
+                       value="{% if request.GET.from_date %}{{ request.GET.from_date }}{% else %}{{ search_form.from_date.value }}{% endif %}">
+                <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+                {% if search_form.from_date.errors %}
+                    {% for error in search_form.from_date.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group calendar">
+                <label for=""></label>
+                <input type="date" name="{{ search_form.to_date.name }}" id="{{ search_form.to_date.id_for_label }}"
+                       class="form-control{% if search_form.to_date.errors %} is-invalid{% endif %}"
+                       value="{% if request.GET.to_date %}{{ request.GET.to_date }}{% else %}{{ search_form.to_date.value }}{% endif %}">
+                <i class="m-menu__link-icon flaticon-calendar-1"></i>
+
+                {% if search_form.to_date.errors %}
+                    {% for error in search_form.to_date.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ search_form.company.id_for_label }}">{{ search_form.company.label }}</label>
+                <select name="{{ search_form.company.name }}" id="{{ search_form.company.id_for_label }}"
+                        class="form-control{% if search_form.company.errors %} is-invalid{% endif %}">
+                    {% for key, value in search_form.company.field.choices %}
+                    <option value="{{ key }}" {% if request.GET.company|to_int == key %} selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if search_form.company.errors %}
+                    {% for error in search_form.company.errors %}
+                        <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ search_form.division.id_for_label }}">{{ search_form.division.label }}</label>
+                <select name="{{ search_form.division.name }}" id="{{ search_form.division.id_for_label }}"
+                        class="form-control{% if search_form.division.errors %} is-invalid{% endif %}">
+                    {% for key, value in search_form.division.field.choices %}
+                    <option value="{{ key }}" {% if request.GET.division|to_int == key %} selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ search_form.department.id_for_label }}">{{ search_form.department.label }}</label>
+                <select name="{{ search_form.department.name }}" id="{{ search_form.department.id_for_label }}"
+                        class="form-control{% if search_form.department.errors %} is-invalid{% endif %}">
+                    {% for key, value in search_form.department.field.choices %}
+                    <option value="{{ key }}" {% if request.GET.department|to_int == key %} selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ search_form.business_unit.id_for_label }}">{{ search_form.business_unit.label }}</label>
+                <select name="{{ search_form.business_unit.name }}" id="{{ search_form.business_unit.id_for_label }}"
+                        class="form-control{% if search_form.business_unit.errors %} is-invalid{% endif %}">
+                    {% for key, value in search_form.business_unit.field.choices %}
+                    <option value="{{ key }}" {% if request.GET.business_unit|to_int == key %} selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ search_form.branch.id_for_label }}">{{ search_form.branch.label }}</label>
+                <select name="{{ search_form.branch.name }}" id="{{ search_form.branch.id_for_label }}"
+                        class="form-control{% if search_form.branch.errors %} is-invalid{% endif %}">
+                    {% for key, value in search_form.branch.field.choices %}
+                    <option value="{{ key }}" {% if request.GET.branch|to_int == key %} selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="{{ search_form.schedule.id_for_label }}">{{ search_form.schedule.label }}</label>
+                <select name="{{ search_form.schedule.name }}" id="{{ search_form.schedule.id_for_label }}"
+                        class="form-control{% if search_form.schedule.errors %} is-invalid{% endif %}">
+                    {% for key, value in search_form.schedule.field.choices %}
+                    <option value="{{ key }}" {% if request.GET.schedule|to_int == key %} selected{% endif %}>{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>

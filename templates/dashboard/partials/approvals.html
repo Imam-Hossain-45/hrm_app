@@ -1,0 +1,23 @@
+{% load static %}
+
+<div class="card border-1">
+    <div class="card-header dash-header">
+        <h2 class="m-0">Approval</h2>
+        <h5 class="text-right pending-items">Pending: <span class="text-bold"></span></h5>
+    </div>
+    <div class="card-body">
+        <div id="approvals" class="comment-wrapper dash-listing">
+            <!-- <div class="comment-wrap d-flex">
+                <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                <div class="comment-info">
+                    <h2 class="dash-title">Hasibur Rahman <span>has applied for 01 day of Casual Leave on 25 Mar</span>
+                    </h2>
+                    <p>23 Mar- Sunday. 4:56 PM</p>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="card-footer text-right">
+        <a href="{% url 'approvals' %}" class="link-text">Show more</a>
+    </div>
+</div>

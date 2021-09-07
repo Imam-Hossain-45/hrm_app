@@ -1,0 +1,137 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Update Deduction Component{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                {% if request.user.is_superuser or 'update_deductioncomponent' in permissions or 'update_deductiongeneralsetting' in permissions %}
+                    <div class="text-right">
+                        <a href="{% url 'beehive_admin:payroll:deduction_component_settings' component.id %}" class="btn btn-main m-0">
+                            Change Settings
+                        </a>
+                    </div>
+                {% endif %}
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Deduction Component Description</h2>
+                        <p>Deduction Component name and address.</p>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                        <input type="text" name="{{ form.name.name }}" id="{{ form.name.id_for_label }}"
+                                               class="form-control{% if form.name.errors %} is-invalid{% endif %}"
+                                               value="{{ form.name.value|default:'' }}" maxlength="255" required>
+
+                                        {% if form.name.errors %}
+                                            {% for error in form.name.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.short_code.id_for_label }}">{{ form.short_code.label }}</label>
+                                        <input type="text" name="{{ form.short_code.name }}" id="{{ form.short_code.id_for_label }}"
+                                               class="form-control{% if form.short_code.errors %} is-invalid{% endif %}"
+                                               value="{{ form.short_code.value|default:'' }}" maxlength="255">
+
+                                        {% if form.short_code.errors %}
+                                            {% for error in form.short_code.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.deduction_component_type.id_for_label }}">{{ form.deduction_component_type.label }}</label>
+                                        <select name="{{ form.deduction_component_type.name }}" id="{{ form.deduction_component_type.id_for_label }}"
+                                                class="form-control{% if form.deduction_component_type.errors %} is-invalid{% endif %}"
+                                                required>
+                                            {% if form.deduction_component_type.value %}
+                                                {% for choice in form.deduction_component_type.field.choices %}
+                                                    {% if form.deduction_component_type.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.deduction_component_type.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.deduction_component_type.errors %}
+                                            {% for error in form.deduction_component_type.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                                        <textarea name="{{ form.description.name }}"
+                                                  class="form-control{% if form.description.errors %} is-invalid{% endif %}"
+                                                  id="{{ form.description.id_for_label }}" cols="30" rows="10">{{ form.description.value|default_if_none:'' }}</textarea>
+
+                                        {% if form.description.errors %}
+                                            {% for error in form.description.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group w-100">
+                                        <label for="{{ form.status.id_for_label }}">{{ form.status.label }}</label>
+                                        <select name="{{ form.status.name }}" id="{{ form.status.id_for_label }}"
+                                                class="form-control{% if form.status.errors %} is-invalid{% endif %}"
+                                                required>
+                                            {% if form.status.value %}
+                                                {% for choice in form.status.field.choices %}
+                                                    {% if form.status.value == choice.0 %}
+                                                        <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                                    {% else %}
+                                                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for choice in form.status.field.choices %}
+                                                    <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </select>
+
+                                        {% if form.status.errors %}
+                                            {% for error in form.status.errors %}
+                                                <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group w-100 text-right">
+                                        <a class="btn btn-main b-none"
+                                           href="{% url 'beehive_admin:payroll:deduction_component_list' %}">Cancel</a>
+                                        <button type="submit" class="btn btn-main">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

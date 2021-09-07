@@ -1,0 +1,27 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Delete a Project{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Delete Project</h2>
+                        <p>Confirm delete Project</p>
+                    </div>
+                    <div class="card-block">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+
+                            <p>Are you sure you want to delete "{{ object.name }} [{{ object.code }}]"?</p>
+                            <input type="submit" value="Yes, I am sure" class='btn btn-main b-none'>
+                            <a class="btn btn-main" href="{% url 'beehive_admin:setting:project_list' %}">No, take me back</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

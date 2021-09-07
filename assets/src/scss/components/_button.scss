@@ -1,0 +1,178 @@
+//  Default Button Style
+
+.btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.btn-white,
+.btn-black {
+  @extend .btn;
+  @include title-text(1.875rem, 1.618);
+  position: relative;
+  z-index: 2;
+  padding: .75rem 6rem;
+  border-radius: 0;
+  border: 2px solid transparent;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in;
+
+  &.btn-lite {
+    font-weight: 400;
+    border: 1px solid;
+    padding: .75rem 3rem;
+    margin-top: .5rem;
+    font-size: 1.125rem;
+
+    @include media("<lg") {
+      padding: .5rem 3rem;
+      font-size: 1rem;
+    }
+  }
+
+  // Responsive
+  @include media("<lg") {
+    padding: .75rem 5rem;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 15px;
+  }
+
+  @include media("<md") {
+    //@include heading-font();
+    padding: 8px 4rem;
+    margin-top: 5px;
+    font-weight: 400;
+  }
+}
+
+.btn-black {
+  text-transform: none;
+  border-color: rgba(0, 0, 0, 0.35);
+  color: rgba(0, 0, 0, 0.85);
+
+  &:after {
+    background: #000;
+  }
+
+  // Hover
+  &:hover {
+    color: #fff;
+    background: #cc1126;
+    border-color: #cc1126;
+  }
+}
+
+.btn-white {
+  border-color: #fff !important;
+  color: #fff;
+
+  &:after {
+    background: #fff;
+  }
+
+  // Hover
+  &:hover {
+    color: #004f7a;
+  }
+}
+
+.btn-main {
+  @include title-text();
+  background: #f5f5f5;
+  color: #282828;
+  padding: .5rem 2rem;
+  margin: auto;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.618;
+  text-align: center;
+  text-transform: none;
+  border-radius: 0;
+  transition: all 0.3s ease-in;
+  border: 1px solid #282828;
+
+  // Responsive
+  @include media("<lg") {
+    padding: .75rem 5rem;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 15px;
+  }
+
+  @include media("<md") {
+    @include heading-font();
+    padding: 8px 4rem;
+    margin-top: 5px;
+    font-weight: 400;
+  }
+
+  &:hover {
+    background: #292b3a;
+    color: #c7c7c7;
+  }
+
+}
+
+// Button b-none class
+.b-none {
+  border: 1px solid #282828;
+  background: transparent !important;
+  margin-right: 5px;
+  opacity: .75;
+
+  &:hover {
+    color: #282828 !important;
+    opacity: 1;
+  }
+}
+
+// Navbar Sidebar button
+.sidr-class-navbar-toggler {
+  height: 22px;
+  overflow: hidden;
+  background: #006ca1;
+
+  img {
+    margin-top: -4px;
+  }
+}
+
+// Button container
+.view-more {
+  text-align: center;
+  padding-bottom: 50px;
+
+  @include media("<md") {
+    padding-bottom: 30px;
+  }
+}
+
+.btn-submit {
+  padding: 8px 25px;
+  margin: .25rem 10px 0 0;
+  font-size: .875rem;
+  line-height: 1.375rem;
+  color: #fff;
+  background: #558000;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  -webkit-transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  transition: all .3s ease-in;
+}
+
+@media (max-width: 767px) {
+  .btn-submit {
+    margin: .25rem auto;
+  }
+}
+
+.btn-submit:hover {
+  background: #496e00;
+  color: #fff;
+}
+
+.btn-large {
+  padding: 1.25rem 4rem;
+}

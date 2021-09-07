@@ -1,0 +1,93 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Leave{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Self panel > Early Out</p>
+                    <h2>Early Out Status</h2>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <a href="{% url 'self_panel:early_out_apply' %}" class="btn btn-main b-none">Apply</a>
+                            <a href="javascript:;" class="btn btn-main b-none" onclick="show_filter()">
+                                Filter by Date
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row" id="filter-by-date" style="display: none;">
+                        <div class="col-12">
+                            <form method="GET" class="mw-initial">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group calendar">
+                                            <label for="from-date">From Date</label>
+                                            <input type="date" name="from_date" id="from-date" class="form-control" value="{% if request.GET.from_date %}{{ request.GET.from_date }}{% endif %}">
+                                            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group calendar">
+                                            <label for="to-date">To Date</label>
+                                            <input type="date" name="to_date" id="to-date" class="form-control" value="{% if request.GET.to_date %}{{ request.GET.to_date }}{% endif %}">
+                                            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="submit" class="btn btn-main">Filter</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <table class="table table-bordered table-hover" id="datatable">
+                                <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">Date</th>
+                                        <th scope="col">In Time</th>
+                                        <th scope="col">Out Time</th>
+                                        <th scope="col">Apply Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for obj in applications %}
+                                    <tr onclick="location.href = '{% url "self_panel:early_out_update" obj.pk %}'">
+                                        <td>{{ obj.attendance.date }}</td>
+                                        <td>{{ obj.attendance.in_time }}</td>
+                                        <td>{{ obj.attendance.out_time }}</td>
+                                        <td>{{ obj.get_status_display }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function show_filter() {
+        $('#filter-by-date').toggle();
+    }
+
+</script>
+{% endblock %}

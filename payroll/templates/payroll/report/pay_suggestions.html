@@ -1,0 +1,52 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}Pay-Suggestions Report{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <p>Pay Suggestions > Report</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <h2>Filter Employees</h2>
+            <form method="GET" novalidate class="mw-initial mb-5">
+                {% include 'leave/process/layout/search.html' %}
+                <div class="col-md-12">
+                    <div class="form-group text-right mt-3">
+                        <button type="submit" class="btn btn-main">Search Employee</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% if not search_form.errors and from_date and to_date %}
+            {% if employee %}
+                <div class="col-md-12">
+                    <iframe id="pay-suggestions-report"
+                            title="Pay Suggestions Report"
+                            height="1000"
+                            width="100%"
+                            src="{{ report_url }}/frameset?__report=pay_suggestions_single_employee.rptdesign&employee_id={{ employee.id }}&start_date={{ from_date }}&end_date={{ to_date }}}&division_id={{ division }}&department_id={{ department }}&business_unit_id={{ business_unit }}&branch_id={{ branch }}&schedule={{ schedule }}">
+                    </iframe>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <iframe id="pay-suggestions-report-multiple"
+                            title="Pay Suggestions Report"
+                            height="1000"
+                            width="100%"
+                            src="{{ report_url }}/frameset?__report=pay_suggestions_multiple_employee.rptdesign&company={{ company }}&from_date={{ from_date }}&to_date={{ to_date }}&division_id={{ division }}&department_id={{ department }}&business_unit_id={{ business_unit }}&branch_id={{ branch }}&schedule={{ schedule }}">
+                    </iframe>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
+

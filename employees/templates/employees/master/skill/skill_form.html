@@ -1,0 +1,60 @@
+{#{{ family_form }}#}
+<table class="table table-hover">
+    <thead class="text-center">
+        <tr>
+            <th>Skill Name<span>*</span></th>
+            <th>Description</th>
+            <th>Skill Level</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="form-two">
+        {% for form_data in skill_form %}
+        <tr class="item">
+            <td>
+                <input type="text" name="{{ form_data.skill_name.html_name }}" id="{{ form_data.skill_name.id_for_label }}" class="formset-field form-control {% if form_data.skill_name.errors %} is-invalid{% endif %}" {% if form_data.skill_name.value != None %}value="{{ form_data.skill_name.value }}" {% endif %}>
+                {% if form_data.skill_name.errors %}
+                {% for error in form_data.skill_name.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <input type="text" name="{{ form_data.description.html_name }}" id="{{ form_data.description.id_for_label }}" class="formset-field form-control {% if form_data.description.errors %} is-invalid{% endif %}">{% if form_data.description.value != None %}{{ form_data.description.value }}{% endif %}
+                {% if form_data.description.errors %}
+                {% for error in form_data.description.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td>
+                <select name="{{ form_data.skill_level.html_name }}" id="{{ form_data.skill_level.id_for_label }}" class="formset-field form-control {% if form_data.skill_level.errors %} is-invalid{% endif %}">
+                    {% for skill_level in form_data.skill_level %}
+                    {{ skill_level }}
+                    {% endfor %}
+                </select>
+                {% if form_data.skill_level.errors %}
+                {% for error in form_data.skill_level.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </td>
+            <td class="v-middle">
+                <input type="checkbox" name="{{ form_data.DELETE.html_name }}" id="{{ form_data.DELETE.id_for_label }}" {% if form_data.DELETE.value %}checked{% endif %}><label for="{{ form_data.DELETE.id_for_label }}">{{ form_data.DELETE.label }}</label>
+                <input type="hidden" name="{{ form_data.id.html_name }}" id="{{ form_data.id.id_for_label }}" class="formset-field form-control {% if form_data.id.errors %} is-invalid{% endif %}" value="{{ form_data.id.value|default:'' }}">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="clone-btn-wrapper d-flex" style="position: initial;">
+    <div class="ml-auto">
+        <a href="javascript:;" class="clone-row emergency-contact-add"></a>
+    </div>
+
+    <div class="">
+        <a href="javascript:;" class="remove-row emergency-contact-rem"></a>
+    </div>
+</div>
+{{ skill_form.management_form }}

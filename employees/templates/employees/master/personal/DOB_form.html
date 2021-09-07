@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ DOB_form.date_of_birth.id_for_label }}">{{ DOB_form.date_of_birth.label }}<span>*</span></label>
+            <input type="text" name="{{ DOB_form.date_of_birth.name }}" class="form-control{% if DOB_form.date_of_birth.errors %} is-invalid{% endif %}" id="{{ DOB_form.date_of_birth.id_for_label }}" {% if DOB_form.date_of_birth.value != None %}value="{{ DOB_form.date_of_birth.value|date:'m/d/Y' }}" {% endif %}>
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if DOB_form.date_of_birth.errors %}
+            {% for error in DOB_form.date_of_birth.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="age">Age</label>
+            <table class="table table-bordered" style="max-width: 300px;">
+                <tr class="text-center">
+                    <td>{{ years|default:0 }}</td>
+                    <td>Years</td>
+                    <td>{{ months|default:0 }} </td>
+                    <td>Months</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ DOB_form.place_of_birth.id_for_label }}">{{ DOB_form.place_of_birth.label }}</label>
+            <select name="{{ DOB_form.place_of_birth.name }}" class="form-control{% if DOB_form.place_of_birth.errors %} is-invalid{% endif %}" id="{{ DOB_form.place_of_birth.id_for_label }}">
+                {% for place_of_birth in DOB_form.place_of_birth %}
+                {{ place_of_birth }}
+                {% endfor %}
+            </select>
+            {% if DOB_form.place_of_birth.errors %}
+            {% for error in DOB_form.place_of_birth.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ DOB_form.birth_certificate.id_for_label }}">{{ DOB_form.birth_certificate.label }}</label>
+            {% if DOB_form.birth_certificate.value %}
+            <a href="{{ DOB_form.birth_certificate.value.url }}">{{ DOB_form.birth_certificate.value }}</a><br>
+            <input id="birth_certificate-clear_id" name="birth_certificate-clear" type="checkbox" style="display: inline-block;">
+            <label for="birth_certificate-clear_id" style="display: inline-block;">Remove</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ DOB_form.birth_certificate.name }}" class="form-control{% if DOB_form.birth_certificate.errors %} is-invalid{% endif %}" id="{{ DOB_form.birth_certificate.id_for_label }}" accept="image/">
+            {% if DOB_form.birth_certificate.errors %}
+            {% for error in DOB_form.birth_certificate.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

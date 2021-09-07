@@ -1,0 +1,185 @@
+<div class="container">
+    {# TODO: Style the form errors. #}
+    {% if form.non_field_errors %}
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="get" novalidate>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group calendar">
+                    <label for="{{ form.from_date.id_for_label }}">{{ form.from_date.label }}{% if form.from_date.field.required %} *{% endif %}</label>
+                    <input type="date" name="{{ form.from_date.name }}" id="{{ form.from_date.id_for_label }}" class="form-control{% if form.from_date.errors %} is-invalid{% endif %}" value="{{ form.from_date.value|default:'' }}" required>
+                    {% if form.from_date.errors %}
+                    {% for error in form.from_date.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group calendar">
+                    <label for="{{ form.to_date.id_for_label }}">{{ form.to_date.label }}{% if form.to_date.field.required %} *{% endif %}</label>
+                    <input type="date" name="{{ form.to_date.name }}" id="{{ form.to_date.id_for_label }}" class="form-control{% if form.to_date.errors %} is-invalid{% endif %}" value="{{ form.to_date.value|default:'' }}" required>
+                    {% if form.to_date.errors %}
+                    {% for error in form.to_date.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><hr></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.employees.id_for_label }}">{{ form.employees.label }}{% if form.employees.field.required %} *{% endif %}</label>
+                    <input type="text" name="{{ form.employees.name }}" id="{{ form.employees.id_for_label }}" class="form-control{% if form.employees.errors %} is-invalid{% endif %}" value="{{ form.employees.value|default:'' }}" placeholder="employeeID, employeeID">
+                    {% if form.employees.errors %}
+                    {% for error in form.employees.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><hr></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.company.id_for_label }}">{{ form.company.label }}{% if form.company.field.required %} *{% endif %}</label>
+                    <select name="{{ form.company.name }}" id="{{ form.company.id_for_label }}" class="form-control{% if form.company.errors %} is-invalid{% endif %}">
+                        {% for choice in form.company.field.choices %}
+                        <option value="{{ choice.0 }}" {% if form.company.value == choice.0 %} selected{% endif %}>
+                            {{ choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.company.errors %}
+                    {% for error in form.company.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.division.id_for_label }}">{{ form.division.label }}{% if form.division.field.required %} *{% endif %}</label>
+                    <select name="{{ form.division.name }}" id="{{ form.division.id_for_label }}" class="form-control{% if form.division.errors %} is-invalid{% endif %}">
+                        {% for choice in form.division.field.choices %}
+                        <option value="{{ choice.0 }}" {% if form.division.value == choice.0 %} selected{% endif %}>
+                            {{ choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.division.errors %}
+                    {% for error in form.division.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.department.id_for_label }}">{{ form.department.label }}{% if form.department.field.required %} *{% endif %}</label>
+                    <select name="{{ form.department.name }}" id="{{ form.department.id_for_label }}" class="form-control{% if form.department.errors %} is-invalid{% endif %}">
+                        {% for choice in form.department.field.choices %}
+                        <option value="{{ choice.0 }}" {% if form.department.value == choice.0 %} selected{% endif %}>
+                            {{ choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.department.errors %}
+                    {% for error in form.department.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.business_unit.id_for_label }}">{{ form.business_unit.label }}{% if form.business_unit.field.required %} *{% endif %}</label>
+                    <select name="{{ form.business_unit.name }}" id="{{ form.business_unit.id_for_label }}" class="form-control{% if form.business_unit.errors %} is-invalid{% endif %}">
+                        {% for choice in form.business_unit.field.choices %}
+                        <option value="{{ choice.0 }}" {% if form.business_unit.value == choice.0 %} selected{% endif %}>
+                            {{ choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.business_unit.errors %}
+                    {% for error in form.business_unit.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.branch.id_for_label }}">{{ form.branch.label }}{% if form.branch.field.required %} *{% endif %}</label>
+                    <select name="{{ form.branch.name }}" id="{{ form.branch.id_for_label }}" class="form-control{% if form.branch.errors %} is-invalid{% endif %}">
+                        {% for choice in form.branch.field.choices %}
+                        <option value="{{ choice.0 }}" {% if form.branch.value == choice.0 %} selected{% endif %}>
+                            {{ choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.branch.errors %}
+                    {% for error in form.branch.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="{{ form.schedule.id_for_label }}">{{ form.schedule.label }}{% if form.schedule.field.required %} *{% endif %}</label>
+                    <select name="{{ form.schedule.name }}" id="{{ form.schedule.id_for_label }}" class="form-control{% if form.schedule.errors %} is-invalid{% endif %}">
+                        {% for choice in form.schedule.field.choices %}
+                        <option value="{{ choice.0 }}" {% if form.schedule.value == choice.0 %} selected{% endif %}>
+                            {{ choice.1 }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.schedule.errors %}
+                    {% for error in form.schedule.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><hr></div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="hidden" name="employee-filter-in-effect">
+                    <button class="btn btn-main w-100" type="submit">Generate Report</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

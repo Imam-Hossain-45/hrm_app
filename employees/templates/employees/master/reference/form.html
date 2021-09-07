@@ -1,0 +1,237 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.ref_person_name.id_for_label }}">{{ ref_form.ref_person_name.label }}<span>*</span></label>
+            <input type="text" name="{{ ref_form.ref_person_name.name }}" class="form-control{% if ref_form.ref_person_name.errors %} is-invalid{% endif %}" id="{{ ref_form.ref_person_name.id_for_label }}" value="{{ ref_form.ref_person_name.value|default_if_none:'' }}">
+            {% if ref_form.ref_person_name.errors %}
+            {% for error in ref_form.ref_person_name.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.relationship.id_for_label }}">{{ ref_form.relationship.label }}<span>*</span></label>
+            <input type="text" name="{{ ref_form.relationship.name }}" class="form-control{% if ref_form.relationship.errors %} is-invalid{% endif %}" id="{{ ref_form.relationship.id_for_label }}" value="{{ ref_form.relationship.value|default_if_none:'' }}">
+            {% if ref_form.relationship.errors %}
+            {% for error in ref_form.relationship.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ ref_form.designation.id_for_label }}">{{ ref_form.designation.label }}<span>*</span></label>
+            <input type="text" name="{{ ref_form.designation.name }}" class="form-control{% if ref_form.designation.errors %} is-invalid{% endif %}" id="{{ ref_form.designation.id_for_label }}" value="{{ ref_form.designation.value|default_if_none:'' }}">
+            {% if ref_form.designation.errors %}
+            {% for error in ref_form.designation.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.official_cell_number.id_for_label }}">{{ ref_form.official_cell_number.label }}<span>*</span></label>
+            <div class="input-group">
+                <table class="table border-0" style="max-width: 300px;">
+                    <tr>
+                        <td class="border-0 pl-0 pr-0" style="width: 30%;"><select class="input-group-text form-control" id="basic-addon3" name="official_cell_number_0" class="form-control{% if ref_form.official_cell_number.errors %} is-invalid{% endif %}" id="{{ ref_form.official_cell_number.id_for_label }}">
+                                {% for choice in ref_form.dial_code.field.choices %}
+                                <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == ref_form.official_cell_number.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                {% endfor %}
+                            </select></td>
+                        <td class="border-0 pl-0" style="width: 70%;">
+                            <div class="input-group-append">
+                                <input type="number" name="official_cell_number_1" value="{{ ref_form.official_cell_number.value.1 }}" class="form-control{% if ref_form.official_cell_number.errors %} is-invalid{% endif %}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            {% if ref_form.official_cell_number.errors %}
+            {% for error in ref_form.official_cell_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            <small style="color: red;">{{ error }}</small>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.personal_cell_number.id_for_label }}">{{ ref_form.personal_cell_number.label }}<span>*</span></label>
+            <div class="input-group">
+                <table class="table border-0" style="max-width: 300px;">
+                    <tr>
+                        <td class="border-0 pl-0 pr-0" style="width: 30%;"><select class="input-group-text" id="basic-addon3" name="personal_cell_number_0" class="form-control{% if ref_form.personal_cell_number.errors %} is-invalid{% endif %}" id="{{ ref_form.personal_cell_number.id_for_label }}">
+                                {% for choice in ref_form.dial_code.field.choices %}
+                                <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == ref_form.personal_cell_number.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                {% endfor %}
+                            </select></td>
+                        <td class="border-0 pl-0" style="width: 70%;">
+                            <div class="input-group-append">
+                                <input type="number" name="personal_cell_number_1" value="{{ ref_form.personal_cell_number.value.1 }}" class="form-control{% if ref_form.personal_cell_number.errors %} is-invalid{% endif %}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {% if ref_form.personal_cell_number.errors %}
+            {% for error in ref_form.personal_cell_number.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            <small style="color:red;">{{ error }}</small>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.official_email.id_for_label }}">{{ ref_form.official_email.label }}<span>*</span></label>
+            <input type="email" name="{{ ref_form.official_email.name }}" class="form-control{% if ref_form.official_email.errors %} is-invalid{% endif %}" id="{{ ref_form.official_email.id_for_label }}" value="{{ ref_form.official_email.value|default_if_none:'' }}">
+            {% if ref_form.official_email.errors %}
+            {% for error in ref_form.official_email.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.personal_email.id_for_label }}">{{ ref_form.personal_email.label }}</label>
+            <input type="email" name="{{ ref_form.personal_email.name }}" class="form-control{% if ref_form.personal_email.errors %} is-invalid{% endif %}" id="{{ ref_form.personal_email.id_for_label }}" value="{{ ref_form.personal_email.value|default_if_none:'' }}">
+            {% if ref_form.personal_email.errors %}
+            {% for error in ref_form.personal_email.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.organization_name.id_for_label }}">{{ ref_form.organization_name.label }}<span>*</span></label>
+            <input type="text" name="{{ ref_form.organization_name.name }}" class="form-control{% if ref_form.organization_name.errors %} is-invalid{% endif %}" id="{{ ref_form.organization_name.id_for_label }}" value="{{ ref_form.organization_name.value|default_if_none:'' }}">
+            {% if ref_form.organization_name.errors %}
+            {% for error in ref_form.organization_name.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ ref_form.address_line.id_for_label }}">{{ ref_form.address_line.label }}<span>*</span></label>
+            <input type="text" name="{{ ref_form.address_line.name }}" class="mw-initial form-control{% if ref_form.address_line.errors %} is-invalid{% endif %}" id="{{ ref_form.address_line.id_for_label }}" value="{{ ref_form.address_line.value|default_if_none:'' }}" style="width: 77%;">
+            {% if ref_form.address_line.errors %}
+            {% for error in ref_form.address_line.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.country.id_for_label }}">{{ ref_form.country.label }}</label>
+            <select name="{{ ref_form.country.name }}" class="form-control{% if ref_form.country.errors %} is-invalid{% endif %}" id="{{ ref_form.country.id_for_label }}">
+                {% for country in ref_form.country %}
+                {{ country }}
+                {% endfor %}
+            </select>
+            {% if ref_form.country.errors %}
+            {% for error in ref_form.country.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.state.id_for_label }}">{{ ref_form.state.label }}</label>
+            <select name="{{ ref_form.state.name }}" class="form-control{% if ref_form.state.errors %} is-invalid{% endif %}" id="{{ ref_form.state.id_for_label }}">
+                {% include 'employees/master/reference/states.html' %}
+            </select>
+            {% if ref_form.state.errors %}
+            {% for error in ref_form.state.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.city.id_for_label }}">{{ ref_form.city.label }}</label>
+            <select name="{{ ref_form.city.name }}" class="form-control{% if ref_form.city.errors %} is-invalid{% endif %}" id="{{ ref_form.city.id_for_label }}">
+                {% include 'employees/master/reference/cities.html' %}
+            </select>
+            {% if ref_form.city.errors %}
+            {% for error in ref_form.city.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.thana.id_for_label }}">{{ ref_form.thana.label }}</label>
+            <input type="text" name="{{ ref_form.thana.name }}" class="form-control{% if ref_form.thana.errors %} is-invalid{% endif %}" id="{{ ref_form.thana.id_for_label }}" value="{{ ref_form.thana.value|default_if_none:'' }}">
+            {% if ref_form.thana.errors %}
+            {% for error in ref_form.thana.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="{{ ref_form.postal_code.id_for_label }}">{{ ref_form.postal_code.label }}</label>
+            <input type="number" name="{{ ref_form.postal_code.name }}" class="form-control{% if ref_form.postal_code.errors %} is-invalid{% endif %}" id="{{ ref_form.postal_code.id_for_label }}" value="{{ ref_form.postal_code.value|default_if_none:'' }}">
+            {% if ref_form.postal_code.errors %}
+            {% for error in ref_form.postal_code.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ ref_form.contact_person.id_for_label }}">{{ ref_form.contact_person.label }}</label>
+            <input type="text" name="{{ ref_form.contact_person.name }}" class="form-control{% if ref_form.contact_person.errors %} is-invalid{% endif %}" id="{{ ref_form.contact_person.id_for_label }}" value="{{ ref_form.contact_person.value|default_if_none:'' }}">
+            {% if ref_form.contact_person.errors %}
+            {% for error in ref_form.contact_person.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group w-100">
+            <label for="{{ ref_form.phone_number.id_for_label }}">{{ ref_form.phone_number.label }}</label>
+            <div class="input-group">
+                <table class="table border-0" style="max-width: 300px;">
+                    <tr>
+                        <td class="border-0 pl-0 pr-0" style="width: 30%;"><select class="input-group-text" id="basic-addon3" name="phone_number_0" class="form-control{% if ref_form.phone_number.errors %} is-invalid{% endif %}" id="{{ ref_form.phone_number.id_for_label }}">
+                                {% for choice in ref_form.dial_code.field.choices %}
+                                <option value="{{ choice.0 }}" {% if choice.0|stringformat:"i" == ref_form.phone_number.value.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                {% endfor %}
+                            </select></td>
+                        <td class="border-0 pl-0" style="width: 70%;">
+                            <div class="input-group-append">
+                                <input type="number" name="phone_number_1" value="{{ ref_form.phone_number.value.1 }}" class="form-control{% if ref_form.phone_number.errors %} is-invalid{% endif %}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {% if ref_form.phone_number.errors %}
+            {% for error in ref_form.phone_number.errors %}
+            <div class="">{{ error }}</div>
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,294 @@
+{% extends "layouts/master.html" %} {% block title %}Home{% endblock %}
+
+{% load staticfiles %}
+
+{% block style %}
+<link href="{% static 'component/css/simple-calendar.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class='container'>
+        <!-- BEGIN: Subheader -->
+        <!-- <div class="m-subheader ">
+            <div class="d-flex align-items-center">
+                <div class="mr-auto">
+                    <h3 class="m-subheader__title ">
+                        Dashboard
+                    </h3>
+                </div>
+                <div>
+                    <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+                        <span class="m-subheader__daterange-label">
+                            <span class="m-subheader__daterange-title"></span>
+                            <span class="m-subheader__daterange-date m--font-brand"></span>
+                        </span>
+                        <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
+                            <i class="la la-angle-down"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Middle panel-->
+        <div class="row">
+            <div class="col-md-8 content-section">
+                {% include 'dashboard/partials/approvals.html' %}
+            </div>
+            <div class="col-md-4 content-section">
+                <div class="card border-1">
+                    <div class="card-header dash-header secondary dash-blue mb-0">
+                        <div>
+                            <p class="m-0">Today's Attendance Status</p>
+                        </div>
+                        <h2 class="newDate" class="m-0"></h2>
+                    </div>
+                    <div class="card-body d-flex att-status-wrap">
+                        <div class="att-status">
+                            <h5>Present- On Time</h5>
+                            <h2 class="bigger-text green present-total"></h2>
+                        </div>
+                        <div class="att-status">
+                            <h5>Late</h5>
+                            <h2 class="bigger-text red late-total"></h2>
+                        </div>
+                        <div class="att-status">
+                            <h5>Absent</h5>
+                            <h2 class="bigger-text brown absent-total"></h2>
+                        </div>
+                        <div class="att-status">
+                            <h5>Leave</h5>
+                            <h2 class="bigger-text orange leave-total"></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance statistics Chart -->
+        <div class="row mt-5">
+            <div class="col-md-8 content-section">
+                <div class="card border-1">
+                    <div class="card-header dash-header">
+                        <h2 class="m-0">Attendance Statistics</h2>
+                        <p class="text-right">February 2020</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <canvas id="dailyAttandanceChart" width="400px" height="300px"></canvas>
+                            </div>
+                            <div class="col-md-8">
+                                <canvas id="monthlyAttandanceChart" width="400px" height="300px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 content-section">
+                <div class="card border-1">
+                    <div class="card-header dash-header">
+                        <h2 class="m-0">Salary wise Employees</h2>
+                        <p class="text-right">February 2020</p>
+                    </div>
+                    <div class="card-body d-flex align-items-center">
+                        <canvas id="empSalaryChart" width="400px" height="300px"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle panel-->
+
+        <div class="row mt-5">
+            <div class="col-md-4 content-section">
+                <div class="card border-1">
+                    <div class="card-header dash-header">
+                        <h2 class="m-0">Notice Board</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="comment-wrapper dash-listing" id="notice-board"></div>
+                    </div>
+                    <div id="notice-show" class="card-footer text-right">
+                        <a href="{% url 'notice_board' %}" class="link-text">Show more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 content-section">
+                <div class="card border-1">
+                    <div class="card-header dash-header">
+                        <h2 class="m-0">Notification</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="notification-board" class="comment-wrapper dash-listing"></div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="#" class="link-text">Show more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 content-section">
+                <div class="card border-1">
+                    <div class="card-header dash-header mb-0">
+                        <h2 class="m-0">Personal Calender</h2>
+                        <p class="text-right">
+                            &lt; February 2020 &gt;
+                        </p>
+                    </div>
+                    <div id="event-calendar" class="card-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance statistics Chart -->
+        <div class="row mt-5">
+            <div class="col-md-12 content-section">
+                <div class="card border-1">
+                    <div class="card-header dash-header">
+                        <h2 class="m-0">Leave</h2>
+                        <p class="text-right">All Leave Type</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 d-flex align-items-center">
+                                <canvas id="dailyLeaveChart" width="400px" height="300px"></canvas>
+                            </div>
+                            <div class="col-md-6">
+                                <canvas id="monthlyLeaveChart" width="400px" height="300px"></canvas>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <canvas id="yearlyLeaveChart" width="400px" height="300px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Aproval -->
+        <!-- <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="tab-wrapper mt-5">
+                    <div>
+                        <ul class="nav nav-pills business-unit-tab mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="nav-pending-tab" href="#nav-pending" data-toggle="pill" role="tab" aria-controls="nav-pending" aria-selected="true">Pending</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="nav-approved-tab" href="#nav-approved" data-toggle="pill" role="tab" aria-controls="nav-approved" aria-selected="true">Approved</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="nav-declined-tab" href="#nav-declined" data-toggle="pill" role="tab" aria-controls="nav-declined" aria-selected="true">Declined</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <div id="nav-pending" class="tab-pane fade active show" role="tabpanel" aria-labelledby="nav-pending-tab">
+                            <hr>
+                            <div class="tab-wrap">
+                                <div>
+                                    <div class="card-body">
+                                        <div class="comment-wrapper dash-listing">
+                                            <div class="comment-wrap d-flex">
+                                                <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                                <div class="comment-info">
+                                                    <h2 class="dash-title">Hasibur Rahman <span>has applied for 01 day of Casual Leave on 25 Mar</span>
+                                                    </h2>
+                                                    <p>23 Mar- Sunday. 4:56 PM</p>
+                                                </div>
+                                            </div>
+                                            <div class="comment-wrap d-flex">
+                                                <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                                <div class="comment-info">
+                                                    <h2 class="dash-title">Hasibur Rahman <span>has applied for 01 day of Casual Leave on 25 Mar</span>
+                                                    </h2>
+                                                    <p>23 Mar- Sunday. 4:56 PM</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="nav-approved" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-approved-tab">
+                            <hr>
+                            <div class="tab-wrap">
+                                <div class="card-body">
+                                    <div class="comment-wrapper dash-listing">
+                                        <div class="comment-wrap d-flex">
+                                            <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                            <div class="comment-info">
+                                                <h2 class="dash-title">Hasibur Rahman <span>has applied for 01 day of Casual Leave on 25 Mar</span>
+                                                </h2>
+                                                <p>23 Mar- Sunday. 4:56 PM</p>
+                                            </div>
+                                        </div>
+                                        <div class="comment-wrap d-flex">
+                                            <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                            <div class="comment-info">
+                                                <h2 class="dash-title">Hasibur Rahman <span>has applied for 01 day of Casual Leave on 25 Mar</span>
+                                                </h2>
+                                                <p>23 Mar- Sunday. 4:56 PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="nav-declined" class="tab-pane fade" role="tabpanel" aria-labelledby="nav-declined-tab">
+                            <hr>
+                            <div class="tab-wrap">
+                                <div class="card-body">
+                                    <div class="comment-wrapper dash-listing">
+                                        <div class="comment-wrap d-flex">
+                                            <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                            <div class="comment-info">
+                                                <h2 class="dash-title">Hasibur Rahman <span>has applied for 01 day of Casual Leave on 25 Mar</span>
+                                                </h2>
+                                                <p>23 Mar- Sunday. 4:56 PM</p>
+                                            </div>
+                                        </div>
+                                        <div class="comment-wrap d-flex">
+                                            <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                            <div class="comment-info">
+                                                <h2 class="dash-title">Hasibur Rahman <span>has applied for 01 day of Casual Leave on 25 Mar</span>
+                                                </h2>
+                                                <p>23 Mar- Sunday. 4:56 PM</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'component/js/jquery.simple-calendar.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'vendor/chart.js/dist/Chart.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'src/js/chart.js' %}" type="text/javascript"></script>
+
+<script>
+
+
+</script>
+
+{% endblock %}

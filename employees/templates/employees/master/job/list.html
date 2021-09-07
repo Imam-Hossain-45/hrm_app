@@ -1,0 +1,137 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Employee Job Information > List{% endblock %}
+
+{% block content %}
+    {% include 'employees/master/layouts/sidebar.html' %}
+    {% include 'layouts/event.html' %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                {% if request.user.is_superuser or 'add_jobinformation' in permissions %}
+                    <div class="text-right">
+                        <a href="{% url 'employees:employee_job_create' pk %}" class="btn btn-main m-0">+
+                            Add</a>
+                    </div>
+                {% endif %}
+
+                <div class="card">
+                    <div class="card-header secondary card-box">
+                        <div class="card-title">
+                            <h2>All Job Information</h2>
+                        </div>
+                    </div>
+
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="datatable">
+                                        <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Date of Joining</th>
+                                            <th scope="col">Company</th>
+                                            <th scope="col">Division</th>
+                                            <th scope="col">Department</th>
+                                            <th scope="col">Job Title</th>
+                                            <th scope="col">Reports To</th>
+                                            <th scope="col">Job Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for obj in job_list %}
+                                            <tr>
+                                                <td>{{ obj.date_of_joining }}</td>
+                                                <td>{{ obj.company }}</td>
+                                                <td>{{ obj.division }}</td>
+                                                <td>{{ obj.department }}</td>
+                                                <td>{{ obj.designation }}</td>
+                                                <td>{{ obj.report_to }}</td>
+                                                <td>{{ obj.job_status }}</td>
+                                                <td>
+                                                    {% if request.user.is_superuser or 'change_jobinformation' in permissions %}
+                                                        <a href="{% url 'employees:employee_job_update' pk obj.id %}"
+                                                           title="edit"
+                                                           class="btn btn-outline-metal m-btn m-btn--icon m-btn--icon-only m-btn--outline">
+                                                            <i class="la la-edit"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                    {% if request.user.is_superuser or 'delete_jobinformation' in permissions %}
+                                                        <div class="modal fade" id="confirmDeleteModal{{ obj.id }}"
+                                                             tabindex="-1" role="dialog"
+                                                             aria-labelledby="confirmDeleteModalLabel"
+                                                             aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <form
+                                                                    action="{% url 'employees:employee_job_delete' employee_pk=pk pk=obj.id %}"
+                                                                    method="POST">
+                                                                    {% csrf_token %}
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body confirm-delete">
+                                                                            Are you sure you want to delete
+                                                                            "{{ obj.company }}"?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                    class="btn btn-secondary"
+                                                                                    data-dismiss="modal">
+                                                                                Cancel
+                                                                            </button>
+                                                                            <input type="submit" class="btn btn-danger"
+                                                                                   value="Delete"
+                                                                                   name="delete">
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <a href="javascript:void(0)"
+                                                           title="delete"
+                                                           class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--outline"
+                                                           data-toggle="modal"
+                                                           data-target="#confirmDeleteModal{{ obj.id }}"
+                                                           id="deleteButton{{ obj.id }}">
+                                                            <i class="la la-times-circle-o"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if job_list.paginator.num_pages > 1 %}
+                        <nav aria-label="navigation" class="margin-lg margin-md">
+                                <ul class="pagination d-flex justify-content-center">
+                                    {% if job_list.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ job_list.previous_page_number }}">Previous</a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% for pg in page_range %}
+                                        <li class="page-item">
+                                            <a class="page-link {% if pg == job_list.number %}active{% endif %}" href="?page={{ pg }}">{{ pg }} {{ job_list.current_page_number }}</a>
+                                        </li>
+                                    {% endfor %}
+
+                                    {% if job_list.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ job_list.next_page_number }}">Next</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

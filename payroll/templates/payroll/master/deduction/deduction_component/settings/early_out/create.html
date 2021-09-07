@@ -1,0 +1,33 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Create new early out slab{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-10 col-md-offset-1">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Create new early out slab</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div>
+                            {% include 'payroll/master/deduction/deduction_component/settings/early_out/form.html' %}
+                        </div>
+
+                        <div class="form-group w-100">
+                            <button type="submit" class="btn btn-main">Save</button>
+                            <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:deduction_early_out_settings' component.id %}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

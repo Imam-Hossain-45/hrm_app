@@ -1,0 +1,329 @@
+<div class="row">
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ document_form.resume.id_for_label }}">{{ document_form.resume.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+            <div style="width: 50%;">
+                {% if document_form.resume.value %}
+                <input id="{{ document_form.resume.name }}-clear_id" name="{{ document_form.resume.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ document_form.resume.value }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ document_form.resume.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ document_form.resume.name }}">Delete</a>
+                </div>
+            </div>
+
+
+            {% endif %}
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ document_form.resume.name }}" class="ml-auto border-0 form-control{% if document_form.resume.errors %} is-invalid{% endif %}" id="{{ document_form.resume.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if document_form.resume.errors %}
+                {% for error in document_form.resume.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ document_form.cover_letter.id_for_label }}">{{ document_form.cover_letter.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+            {% if document_form.cover_letter.value %}
+            <div style="width: 50%;">
+                <input id="{{ document_form.cover_letter.name }}-clear_id" name="{{ document_form.cover_letter.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ document_form.cover_letter.value }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ document_form.cover_letter.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ document_form.cover_letter.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ document_form.cover_letter.name }}" class="ml-auto border-0 form-control{% if document_form.cover_letter.errors %} is-invalid{% endif %}" id="{{ document_form.cover_letter.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if document_form.cover_letter.errors %}
+                {% for error in document_form.cover_letter.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ document_form.appointment_letter.id_for_label }}">{{ document_form.appointment_letter.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+            {% if document_form.appointment_letter.value %}
+            <div style="width: 50%;">
+                <input id="{{ document_form.appointment_letter.name }}-clear_id" name="{{ document_form.appointment_letter.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ document_form.appointment_letter.value }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ document_form.appointment_letter.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ document_form.appointment_letter.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ document_form.appointment_letter.name }}" class="ml-auto border-0 form-control{% if document_form.appointment_letter.errors %} is-invalid{% endif %}" id="{{ document_form.appointment_letter.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if document_form.appointment_letter.errors %}
+                {% for error in document_form.appointment_letter.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ document_form.resign_letter.id_for_label }}">{{ document_form.resign_letter.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+            {% if document_form.resign_letter.value %}
+            <div style="width: 50%;">
+                <input id="{{ document_form.resign_letter.name }}-clear_id" name="{{ document_form.resign_letter.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ document_form.resign_letter.value }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ document_form.resign_letter.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ document_form.resign_letter.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ document_form.resign_letter.name }}" class="ml-auto border-0 form-control{% if document_form.resign_letter.errors %} is-invalid{% endif %}" id="{{ document_form.resign_letter.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if document_form.resign_letter.errors %}
+                {% for error in document_form.resign_letter.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ tax_form.TIN.id_for_label }}">{{ tax_form.TIN.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+
+            {% if tax_form.TIN.value %}
+            <div style="width: 50%;">
+                <input id="{{ tax_form.TIN.name }}-clear_id" name="{{ tax_form.TIN.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ tax_form.TIN.value.url }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ tax_form.TIN.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ tax_form.TIN.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ tax_form.TIN.name }}" class="ml-auto border-0 form-control{% if tax_form.TIN.errors %} is-invalid{% endif %}" id="{{ tax_form.TIN.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if tax_form.TIN.errors %}
+                {% for error in tax_form.TIN.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ tax_form.work_permit_doc.id_for_label }}">{{ tax_form.work_permit_doc.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+
+            {% if tax_form.work_permit_doc.value %}
+            <div style="width: 50%;">
+                <input id="{{ tax_form.work_permit_doc.name }}-clear_id" name="{{ tax_form.work_permit_doc.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ tax_form.work_permit_doc.value.url }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ tax_form.work_permit_doc.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ tax_form.work_permit_doc.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ tax_form.work_permit_doc.name }}" class="ml-auto border-0 form-control{% if tax_form.work_permit_doc.errors %} is-invalid{% endif %}" id="{{ tax_form.work_permit_doc.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if tax_form.work_permit_doc.errors %}
+                {% for error in tax_form.work_permit_doc.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ tax_form.signature.id_for_label }}">{{ tax_form.signature.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+
+            {% if tax_form.signature.value %}
+            <div style="width: 50%;">
+                <input id="{{ tax_form.signature.name }}-clear_id" name="{{ tax_form.signature.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ tax_form.signature.value.url }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ tax_form.signature.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ tax_form.signature.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ tax_form.signature.name }}" class="ml-auto border-0 form-control{% if tax_form.signature.errors %} is-invalid{% endif %}" id="{{ tax_form.signature.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if tax_form.signature.errors %}
+                {% for error in tax_form.signature.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ tax_form.nid.id_for_label }}">{{ tax_form.nid.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+
+            {% if tax_form.nid.value %}
+            <div style="width: 50%;">
+                <input id="{{ tax_form.nid.name }}-clear_id" name="{{ tax_form.nid.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ tax_form.nid.value.url }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ tax_form.nid.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ tax_form.nid.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ tax_form.nid.name }}" class="ml-auto border-0 form-control{% if tax_form.nid.errors %} is-invalid{% endif %}" id="{{ tax_form.nid.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if tax_form.nid.errors %}
+                {% for error in tax_form.nid.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="{{ tax_form.birth_certificate.id_for_label }}">{{ tax_form.birth_certificate.label }}</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+
+            {% if tax_form.birth_certificate.value %}
+            <div style="width: 50%;">
+                <input id="{{ tax_form.birth_certificate.name }}-clear_id" name="{{ tax_form.birth_certificate.name }}-clear" type="checkbox" style="display: none;">
+                <div class="">
+                    <p>{{ tax_form.birth_certificate.value.url }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ tax_form.birth_certificate.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="delete" id="{{ tax_form.birth_certificate.name }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="{{ tax_form.birth_certificate.name }}" class="ml-auto border-0 form-control{% if tax_form.birth_certificate.errors %} is-invalid{% endif %}" id="{{ tax_form.birth_certificate.id_for_label }}" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if tax_form.birth_certificate.errors %}
+                {% for error in tax_form.birth_certificate.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <label for="id_certificate">Education Certificate</label>
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+
+
+            <input name="certificate-clear" type="hidden" value="">
+            {% for edu in edu_doc_form %}
+            {% if edu.certificate.value %}
+            <div style="width: 50%;">
+                <div class="">
+                    <p>{{ edu.certificate.value.url }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ edu.certificate.value.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="certificate_delete" id="{{ edu.edu_id }}">Delete</a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            <div class="text-right" style="width: 50%;margin-left: auto;margin-top: -18px;">
+                <input type="file" name="certificate" class="ml-auto border-0 form-control{% if edu_doc_form.0.certificate.errors %} is-invalid{% endif %}" id="id_certificate" accept="image/*,.xlsx, .xls, .doc, .docx, .txt, .pdf, .ppt">
+                {% if edu_doc_form.0.certificate.errors %}
+                {% for error in edu_doc_form.0.certificate.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <input type="hidden" value="{{ pk }}" name="{{ others_doc_form.id.name }}" />
+    </div>
+
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group w-100">
+                    <input type="text" name="{{ others_doc_form.title.name }}" class="mr-auto form-control{% if others_doc_form.title.errors %} is-invalid{% endif %}" id="{{ others_doc_form.title.id_for_label }}" placeholder="Title" value="{{ others_doc_form.title.value|default:'' }}">
+                    {% if others_doc_form.title.errors %}
+                    {% for error in others_doc_form.title.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group w-100">
+                    <input type="file" name="{{ others_doc_form.file.name }}" class="ml-auto border-0 form-control{% if others_doc_form.file.errors %} is-invalid{% endif %}" id="{{ others_doc_form.file.id_for_label }}" placeholder="Title">
+                    {% if others_doc_form.file.errors %}
+                    {% for error in others_doc_form.file.errors %}
+                    <div class="invalid-feedback">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 border-1 p-3 mb-3">
+        <div class="form-group w-100 d-flex justify-content-between align-items-center">
+            <input name="file-clear" type="hidden" value="">
+            {% for others in others_doc_object %}
+            <div style="width: 100%;">
+                <p>{{ others.title }}</p>
+                <div class="">
+                    <p>{{ others.file }}</p>
+                    <hr>
+                </div>
+                <div class="text-right">
+                    <a class="link-text pr-3" href="{{ others.file.url }}">View</a>
+                    <a class="link-text" href="javascript:void(0)" class="file_delete" id="{{ others.id }}">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</div>

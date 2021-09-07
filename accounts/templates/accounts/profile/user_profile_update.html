@@ -1,0 +1,312 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 offset-3">
+                    {{ error_message }}
+                    <form method="POST" enctype='multipart/form-data' novalidate>
+                        {% csrf_token %}
+
+                        <h5 align="center"><b>Personal Info:</b></h5>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                                <input type="text" name="{{ form.first_name.name }}"
+                                       class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
+                                       {% if form.first_name.value != None %}value="{{ form.first_name.value }}" {% endif %}
+                                       placeholder="Name"
+                                       maxlength="20" required="" id="{{ form.first_name.id_for_label }}">
+                                {% if form.first_name.errors %}
+                                    {% for error in form.first_name.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                                <input type="text" name="{{ form.last_name.name }}"
+                                       class="form-control{% if form.last_name.errors %} is-invalid{% endif %}"
+                                       {% if form.last_name.value != None %}value="{{ form.last_name.value }}" {% endif %}
+                                       placeholder="Name"
+                                       maxlength="20" required="" id="{{ form.last_name.id_for_label }}">
+                                {% if form.last_name.errors %}
+                                    {% for error in form.last_name.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.gender.id_for_label }}">{{ profile_form.gender.label }}</label>
+                                <select name="{{ profile_form.gender.name }}"
+                                        class="form-control{% if form.gender.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.gender.id_for_label }}">
+                                    {% for choice in profile_form.gender.field.choices %}
+                                        {% if profile_form.gender.value == choice.0 %}
+                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                {% if profile_form.gender.errors %}
+                                    {% for error in profile_form.gender.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label
+                                    for="{{ profile_form.blood_group.id_for_label }}">{{ profile_form.blood_group.label }}</label>
+                                <select name="{{ profile_form.blood_group.name }}"
+                                        class="form-control{% if profile_form.blood_group.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.blood_group.id_for_label }}">
+                                    {% for choice in profile_form.blood_group.field.choices %}
+                                        {% if profile_form.blood_group.value == choice.0 %}
+                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                {% if profile_form.blood_group.errors %}
+                                    {% for error in profile_form.blood_group.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label
+                                    for="{{ profile_form.religion.id_for_label }}">{{ profile_form.religion.label }}</label>
+                                <select name="{{ profile_form.religion.name }}"
+                                        class="form-control{% if profile_form.religion.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.religion.id_for_label }}">
+                                    {% for choice in profile_form.religion.field.choices %}
+                                        {% if profile_form.religion.value == choice.0 %}
+                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                {% if profile_form.religion.errors %}
+                                    {% for error in profile_form.religion.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label
+                                    for="{{ profile_form.date_of_birth.id_for_label }}">{{ profile_form.date_of_birth.label }}:</label>
+                                {% if profile_form.date_of_birth.value != None %}
+                                    <b>{{ profile_form.date_of_birth.value }}</b>
+                                {% endif %}
+                                <input type="date" name="{{ profile_form.date_of_birth.name }}"
+                                       class="form-control{% if profile_form.date_of_birth.errors %} is-invalid{% endif %}"
+                                       id="{{ profile_form.date_of_birth.id_for_label }}">
+                                {% if profile_form.date_of_birth.errors %}
+                                    {% for error in profile_form.date_of_birth.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.nid.id_for_label }}">{{ profile_form.nid.label }}: <a href="
+                                    {% get_media_prefix %}{% url 'index' %}{{ user.userprofile.nid }}">{{ user.userprofile.nid }}</a></label>
+                                <input type="file" name="{{ profile_form.nid.name }}" accept="image/*"
+                                       class="form-control{% if profile_form.nid.errors %} is-invalid{% endif %}"
+                                       id="{{ profile_form.nid.id_for_label }}">
+                                {% if profile_form.nid.errors %}
+                                    {% for error in profile_form.nid.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- ----------------------------------------------------------------------------------------------- -->
+                        <p></p>
+                        <h5 align="center"><b>Contact Info:</b></h5>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                                <input type="email" name="{{ form.email.name }}"
+                                       class="form-control{% if form.email.errors %} is-invalid{% endif %}"
+                                       {% if form.email.value != None %}value="{{ form.email.value }}" {% endif %}
+                                       placeholder="Email" required="" id="{{ form.email.id_for_label }}">
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.work_phone.id_for_label }}">{{ profile_form.work_phone.label }}</label>
+                                <input type="text" name="{{ profile_form.work_phone.name }}"
+                                       class="form-control{% if form.work_phone.errors %} is-invalid{% endif %}"
+                                       {% if profile_form.work_phone.value != None %}value="{{ profile_form.work_phone.value }}" {% endif %}
+                                       placeholder="Phone Number" maxlength="20" required=""
+                                       id="{{ profile_form.work_phone.id_for_label }}">
+                                {% if profile_form.work_phone.errors %}
+                                    {% for error in profile_form.work_phone.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.personal_phone.id_for_label }}">{{ profile_form.personal_phone.label }}</label>
+                                <input type="text" name="{{ profile_form.personal_phone.name }}"
+                                       class="form-control{% if form.personal_phone.errors %} is-invalid{% endif %}"
+                                       {% if profile_form.personal_phone.value != None %}value="{{ profile_form.personal_phone.value }}" {% endif %}
+                                       placeholder="Phone Number" maxlength="20" required=""
+                                       id="{{ profile_form.personal_phone.id_for_label }}">
+                                {% if profile_form.personal_phone.errors %}
+                                    {% for error in profile_form.personal_phone.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label
+                                for="{{ profile_form.address_line1.id_for_label }}">{{ profile_form.address_line1.label }}</label>
+                                <textarea name="{{ profile_form.address_line1.name }}" cols="40" rows="3"
+                                          class="form-control{% if form.address_line1.errors %} is-invalid{% endif %}"
+                                          placeholder="Address Line 1"
+                                          id="{{ profile_form.address_line1.id_for_label }}">{{ profile_form.address_line1.value|default_if_none:'' }}</textarea>
+                                {% if profile_form.address_line1.errors %}
+                                    {% for error in profile_form.address_line1.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label
+                                for="{{ profile_form.address_line2.id_for_label }}">{{ profile_form.address_line2.label }}</label>
+                                <textarea name="{{ profile_form.address_line2.name }}" cols="40" rows="3"
+                                          class="form-control{% if form.address_line2.errors %} is-invalid{% endif %}"
+                                          placeholder="Address Line 2"
+                                          id="{{ profile_form.address_line2.id_for_label }}">{{ profile_form.address_line2.value|default_if_none:'' }}</textarea>
+                                {% if profile_form.address_line2.errors %}
+                                    {% for error in profile_form.address_line2.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.country.id_for_label }}">{{ profile_form.country.label }}</label>
+                                <select name="{{ profile_form.country.name }}"
+                                        class="form-control{% if form.country.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.country.id_for_label }}">
+                                    {% for choice in profile_form.country.field.choices %}
+                                        {% if profile_form.country.value == choice.0 %}
+                                            <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                                {% if profile_form.country.errors %}
+                                    {% for error in profile_form.country.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.state.id_for_label }}">{{ profile_form.state.label }}</label>
+                                <input type="text" name="{{ profile_form.state.name }}"
+                                       class="form-control{% if form.state.errors %} is-invalid{% endif %}"
+                                       {% if profile_form.state.value != None %}value="{{ profile_form.state.value }}" {% endif %}
+                                       placeholder="State" id="{{ profile_form.state.id_for_label }}">
+                                {% if profile_form.state.errors %}
+                                    {% for error in profile_form.state.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.city.id_for_label }}">{{ profile_form.city.label }}</label>
+                                <input type="text" name="{{ profile_form.city.name }}"
+                                       class="form-control{% if form.city.errors %} is-invalid{% endif %}"
+                                       {% if profile_form.city.value != None %}value="{{ profile_form.city.value }}" {% endif %}
+                                       placeholder="City" id="{{ profile_form.city.id_for_label }}">
+                                {% if profile_form.city.errors %}
+                                    {% for error in profile_form.city.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ profile_form.zip_code.id_for_label }}">{{ profile_form.zip_code.label }}</label>
+                                <input type="number" name="{{ profile_form.zip_code.name }}"
+                                       class="form-control{% if form.zip_code.errors %} is-invalid{% endif %}"
+                                       {% if profile_form.zip_code.value != None %}value="{{ profile_form.zip_code.value }}" {% endif %}
+                                       placeholder="Zip Code" id="{{ profile_form.zip_code.id_for_label }}">
+                                {% if profile_form.zip_code.errors %}
+                                    {% for error in profile_form.zip_code.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <a class="float-right" href="javascript:;" onclick="window.history.back()">Cancel</a>
+                                <button type="submit" class="btn btn-main float-right">Save</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

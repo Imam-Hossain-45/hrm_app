@@ -1,0 +1,629 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Register New Employee{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Employee Description</h2>
+                        <p>Employee name and description.</p>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" enctype='multipart/form-data' novalidate>
+                            {% csrf_token %}
+
+                            <div class="form-group w-100"><h2>Personal Info</h2></div>
+
+                            <div class="form-group">
+                                <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                                <input type="text" name="{{ form.first_name.name }}" maxlength="20" required=""
+                                       class="form-control{% if form.first_name.errors %} is-invalid{% endif %}"
+                                       placeholder="First Name" id="{{ form.first_name.id_for_label }}"
+                                       value="{{ form.first_name.value|default_if_none:'' }}">
+                                {% if form.first_name.errors %}
+                                    {% for error in form.first_name.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                                <input type="text" name="{{ form.last_name.name }}" maxlength="20" required=""
+                                       class="form-control{% if form.last_name.errors %} is-invalid{% endif %}"
+                                       placeholder="Last Name" id="{{ form.last_name.id_for_label }}"
+                                       value="{{ form.last_name.value|default_if_none:'' }}">
+                                {% if form.last_name.errors %}
+                                    {% for error in form.last_name.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                                <input type="email" name="{{ form.email.name }}" required=""
+                                       class="form-control{% if form.email.errors %} is-invalid{% endif %}"
+                                       placeholder="Email" id="{{ form.email.id_for_label }}"
+                                       value="{{ form.email.value|default_if_none:'' }}">
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                                <input type="password" name="{{ form.password.name }}" required=""
+                                       class="form-control{% if form.password.errors %} is-invalid{% endif %}"
+                                       placeholder="Password" id="{{ form.password.id_for_label }}"
+                                       value="{{ form.password.value|default_if_none:'' }}">
+                                {% if form.password.errors %}
+                                    {% for error in form.password.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ form.password_confirmation.id_for_label }}">{{ form.password_confirmation.label }}</label>
+                                <input type="password" name="{{ form.password_confirmation.name }}" required=""
+                                       class="form-control{% if form.password_confirmation.errors %} is-invalid{% endif %}"
+                                       placeholder="Confirm Password"
+                                       id="{{ form.password_confirmation.id_for_label }}"
+                                       value="{{ form.password_confirmation.value|default_if_none:'' }}">
+                                {% if form.password_confirmation.errors %}
+                                    {% for error in form.password_confirmation.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="{{ form.user_type.id_for_label }}">{{ form.user_type.label }}</label>
+                                <select name="{{ form.user_type.name }}"
+                                        class="form-control{% if form.user_type.errors %} is-invalid{% endif %}"
+                                        id="{{ form.user_type.id_for_label }}" required="">
+                                    {% if form.user_type.value %}
+                                        {% for choice in form.user_type.field.choices %}
+                                            {% if form.user_type.value == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in form.user_type.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if form.user_type.errors %}
+                                    {% for error in form.user_type.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <!-- -------------------------------------------------------------------------------------------------- -->
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.blood_group.id_for_label }}">{{ profile_form.blood_group.label }}</label>
+                                <select name="{{ profile_form.blood_group.name }}"
+                                        class="form-control{% if profile_form.blood_group.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.blood_group.id_for_label }}">
+                                    {% if profile_form.blood_group.value %}
+                                        {% for choice in profile_form.blood_group.field.choices %}
+                                            {% if profile_form.blood_group.value == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.blood_group.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.blood_group.errors %}
+                                    {% for error in profile_form.blood_group.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.religion.id_for_label }}">{{ profile_form.religion.label }}</label>
+                                <select name="{{ profile_form.religion.name }}"
+                                        class="form-control{% if profile_form.religion.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.religion.id_for_label }}">
+                                    {% if profile_form.religion.value %}
+                                        {% for choice in profile_form.religion.field.choices %}
+                                            {% if profile_form.religion.value == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.religion.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.religion.errors %}
+                                    {% for error in profile_form.religion.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.date_of_birth.id_for_label }}">{{ profile_form.date_of_birth.label }}</label>
+                                <input type="date" name="{{ profile_form.date_of_birth.name }}"
+                                       class="form-control{% if profile_form.date_of_birth.errors %} is-invalid{% endif %}"
+                                       id="{{ profile_form.date_of_birth.id_for_label }}"
+                                       value="{{ profile_form.date_of_birth.value|default_if_none:'' }}">
+                                {% if profile_form.date_of_birth.errors %}
+                                    {% for error in profile_form.date_of_birth.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.date_of_joining.id_for_label }}">{{ profile_form.date_of_joining.label }}</label>
+                                <input type="date" name="{{ profile_form.date_of_joining.name }}"
+                                       class="form-control{% if profile_form.date_of_joining.errors %} is-invalid{% endif %}"
+                                       id="{{ profile_form.date_of_joining.id_for_label }}"
+                                       value="{{ profile_form.date_of_joining.value|default_if_none:'' }}">
+                                {% if profile_form.date_of_joining.errors %}
+                                    {% for error in profile_form.date_of_joining.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.work_phone.id_for_label }}">{{ profile_form.work_phone.label }}</label>
+                                <input type="text" name="{{ profile_form.work_phone.name }}"
+                                       placeholder="Phone Number"
+                                       class="form-control{% if profile_form.work_phone.errors %} is-invalid{% endif %}"
+                                       maxlength="20" required="" id="{{ profile_form.work_phone.id_for_label }}"
+                                       value="{{ profile_form.work_phone.value|default_if_none:'' }}">
+                                {% if profile_form.work_phone.errors %}
+                                    {% for error in profile_form.work_phone.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.personal_phone.id_for_label }}">{{ profile_form.personal_phone.label }}</label>
+                                <input type="text" name="{{ profile_form.personal_phone.name }}"
+                                       placeholder="Phone Number"
+                                       class="form-control{% if profile_form.personal_phone.errors %} is-invalid{% endif %}"
+                                       maxlength="20" required=""
+                                       id="{{ profile_form.personal_phone.id_for_label }}"
+                                       value="{{ profile_form.personal_phone.value|default_if_none:'' }}">
+                                {% if profile_form.personal_phone.errors %}
+                                    {% for error in profile_form.personal_phone.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.rfid.id_for_label }}">{{ profile_form.rfid.label }}</label>
+                                <input type="text" name="{{ profile_form.rfid.name }}" placeholder="RFID Number"
+                                       class="form-control{% if profile_form.rfid.errors %} is-invalid{% endif %}"
+                                       maxlength="20" required="" id="{{ profile_form.rfid.id_for_label }}"
+                                       value="{{ profile_form.rfid.value|default_if_none:'' }}">
+                                {% if profile_form.rfid.errors %}
+                                    {% for error in profile_form.rfid.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.gender.id_for_label }}">{{ profile_form.gender.label }}</label>
+                                <select name="{{ profile_form.gender.name }}"
+                                        class="form-control{% if profile_form.gender.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.gender.id_for_label }}">
+                                    {% if profile_form.gender.value %}
+                                        {% for choice in profile_form.gender.field.choices %}
+                                            {% if profile_form.gender.value == choice.0 %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.gender.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.gender.errors %}
+                                    {% for error in profile_form.gender.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.division.id_for_label }}">{{ profile_form.division.label }}</label>
+                                <select name="{{ profile_form.division.name }}"
+                                        class="form-control{% if profile_form.division.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.division.id_for_label }}">
+                                    {% if profile_form.division.value %}
+                                        {% for choice in profile_form.division.field.choices %}
+                                            {% if profile_form.division.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.division.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.division.errors %}
+                                    {% for error in profile_form.division.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.department.id_for_label }}">{{ profile_form.department.label }}</label>
+                                <select name="{{ profile_form.department.name }}"
+                                        class="form-control{% if profile_form.department.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.department.id_for_label }}">
+                                    {% if profile_form.department.value %}
+                                        {% for choice in profile_form.department.field.choices %}
+                                            {% if profile_form.department.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.department.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.department.errors %}
+                                    {% for error in profile_form.department.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.designation.id_for_label }}">{{ profile_form.designation.label }}</label>
+                                <select name="{{ profile_form.designation.name }}"
+                                        class="form-control{% if profile_form.designation.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.designation.id_for_label }}">
+                                    {% if profile_form.designation.value %}
+                                        {% for choice in profile_form.designation.field.choices %}
+                                            {% if profile_form.designation.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.designation.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.designation.errors %}
+                                    {% for error in profile_form.designation.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.report_to.id_for_label }}">{{ profile_form.report_to.label }}</label>
+                                <select name="{{ profile_form.report_to.name }}"
+                                        class="form-control{% if profile_form.report_to.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.report_to.id_for_label }}">
+                                    {% if profile_form.report_to.value %}
+                                        {% for choice in profile_form.report_to.field.choices %}
+                                            {% if profile_form.report_to.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.report_to.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.report_to.errors %}
+                                    {% for error in profile_form.report_to.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.schedule.id_for_label }}">{{ profile_form.schedule.label }}</label>
+                                <select name="{{ profile_form.schedule.name }}"
+                                        class="form-control{% if profile_form.schedule.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.schedule.id_for_label }}">
+                                    {% if profile_form.schedule.value %}
+                                        {% for choice in profile_form.schedule.field.choices %}
+                                            {% if profile_form.schedule.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.schedule.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.schedule.errors %}
+                                    {% for error in profile_form.schedule.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.grade.id_for_label }}">{{ profile_form.grade.label }}</label>
+                                <select name="{{ profile_form.grade.name }}"
+                                        class="form-control{% if profile_form.grade.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.grade.id_for_label }}">
+                                    {% if profile_form.grade.value %}
+                                        {% for choice in profile_form.grade.field.choices %}
+                                            {% if profile_form.grade.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.grade.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.grade.errors %}
+                                    {% for error in profile_form.grade.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.pay_scale.id_for_label }}">{{ profile_form.pay_scale.label }}</label>
+                                <select name="{{ profile_form.pay_scale.name }}"
+                                        class="form-control{% if profile_form.pay_scale.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.pay_scale.id_for_label }}">
+                                    {% if profile_form.pay_scale.value %}
+                                        {% for choice in profile_form.pay_scale.field.choices %}
+                                            {% if profile_form.pay_scale.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.pay_scale.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.pay_scale.errors %}
+                                    {% for error in profile_form.pay_scale.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.category.id_for_label }}">{{ profile_form.category.label }}</label>
+                                <select name="{{ profile_form.category.name }}"
+                                        class="form-control{% if profile_form.category.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.category.id_for_label }}">
+                                    {% if profile_form.category.value %}
+                                        {% for choice in profile_form.category.field.choices %}
+                                            {% if profile_form.category.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.category.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.category.errors %}
+                                    {% for error in profile_form.category.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.job_status.id_for_label }}">{{ profile_form.job_status.label }}</label>
+                                <select name="{{ profile_form.job_status.name }}"
+                                        class="form-control{% if profile_form.job_status.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.job_status.id_for_label }}">
+                                    {% if profile_form.job_status.value %}
+                                        {% for choice in profile_form.job_status.field.choices %}
+                                            {% if profile_form.job_status.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.job_status.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.job_status.errors %}
+                                    {% for error in profile_form.job_status.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.leave_group.id_for_label }}">{{ profile_form.leave_group.label }}</label>
+                                <select name="{{ profile_form.leave_group.name }}"
+                                        class="form-control{% if profile_form.leave_group.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.leave_group.id_for_label }}">
+                                    {% if profile_form.leave_group.value %}
+                                        {% for choice in profile_form.leave_group.field.choices %}
+                                            {% if profile_form.leave_group.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.leave_group.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.leave_group.errors %}
+                                    {% for error in profile_form.leave_group.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.late_policy.id_for_label }}">{{ profile_form.late_policy.label }}</label>
+                                <select name="{{ profile_form.late_policy.name }}"
+                                        class="form-control{% if profile_form.late_policy.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.late_policy.id_for_label }}">
+                                    {% if profile_form.late_policy.value %}
+                                        {% for choice in profile_form.late_policy.field.choices %}
+                                            {% if profile_form.late_policy.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.late_policy.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.late_policy.errors %}
+                                    {% for error in profile_form.salary.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.policy_group.id_for_label }}">{{ profile_form.policy_group.label }}</label>
+                                <select name="{{ profile_form.policy_group.name }}"
+                                        class="form-control{% if profile_form.policy_group.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.policy_group.id_for_label }}">
+                                    {% if profile_form.policy_group.value %}
+                                        {% for choice in profile_form.policy_group.field.choices %}
+                                            {% if profile_form.policy_group.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.policy_group.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.policy_group.errors %}
+                                    {% for error in profile_form.policy_group.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label
+                                    for="{{ profile_form.branch.id_for_label }}">{{ profile_form.branch.label }}</label>
+                                <select name="{{ profile_form.branch.name }}"
+                                        class="form-control{% if profile_form.branch.errors %} is-invalid{% endif %}"
+                                        id="{{ profile_form.branch.id_for_label }}">
+                                    {% if profile_form.branch.value %}
+                                        {% for choice in profile_form.branch.field.choices %}
+                                            {% if profile_form.branch.value == choice.0|stringformat:"i" %}
+                                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                            {% else %}
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for choice in profile_form.branch.field.choices %}
+                                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                {% if profile_form.branch.errors %}
+                                    {% for error in profile_form.branch.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group w-100">
+                                <button type="submit" class="btn btn-main">Submit</button>
+                                <a class="btn btn-main b-none" href="{% url 'beehive_admin:user_list' %}">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

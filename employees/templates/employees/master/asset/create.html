@@ -1,0 +1,36 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Asset{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            {% if request.user.is_superuser or 'view_asset' in permissions %}
+            <div class="text-right">
+                <a href="{% url 'employees:employee_asset_list' pk %}" class="btn btn-main m-0">List of Assets</a>
+            </div>
+            {% endif %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Employee Master</p>
+                    <h2>Asset</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/asset/form.html' %}
+                        <div class="form-group w-100 text-right mt-5">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main" name="form1">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

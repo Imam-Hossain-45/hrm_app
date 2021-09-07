@@ -1,0 +1,146 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Disbursement{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class="container">
+        <div class="row">
+            {% if object_list %}
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="{% url 'beehive_admin:payroll:salary_disbursement_edit' object_list.id %}"
+                                       class="btn btn-main pull-right" name="form1">Edit</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Pay To:</h2>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ object_list.employee }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Designation:</h2>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ object_list.employee.employee_job_information.last.designation|default_if_none:'' }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Employee Id:</h2>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ object_list.employee.employee_id }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Payment Mode:</h2>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{{ payment_details.mode }}</p>
+                                    {% if payment_details.mode_value == 'bank' %}
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div class="col-md-12">
+                                                <p>Bank A/C Name: {{ d_list.0.account_name }}</p>
+                                                <p>Bank Name: {{ d_list.0.bank_name }}, A/C
+                                                    Number: {{ d_list.0.ac_no }}</p>
+                                                <p>Branch Code: {{ d_list.0.branch_code }}, Routing
+                                                    Number: {{ d_list.0.routing_number }}</p>
+                                            </div>
+                                        </div>
+                                    {% elif payment_details.mode_value == 'cheque' %}
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div class="col-md-12">
+                                                <p>Cheque Number: {{ d_list.0.cheque_number }}</p>
+                                            </div>
+                                        </div>
+                                    {% elif payment_details.mode_value == 'fintech' %}
+                                        <div class="row" style="background-color: whitesmoke">
+                                            <div class="col-md-12">
+                                                <p>{{ d_list.0.service }} No: {{ d_list.0.mobile_no }}</p>
+                                            </div>
+                                        </div>
+                                    {% elif payment_details.mode_value == 'mixed' %}
+                                        {% for d_list in payment_details.disburse_list %}
+                                            {% if d_list.mixed_mode_value == 'bank' %}
+                                                <h2><i>{{ d_list.mixed_mode }}</i></h2>
+                                                <div class="row" style="background-color: whitesmoke">
+                                                    <div class="col-md-12">
+                                                        <p>Bank A/C Name: {{ d_list.account_name }}</p>
+                                                        <p>Bank Name: {{ d_list.bank_name }}, A/C
+                                                            Number: {{ d_list.ac_no }}</p>
+                                                        <p>Branch Code: {{ d_list.branch_code }}, Routing
+                                                            Number: {{ d_list.routing_number }}</p>
+                                                        <p>Disbursed Amount : {{ d_list.disburse_amount }}</p>
+                                                    </div>
+                                                </div>
+                                            {% elif d_list.mixed_mode_value == 'cheque' %}
+                                                <h2><i>{{ d_list.mixed_mode }}</i></h2>
+                                                <div class="row" style="background-color: whitesmoke">
+                                                    <div class="col-md-12">
+                                                        <p>Cheque Number: {{ d_list.cheque_number }}</p>
+                                                        <p>Disbursed Amount : {{ d_list.disburse_amount }}</p>
+                                                    </div>
+                                                </div>
+                                            {% elif d_list.mixed_mode_value == 'fintech' %}
+                                                <h2><i>{{ d_list.mixed_mode }}</i></h2>
+                                                <div class="row" style="background-color: whitesmoke">
+                                                    <div class="col-md-12">
+                                                        <p>{{ d_list.service }} No: {{ d_list.mobile_no }}</p>
+                                                        <p>Disbursed Amount : {{ d_list.disburse_amount }}</p>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <h2><i>{{ d_list.mixed_mode }}</i></h2>
+                                                <div class="row" style="background-color: whitesmoke">
+                                                    <div class="col-md-12">
+                                                        <p>Disbursed Amount : {{ d_list.disburse_amount }}</p>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Amount to be paid:</h2>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>BDT {{ object_list.net_earning }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h2>Date of Disbursement:</h2>
+                                </div>
+                                <div class="col-md-8">
+                                    <p>{% now "d M Y" %}</p>
+                                </div>
+                            </div>
+
+                            <form method="POST" novalidate>
+                                {% csrf_token %}
+                                <div class="form-group w-100 text-right">
+                                    <a href="{% url 'beehive_admin:payroll:salary_disbursement' %}"
+                                       class="btn btn-main b-none" name="form1">Cancel</a>
+                                    <button type="submit" class="btn btn-main" name="disburse">Disburse
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

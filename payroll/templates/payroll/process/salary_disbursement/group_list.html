@@ -1,0 +1,121 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Payroll > Disbursement{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <h2>Group Disbursement</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if employee_list %}
+        <div class="col-md-12">
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="datatable">
+                                        <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Payable Salary (BDT)</th>
+                                            <th scope="col">Mode of Payment</th>
+                                            <th scope="col">Date of Disbursement</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for em in employee_list %}
+                                        <tr>
+                                            <td>
+                                                <input type="hidden" name="employee_salary_id" value="{{ em.id }}" multiple>
+                                                {{ em.employee }}
+                                                {{ em.employee.employee_job_information.last.designation|default_if_none:'' }}
+                                            </td>
+                                            <td>{{ em.net_earning }}</td>
+                                            <td>
+                                                {% for method in em.salary_payment_method.all %}
+                                                     <input type="hidden" name="employee_payment_method" value="{{ method.payment_mode }}" multiple>
+                                                    <p>{{ method.get_payment_mode_display }}</p>
+                                                    {% if method.payment_mode == 'bank' %}
+                                                        {% for disburse_method in method.disburse_payment_method.all %}
+                                                            <p>Bank A/C Name: {{ disburse_method.employee_bank_AC_name }}</p>
+                                                            <p>Bank Name: {{ disburse_method.employee_bank_name }}, A/C
+                                                                Number: {{ disburse_method.bank_AC_no }}</p>
+                                                            <p>Branch Code: {{ disburse_method.bank_branch_code }}, Routing
+                                                                Number: {{ disburse_method.routing_number }}</p>
+                                                        {% endfor %}
+                                                    {% elif method.payment_mode == 'cheque' %}
+                                                            <div class="form-group row">
+                                                                <div class="col-md-12">
+                                                                    <input type="number" name="{{ group_form.cheque_number.name }}__{{ em.id }}" placeholder="Cheque no"
+                                                                            id="{{ group_form.cheque_number.id_for_label }}"
+                                                                            class="form-control{% if group_form.cheque_number.errors %} is-invalid{% endif %}"
+                                                                    value="{{ group_form.cheque_number.value|default_if_none:'' }}">
+                                                                    {% if group_form.cheque_number.errors %}
+                                                                        {% for error in group_form.cheque_number.errors %}
+                                                                            <div class="invalid-feedback">{{ error }}</div>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                    {% elif method.payment_mode == 'fintech' %}
+                                                        {% for disburse_method in method.disburse_payment_method.all %}
+                                                            <p>{{ disburse_method.get_fintech_service_display }}, Mobile
+                                                                Number: {{ disburse_method.mobile_number }}</p>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% empty %}
+                                                <p>
+                                                    {{ em.employee.employee_payment.last.get_payment_mode_display }}
+                                                </p>
+                                                {% endfor %}
+                                            </td>
+                                            <td>
+                                                <div class="form-group row">
+                                                    <div class="col-md-12">
+                                                        <input type="date"
+                                                               name="{{ group_form.disbursed_date.name }}"
+                                                               id="{{ group_form.disbursed_date.id_for_label }}"
+                                                               class="{% if group_form.disbursed_date.errors %} is-invalid{% endif %}"
+                                                               value="{{ group_form.disbursed_date.value|date:'Y-m-d' }}" multiple>
+                                                        {% if group_form.disbursed_date.errors %}
+                                                        {% for error in group_form.disbursed_date.errors %}
+                                                        <div class="invalid-feedback">{{ error }}</div>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group w-100">
+                    <a href="{% url 'beehive_admin:payroll:salary_disbursement' %}"
+                       class="btn btn-main pull-right" name="form1">Cancel</a>
+                    <button type="submit" class="btn btn-main pull-right" name="disburse_all">Disburse All
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

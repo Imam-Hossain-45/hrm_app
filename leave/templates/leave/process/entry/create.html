@@ -1,0 +1,136 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Leave > Leave Entry > {% if edit == True %}Edit{% else %}New{% endif %}{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    {% if edit == True %}<h2>Edit Leave Entry</h2>{% else %}<h2>New Leave Entry</h2>{% endif %}
+                </div>
+                <div class="card-block">
+                    {% if edit != True %}
+                    <form method="GET" action="" class="mw-initial">
+                        <input type="search" name="query" class="form-control" placeholder="Search Employee by Name, ID." id='search' autocomplete="off">
+                        <div id="search-result" class="search-result" style="display: none">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul id="search_employee" class="search_employee"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    {% if error %}
+                    <p>{{ error }}</p>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% if info %}
+            <div class='card mt-5 mb-3'>
+                <div class="card-block border-1">
+                    <div class="row">
+                        <div class="col-6" style="border-right: 1px solid #ccc;">
+                            <div class="employee-wrap p-4">
+                                <h2>{{ info.name }}</h2>
+                                <p>{{ info.designation|default_if_none:'' }}</p>
+                                <p>Employee ID: {{ info.employee_id|default_if_none:'' }}</p>
+                                <p>Company: {{ info.company|default_if_none:'' }}</p>
+                                <p>Division: {{ info.division|default_if_none:'' }}</p>
+                                <p>Department: {{ info.department|default_if_none:'' }}</p>
+                                <p>Business Unit: {{ info.business_unit|default_if_none:'' }}</p>
+                                <p>Project: {{ info.project|default_if_none:'' }}</p>
+                            </div>
+                        </div>
+                        {% if leave_list %}
+                        <div class="col-6 p-4">
+                            <table class="table table-hover" id="datatable">
+                                <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">Leave Type</th>
+                                        <th scope="col">Credit</th>
+                                        <th scope="col">Avail</th>
+                                        <th scope="col">Remaining</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for obj in leave_list %}
+                                    <tr>
+                                        <td>{{ obj.type }}</td>
+                                        <td>{{ obj.credit }}</td>
+                                        <td>{{ obj.avail }}</td>
+                                        <td>{{ obj.remaining }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% if last_apply_leave_list %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Last Applied Leave</h2>
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="datatable">
+                            <thead>
+                                <tr class="selectable">
+                                    <th scope="col">Start Date & Time</th>
+                                    <th scope="col">End Date & Time</th>
+                                    <th scope="col">Leave Type</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ last_apply_leave_list.start_date|date:'d/m/Y' }} {{ last_apply_leave_list.start_time|date:'h:i A' }}</td>
+                                    <td>{{ last_apply_leave_list.end_date|date:'d/m/Y' }} {{ last_apply_leave_list.end_time|date:'h:i A' }}</td>
+                                    <td>{{ last_apply_leave_list.leave_type }}</td>
+                                    <td>{{ last_apply_leave_list.get_status_display }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer secondary">
+                    <a href="{% url 'beehive_admin:leave:leave_entry_individual_list' last_apply_leave_list.employee.id %}">Show
+                        All Leave History</a>
+                </div>
+            </div>
+            {% endif %}
+            {% if form %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Apply for a Leave</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate enctype="multipart/form-data" class="mw-initial">
+                        {% csrf_token %}
+                        {% include 'leave/process/entry/form.html' %}
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main" href="{% url 'beehive_admin:leave:leave_entry_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main" name="apply">Apply</button>
+                            {% if request.user.is_superuser or request.user.management %}
+                            <button type="submit" class="btn btn-main" name="apply_approve">Apply and Approve
+                            </button>
+                            <button type="submit" class="btn btn-main" name="apply_deny">Apply and Deny
+                            </button>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

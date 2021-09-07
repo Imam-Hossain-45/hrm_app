@@ -1,0 +1,43 @@
+{% load index %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ driving_form.driving_licence_no.id_for_label }}">{{ driving_form.driving_licence_no.label }}</label>
+            <input type="text" name="{{ driving_form.driving_licence_no.name }}" class="form-control{% if driving_form.driving_licence_no.errors %} is-invalid{% endif %}" id="{{ driving_form.driving_licence_no.id_for_label }}" {% if driving_form.driving_licence_no.value != None %}value="{{ driving_form.driving_licence_no.value }}" {% endif %}>
+            {% if driving_form.driving_licence_no.errors %}
+            {% for error in driving_form.driving_licence_no.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group calendar">
+            <label for="{{ driving_form.driving_licence_expiry_date.id_for_label }}">{{ driving_form.driving_licence_expiry_date.label }}</label>
+            <input type="date" name="{{ driving_form.driving_licence_expiry_date.name }}" class="form-control{% if driving_form.driving_licence_expiry_date.errors %} is-invalid{% endif %}" id="{{ driving_form.driving_licence_expiry_date.id_for_label }}"  value="{% if driving_form.driving_licence_expiry_date.value|get_date_type == 'str' %}{{ driving_form.driving_licence_expiry_date.value }}{% else %}{{ driving_form.driving_licence_expiry_date.value|date:'Y-m-d' }}{% endif %}">
+            <i class="m-menu__link-icon flaticon-calendar-1"></i>
+            {% if driving_form.driving_licence_expiry_date.errors %}
+            {% for error in driving_form.driving_licence_expiry_date.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="{{ driving_form.driving_licence_doc.id_for_label }}">{{ driving_form.driving_licence_doc.label }}</label>
+            {% if driving_form.driving_licence_doc.value %}
+            Currently: <a href="{{ driving_form.driving_licence_doc.value.url }}">{{ driving_form.driving_licence_doc.value.url }}</a><br>
+            <input id="driving_licence_doc-clear_id" name="driving_licence_doc-clear" type="checkbox" style="display: inline-block;">
+            <label for="driving_licence_doc-clear_id" style="display: inline-block;">Clear</label>
+            <br>Change:
+            {% endif %}
+            <input type="file" name="{{ driving_form.driving_licence_doc.name }}" class="form-control{% if driving_form.driving_licence_doc.errors %} is-invalid{% endif %}" id="{{ driving_form.driving_licence_doc.id_for_label }}" accept="image/">
+            {% if driving_form.driving_licence_doc.errors %}
+            {% for error in driving_form.driving_licence_doc.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

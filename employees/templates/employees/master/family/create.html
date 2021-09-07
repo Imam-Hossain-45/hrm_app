@@ -1,0 +1,30 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Family Information{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Employee Master</p>
+                    <h2>Family</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/family/form.html' %}
+                        <div class="form-group w-100 text-right mt-5">
+                            <button type='reset' class="btn btn-main b-none">Cancel</button>
+                            <button type="submit" class="btn btn-main" name="form1">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

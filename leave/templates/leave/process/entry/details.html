@@ -1,0 +1,130 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Leave > Leave Entry > Details{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Details of Leave Entry</h2>
+                </div>
+            </div>
+            {% if info %}
+            <div class='card mt-5 mb-3'>
+                <div class="card-block border-1">
+                    <div class="row">
+                        <div class="col-6" style="border-right: 1px solid #ccc;">
+                            <div class="employee-wrap p-4">
+                                <h2>{{ info.name }}</h2>
+                                <p>{{ info.designation|default_if_none:'' }}</p>
+                                <p>Employee ID: {{ info.employee_id|default_if_none:'' }}</p>
+                                <p>Company: {{ info.company|default_if_none:'' }}</p>
+                                <p>Division: {{ info.division|default_if_none:'' }}</p>
+                                <p>Department: {{ info.department|default_if_none:'' }}</p>
+                                <p>Business Unit: {{ info.business_unit|default_if_none:'' }}</p>
+                                <p>Project: {{ info.project|default_if_none:'' }}</p>
+                            </div>
+                        </div>
+                        {% if leave_list %}
+                        <div class="col-6">
+                            <table class="table table-hover" id="datatable">
+                                <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">Leave Type</th>
+                                        <th scope="col">Credit</th>
+                                        <th scope="col">Avail</th>
+                                        <th scope="col">Remaining</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for obj in leave_list %}
+                                    <tr>
+                                        <td>{{ obj.type }}</td>
+                                        <td>{{ obj.credit }}</td>
+                                        <td>{{ obj.avail }}</td>
+                                        <td>{{ obj.remaining }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% if last_apply_leave_list %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Last Applied Leave</h2>
+                </div>
+                <div class="card-block">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="datatable">
+                            <thead>
+                                <tr class="selectable">
+                                    <th scope="col">Start Date & Time</th>
+                                    <th scope="col">End Date & Time</th>
+                                    <th scope="col">Leave Type</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ last_apply_leave_list.start_date|date:'d/m/Y' }} {{ last_apply_leave_list.start_time|date:'h:i A' }}</td>
+                                    <td>{{ last_apply_leave_list.end_date|date:'d/m/Y' }} {{ last_apply_leave_list.end_time|date:'h:i A' }}</td>
+                                    <td>{{ last_apply_leave_list.leave_type }}</td>
+                                    <td>{{ last_apply_leave_list.get_status_display }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer secondary">
+                    <a href="{% url 'beehive_admin:leave:leave_entry_individual_list' last_apply_leave_list.employee.id %}">Show
+                        All Leave History</a>
+                </div>
+            </div>
+            {% endif %}
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Leave Application Details</h2>
+                </div>
+                <div class="card-block">
+                    {% if leave_info %}
+                        <div>
+                            <p>Leave Type : {{ leave_info.name }}</p>
+                            <p>Leave Duration : {{ leave_info.credit }} ({{ leave_info.start_date }}
+                                {% if leave_info.start_time %} {{ leave_info.start_time|time:'h:i A' }}{% endif %} -
+                                {{ leave_info.end_date }}{% if leave_info.end_time %}
+                                    {{ leave_info.end_time|time:'h:i A' }}{% endif %})</p>
+                            <p>Leave Application Date : {{ leave_info.apply_date|date:'M d, Y' }}</p>
+                            {% if leave_info.reason %}
+                                <p>Reason of Leave : {{ leave_info.reason }}</p>
+                            {% endif %}
+                            {% if leave_info.attachment %}
+                                <p>Attachment : {{ leave_info.attachment }}  <a href="{{ leave_info.attachment_url }}">View</a></p>
+                            {% endif %}
+                            <p>Status : {{ leave_info.status }}</p>
+                        </div>
+                    {% endif %}
+                    <br>
+                    {% if comment %}
+                        <h2>Comments:</h2>
+                        {% for obj in comment %}
+                            <h3>{{ obj.user }}, {{ obj.user.user_job_information.latest.designation.name|default_if_none:'' }}, {{ obj.created_at }} </h3>
+                            <p>{{ obj.comment }}</p>
+                            <hr>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="card-footer"> <a class="btn btn-main" href="{% url 'beehive_admin:leave:leave_entry_list' %}">Go Back</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

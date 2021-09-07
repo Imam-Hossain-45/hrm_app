@@ -1,0 +1,41 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Grade List{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <p>
+                <a class="btn btn-main"
+                   href="{% url 'beehive_admin:payroll:paygrade_create' %}">Create New Grade</a>
+            </p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sl.</th>
+                        <th>Grade</th>
+                        <th>Active/Inactive</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                {% for grade in grades %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ grade.name }}</td>
+                        {% if grade.status %}
+                            <td>Active</td>
+                        {% else %}
+                            <td>Inactive</td>
+                        {% endif %}
+                        <td>{{ grade.description }}</td>
+                        <td><a href="{% url 'beehive_admin:hr_policies:paygrade_update' pk=grade.id %}">Edit</a> |
+                            <a href="{% url 'beehive_admin:hr_policies:paygrade_delete' pk=grade.id %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Bonus Component Settings{% endblock %}
+
+{% block content %}
+{% include 'layouts/event.html' %}
+
+<div class='container'>
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <h2>Bonus Component Settings</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="form-group w-100">
+                            <label for="{{ form.bonus_period.id_for_label }}">{{ form.bonus_period.label }}</label>
+                            <select name="{{ form.bonus_period.name }}" id="{{ form.bonus_period.id_for_label }}" class="form-control{% if form.bonus_period.errors %} is-invalid{% endif %}" required>
+                                {% if bonus_period %}
+                                {% for choice in form.bonus_period.field.choices %}
+                                {% if bonus_period == choice.0 %}
+                                <option value="{{ choice.0 }}" selected>{{ choice.1 }}</option>
+                                {% else %}
+                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                {% for choice in form.bonus_period.field.choices %}
+                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+
+                            {% if form.bonus_period.errors %}
+                            {% for error in form.bonus_period.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group w-100">
+                            <label for="{{ form.bonus_frequency.id_for_label }}">{{ form.bonus_frequency.label }}</label>
+                            <input type="number" name="{{ form.bonus_frequency.name }}" id="{{ form.bonus_frequency.id_for_label }}" class="form-control{% if form.bonus_frequency.errors %} is-invalid{% endif %}" placeholder="Bonus Frequency Number" value="{{ bonus_frequency|default_if_none:'' }}">
+
+                            {% if form.bonus_frequency.errors %}
+                            {% for error in form.bonus_frequency.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        {% for choice in form.rule_type.field.choices %}
+                        {% if choice.0 and choice.0 != 'variable' %}
+                        <input style="" type="radio" name="options" value="{{ choice.0 }}" id="id_{{ choice.0 }}" {% if selected_item == choice.0 %} checked {% endif %}>
+                        <label for="id_{{ choice.0 }}">{{ choice.1 }}</label><br>
+                        {% if choice.0 == 'rule-based' %}
+                            {{ rbforms.management_form }}
+                            {% for rbform in rbforms %}
+                                <input type="hidden" name="formulae-{{ forloop.counter0 }}-variable" value="{{ bonus_component.variable.pk }}">
+                                <input type="hidden" name="formulae-{{ forloop.counter0 }}-id"{% if rbform.id.value %} value="{{ rbform.id.value }}{% endif %}">
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="formulae-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}">
+                                                {{ rbform.priority.label }}{% if rbform.priority.field.required %} *{% endif %}
+                                            </label>
+                                            <input type="number" name="formulae-{{ forloop.counter0 }}-{{ rbform.priority.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.priority.id_for_label }}"
+                                                   class="form-control{% if rbform.priority.errors %} is-invalid{% endif %}"
+                                                   value="{{ rbform.priority.value|default:1 }}" min="1" step="1">
+                                            {% if rbform.priority.errors %}
+                                            {% for error in rbform.priority.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="formulae-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}">
+                                                {{ rbform.condition.label }}{% if rbform.condition.field.required %} *{% endif %}
+                                            </label>
+                                            <input type="text" name="formulae-{{ forloop.counter0 }}-{{ rbform.condition.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.condition.id_for_label }}"
+                                                   class="form-control{% if rbform.condition.errors %} is-invalid{% endif %}"
+                                                   value="{{ rbform.condition.value|default:'' }}" required>
+                                            {% if rbform.condition.errors %}
+                                            {% for error in rbform.condition.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="formulae-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}">
+                                                {{ rbform.rule.label }}{% if rbform.rule.field.required %} *{% endif %}
+                                            </label>
+                                            <input type="text" name="formulae-{{ forloop.counter0 }}-{{ rbform.rule.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.rule.id_for_label }}"
+                                                   class="form-control{% if rbform.rule.errors %} is-invalid{% endif %}"
+                                                   value="{{ rbform.rule.value|default:'' }}" required>
+                                            {% if rbform.rule.errors %}
+                                            {% for error in rbform.rule.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-check-inline">
+                                            <span class="m-switch m-switch--outline m-switch--icon m-switch--success">
+                                                <label class="form-check-label" for="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}">
+                                                  {{ rbform.DELETE.label }}{% if rbform.DELETE.field.required %} *{% endif %}
+                                                    <input type="checkbox" name="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.name }}" id="formulae-{{ forloop.counter0 }}-{{ rbform.DELETE.id_for_label }}"
+                                                       class="form-check-input{% if rbform.DELETE.errors %} is-invalid{% endif %}">
+                                                    <span></span>
+                                                </label>
+                                            </span>
+
+                                            </div>
+                                            {% if rbform.DELETE.errors %}
+                                            {% for error in rbform.DELETE.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+
+                        <input type="hidden" name="next" value="{{ request.path }}">
+
+                        <div class="form-group w-100 text-right">
+                            <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:bonus_component_list' %}">Cancel</a>
+                            <button type="submit" class="btn btn-main">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

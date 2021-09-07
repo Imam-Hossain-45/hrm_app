@@ -1,0 +1,33 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Update a Deduction Group{% endblock %}
+
+{% block content %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Deduction Group Description</h2>
+                        <p>Deduction Group name and address.</p>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+
+                            {% include 'payroll/master/deduction/deduction_group/form.html' %}
+
+                            <input type="hidden" name="next" value="{{ request.path }}">
+
+                            <div class="form-group w-100 text-right">
+                                <a class="btn btn-main b-none"
+                                   href="{% url 'beehive_admin:payroll:deduction_group_list' %}">Cancel</a>
+                                <button type="submit" class="btn btn-main">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

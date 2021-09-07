@@ -1,0 +1,33 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Delete Bank{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-10 col-md-offset-1">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Bank Delete Form</h2>
+                        <p>Bank Delete for employee info</p>
+                    </div>
+                    <div class="card-block">
+                        <form action="" method="post">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                Are you sure you want to delete "{{ bank }}"?
+                            </div>
+
+                            <div class='form-group w-100'>
+                                <button type="submit" class="btn btn-main">Delete</button>
+                                <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:bank_list' %}">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

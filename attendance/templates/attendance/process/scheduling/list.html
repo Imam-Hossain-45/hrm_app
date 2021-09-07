@@ -1,0 +1,276 @@
+{% extends "layouts/master.html" %}
+{% block title %}Attendance Scheduling > List{% endblock %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Attendance</p>
+                    <h2>Scheduling</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Filter Employees</h2>
+                <form method="GET" novalidate class="mw-initial mb-5">
+                    {% include 'leave/process/layout/search.html' %}
+                    <div class="col-md-12">
+                        <div class="form-group text-right mt-5">
+                            <button type="submit" name="scheduling-search" class="btn btn-main">Go to
+                                Schedule
+                            </button>
+                        </div>
+                    </div>
+                </form>
+        </div>
+
+        <div class="col-md-12 mt-3">
+            <hr>
+        </div>
+        {% include 'layouts/event.html' %}
+        {% if scheduling_list %}
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header secondary card-box">
+                    <div class="card-title">
+                        <div class="row">
+                            <div class="col-md-6 d-flex align-items-center">
+                                <p>Date:
+                                    {% if request.GET.from_date %}
+                                        {{ request.GET.from_date }}
+                                    {% else %}
+                                        {{ scheduling_list.0.date|date:"d/m/Y" }}
+                                    {% endif %} to
+                                    {% if request.GET.to_date %}
+                                        {{ request.GET.to_date }}
+                                    {% else %}
+                                        {% with scheduling_list|last as last %}
+                                            {{ last.date|date:"d/m/Y" }}
+                                        {% endwith %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class=" col-md-6 text-right">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-main" data-toggle="modal" data-target="#scheduleModal" onclick="checked_value();">
+                                    Action for All
+                                </button>
+                                {% include 'attendance/process/scheduling/modal.html' %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive" style="overflow: visible;">
+                                <form action="" method="POST" novalidate class="mw-initial">
+                                    {% csrf_token %}
+                                    <table class="table table-hover" id="datatable">
+                                        <thead>
+                                            <tr class="selectable">
+                                                <th scope="col">Employee</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col" style="display: flex; justify-content: space-around; width: 400px;">
+                                                    <p>In Time</p>
+                                                    <p>Out Time</p>
+                                                </th>
+                                                <th scope="col">Status</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for obj in scheduling_list %}
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" id="schedule_record_{{ obj.schedule_record_id }}" value="{{ obj.schedule_record_id }}">
+                                                    </div>
+                                                    <label class="form-check-label d-inline-block" for="schedule_record_{{ obj.schedule_record_id }}" style="margin-left: 2rem;">
+                                                        <div class="d-flex">
+                                                            <img class="comment-img" src="{% static 'img/user1.jpg' %}" alt="">
+                                                            <div>
+                                                                <h5 class="title">{{ obj.name }}</h5>
+                                                                <p>{{ obj.designation|default_if_none:'' }}</p>
+                                                                <p>{{ obj.employee_id }}</p>
+                                                                <small>{% if obj.schedule_type == 'Roster' %}{{ obj.roster_type }}{% else %}{{ obj.schedule_type }}{% endif %}</small>
+                                                            </div>
+                                                        </div>
+
+                                                    </label>
+
+                                                </td>
+                                                <td>{{ obj.date|date:'d/m/Y' }}</td>
+                                                <td style="width: 400px;">
+                                                    <div class="time-wrap d-flex justify-content-between">
+                                                        <div class="in-time-wrap">
+                                                            <input type="text" value="{{ obj.in_time|date:'h:i A' }}" name="{{ scheduling_time_form.in_time.name }}_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" class="datetimepicker form-control{% if scheduling_time_form.in_time.errors %} is-invalid{% endif %} mw-initial w-100" placeholder="In time">
+                                                        </div>
+
+                                                        <div class="out-time-wrap">
+                                                            <div class="mb-3 manual-process-field">
+                                                                <input type="text" value="{{ obj.out_time|date:'h:i A' }}" name="{{ scheduling_time_form.out_time.name }}_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" class="datetimepicker mw-initial form-control{% if scheduling_time_form.out_time.errors %} is-invalid{% endif %}" placeholder="Out time">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" value="{{ obj.out_date|date:'Y-m-d' }}" name="{{ scheduling_time_form.out_date.name }}_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_break" style="width: 94%; float: left;">
+                                                        {% for b in obj.break_data %}
+                                                        <div class="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_append_break d-flex">
+                                                            <div class="mb-3 manual-process-field" style="width: 50%;">
+                                                                <input type="text" value="{{ b.break_start|date:'h:i A' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_start.name }}" multiple class="datetimepicker form-control{% if scheduling_break_form.break_start.errors %} is-invalid{% endif %}" placeholder="Break start">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ b.break_start_date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_start_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3 manual-process-field" style="width: 50%;">
+                                                                <input type="text" value="{{ b.break_end|date:'h:i A' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_end.name }}" multiple class="datetimepicker form-control{% if scheduling_break_form.break_end.errors %} is-invalid{% endif %}" placeholder="Break end">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ b.break_end_date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_end_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <input type="button" value="" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_btn_decrease" class="btn break_danger remove-row" style="display: block; background-color: transparent; width: 21px; height: 20px; margin-top: 10px; padding: 0; border-radius: 100%; border: none; background-color: transparent;">
+                                                        </div>
+                                                        {% empty %}
+                                                        <div class="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_append_break d-flex">
+                                                            <div class="mb-3 manual-process-field" style="width: 50%;">
+                                                                <input type="text" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_start.name }}" multiple class="datetimepicker form-control{% if scheduling_break_form.break_start.errors %} is-invalid{% endif %}" placeholder="Break start">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ obj.date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_start_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3 manual-process-field" style="width: 50%;">
+                                                                <input type="text" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_end.name }}" multiple class="datetimepicker form-control{% if scheduling_break_form.break_end.errors %} is-invalid{% endif %}" placeholder="Break end">
+                                                                <div class="calendar">
+                                                                    <span class="">
+                                                                        <input type="date" multiple value="{{ obj.date|date:'Y-m-d' }}" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_{{ scheduling_break_form.break_end_date.name }}">
+                                                                        <i class="m-menu__link-icon flaticon-calendar-1"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <input type="button" value="" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_btn_decrease" class="btn break_danger remove-row" style="display: block; background-color: transparent; width: 21px; height: 20px; margin-top: 10px; padding: 0; border-radius: 100%; border: none;">
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="incr-btn-wrapper d-flex flex-column align-items-center" style="width: 6%; float: left;">
+                                                        <input type="button" value="" name="{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}_btn_increase" class="break_success clone-row" style="display: block; width: 20px; height: 20px; margin-top: 10px; padding: 0; border-radius: 100%; border: none; background-color: transparent;">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">{{ obj.status }}</td>
+                                                <td>
+                                                    <div class="form-check mb-2">
+                                                        <input type="radio" class="form-check-input" id="work_day_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" value="work_day" name="{{ scheduling_form.is_working_day.name }}_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" {% if obj.work_day == True %}checked{% endif %}>
+                                                        <label class="form-check-label" for="work_day_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" style="padding-left: 8px;">Work
+                                                            day</label>
+                                                    </div>
+
+                                                    <div class="form-check">
+                                                        <input type="radio" class="form-check-input" id="not_work_day_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" value="not_work_day" name="{{ scheduling_form.is_working_day.name }}_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" {% if obj.work_day == False %}checked{% endif %}>
+                                                        <label class="form-check-label" for="not_work_day_{{ obj.id }}_{{ obj.date|date:'Y-m-d' }}" style="padding-left: 8px;">Not
+                                                            work day</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="del_break">
+                                    <div class="text-right mt-5">
+                                        <a class="btn btn-main b-none" href="{% url 'beehive_admin:attendance:attendance_scheduling' %}">Cancel</a>
+                                        <button type="submit" class="btn btn-main" name="form1">Save</button>
+                                        <input type="button" class="btn btn-main clear-button" value="Clear Data">
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if scheduling_list.paginator.num_pages > 1 %}
+                    <nav aria-label="navigation" class="margin-lg margin-md">
+                            <ul class="pagination d-flex justify-content-center">
+                                {% if scheduling_list.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ scheduling_list.previous_page_number }}&{{path}}">Previous</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for pg in page_range %}
+                                    <li class="page-item">
+                                        <a class="page-link {% if pg == scheduling_list.number %}active{% endif %}" href="?page={{ pg }}&{{path}}">{{ pg }} {{ scheduling_list.current_page_number }}</a>
+                                    </li>
+                                {% endfor %}
+
+                                {% if scheduling_list.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ scheduling_list.next_page_number }}&{{path}}">Next</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                {% endif %}
+            </div>
+        </div>
+        {% elif no_schedule %}
+        <p>{{ no_schedule }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).on('click', '.break_danger', function () {
+        var del_btn_name = $(this).attr('name');
+        var del_split_name = del_btn_name.split("_");
+        var element = $(this).closest("." + del_split_name[0] + "_" + del_split_name[1] + "_append_break");
+        element.find('input[type=\'date\'], input[type=\'text\']').val('');
+        element.remove();
+    });
+
+    $('.clear-button').click(function () {
+        $('input[type=\'date\'], [type=\'text\']').each(function () {
+            $(this).val('');
+        });
+        $('input[type=\'radio\']').each(function () {
+            $(this).prop('checked', false);
+        });
+    });
+
+    function checked_value() {
+        var val = [];
+        $(':checkbox:checked').each(function (i) {
+            val[i] = $(this).val();
+        });
+        console.log(val);
+        console.log(val.length);
+        if (val.length != 0) {
+            $('input[name=\'schedule_record_id\']').val(val);
+        }
+    }
+
+</script>
+<script src="{% static 'src/js/break_time.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Employee Job Information Create{% endblock %}
+
+{% block content %}
+{% include 'employees/master/layouts/sidebar.html' %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Employee Master</p>
+                    <h2>Job Information</h2>
+                </div>
+                <div class="card-block">
+                    <form method="POST" class="mw-initial" novalidate>
+                        {% csrf_token %}
+                        {% include 'employees/master/job/job_form.html' %}
+                        <div class="form-group w-100 text-right mt-5">
+                            <a class="btn btn-main b-none" href="{% url 'employees:employee_job_list' pk %}">Cancel</a>
+                            <button type="submit" class="btn btn-main pull-right" name="form1">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

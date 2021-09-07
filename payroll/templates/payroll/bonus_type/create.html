@@ -1,0 +1,62 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Create New Bonus Type{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                <input type="text" name="{{ form.name.name }}" maxlength="255" required="" class="form-control{% if form.name.errors %} is-invalid{% endif %}" placeholder="Ex: Eid Bonus" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default_if_none:'' }}">
+                                {% if form.name.errors %}
+                                {% for error in form.name.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                                <textarea name="{{ form.description.name }}" cols="40" rows="5" class="form-control{% if form.description.errors %} is-invalid{% endif %}" id="{{ form.description.id_for_label }}">{{ form.description.value|default_if_none:'' }}</textarea>
+                                {% if form.description.errors %}
+                                {% for error in form.description.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label for="{{ form.is_festival.id_for_label }}">{{ form.is_festival.label }}</label>
+                                <input type="checkbox" name="{{ form.is_festival.name }}" id="{{ form.is_festival.id_for_label }}" {% if form.is_festival.value %}checked="" {% endif %}>
+                                {% if form.is_festival.errors %}
+                                {% for error in form.is_festival.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12 text-right">
+                                <a class="btn btn-main b-none" href="{% url 'beehive_admin:payroll:bonus_type_list' %}">Cancel</a>
+                                <button type="submit" class="btn btn-main ">Create</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Self Panel > Leave{% endblock %}
+
+{% block content %}
+<div class='container'>
+    {% include 'layouts/event.html' %}
+
+    <div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card'>
+                <div class="card-header secondary">
+                    <p>Self panel > Leave</p>
+                    <h2>Leave Status</h2>
+                </div>
+                <div class="card-block">
+                    <div class="row ml-0 align-items-end">
+                        <div class="col-md-5 border-1">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="datatable">
+                                    <thead>
+                                        <tr class="selectable">
+                                            <th scope="col">Leave Type</th>
+                                            <th scope="col">Credit</th>
+                                            <th scope="col">Avail</th>
+                                            <th scope="col">Remaining</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for obj in leave_list %}
+                                        <tr>
+                                            <td>{{ obj.type }}</td>
+                                            <td>{{ obj.credit }}</td>
+                                            <td>{{ obj.avail }}</td>
+                                            <td>{{ obj.remaining }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7 leave-status-wrap text-right">
+                            <div class="btn btn-main b-none">Total Leave applied: {{ total_leave_applied }}</div>
+                            <div class="btn btn-main b-none">Total Approved: {{ approved_leave }}</div>
+                            <div class="btn btn-main b-none">Total Declined: {{ declined_leave }}</div>
+                            <div class="btn btn-main b-none">Total Pending: {{ pending_leave }}</div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <table class="table table-bordered table-hover" id="datatable">
+                                <thead>
+                                    <tr class="selectable">
+                                        <th scope="col">From</th>
+                                        <th scope="col">To</th>
+                                        <th scope="col">Duration</th>
+                                        <th scope="col">Leave Type</th>
+                                        <th scope="col">Approval Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for obj in leaves %}
+                                    <tr onclick="location.href = '{% url "self_panel:leave_update" obj.pk %}'">
+                                        <td>{{ obj.start_date|date:'d M, Y' }}</td>
+                                        <td>{{ obj.end_date|date:'d M, Y' }}</td>
+                                        <td>{{ obj.duration }}</td>
+                                        <td>{{ obj.leave_type }}</td>
+                                        <td>{{ obj.get_status_display }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

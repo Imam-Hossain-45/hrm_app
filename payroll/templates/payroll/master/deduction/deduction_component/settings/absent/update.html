@@ -1,0 +1,96 @@
+{% extends "layouts/master.html" %}
+
+{% block title %}Absent Deduction Component Settings{% endblock %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class='container'>
+        <div class='row justify-content-md-center'>
+            <div class="col-md-12">
+                <div class='card'>
+                    <div class="card-header secondary">
+                        <h2>Absent Deduction Component Settings</h2>
+                    </div>
+                    <div class="card-block">
+                        <form method="POST" novalidate>
+                            {% csrf_token %}
+
+                            <div class="form-group w-100">
+                                <label for="{{ form.no_of_absent.id_for_label }}">{{ form.no_of_absent.label }}</label>
+                                <input type="number" name="{{ form.no_of_absent.name }}"
+                                       id="{{ form.no_of_absent.id_for_label }}"
+                                       class="form-control{% if form.no_of_absent.errors %} is-invalid{% endif %}"
+                                       placeholder="i.e., 1/2" value="{{ form.no_of_absent.value|default_if_none:'' }}">
+
+                                {% if form.no_of_absent.errors %}
+                                    {% for error in form.no_of_absent.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                            </div>
+
+                            {% for choice in form.condition_type.field.choices %}
+                                {% if choice.0 and choice.0 == 'rule-based' %}
+                                    <input style="" type="radio" name="condition_type_options" value="{{ choice.0 }}"
+                                           id="id_condition_type_{{ choice.0 }}"
+                                           {% if selected_condition_type == choice.0 %}
+                                            checked
+                                           {% endif %}>
+                                    <label for="id_condition_type_{{ choice.0 }}">{{ choice.1 }}</label><br>
+                                {% endif %}
+                            {% endfor %}
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                            </div>
+
+                            {% for choice in form.basis_type.field.choices %}
+                                {% if choice.0 %}
+                                    <input style="" type="radio" name="basis_type_options" value="{{ choice.0 }}"
+                                           id="id_basis_type_{{ choice.0 }}"
+                                           {% if selected_basis_type == choice.0 %}
+                                            checked
+                                           {% endif %}>
+                                    <label for="id_basis_type_{{ choice.0 }}">{{ choice.1 }}</label><br>
+                                {% endif %}
+                            {% endfor %}
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h2>Rule-Based Settings</h2>
+                                </div>
+
+                                <div class="card-block">
+                                        {% include 'payroll/master/deduction/deduction_component/settings/rbr_form.html' %}
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="next" value="{{ request.path }}">
+
+                            <div class="form-group w-100 text-right">
+                                <a class="btn btn-main b-none"
+                                   href="{% url 'beehive_admin:payroll:deduction_component_list' %}">Cancel</a>
+                                <button type="submit" class="btn btn-main">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

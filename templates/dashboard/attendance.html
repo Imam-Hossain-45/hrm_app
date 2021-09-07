@@ -1,0 +1,45 @@
+<div class='row justify-content-md-center'>
+        <div class="col-md-12">
+            <div class='card mt-5 mb-3'>
+                <div class="card-block border-1">
+                    <div class="row">
+{#                        <div class="col-6" style="border-right: 1px solid #ccc;">#}
+{#                            <div class="employee-wrap p-4">#}
+{#                                <h2>Total Attendance</h2>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <div class="col-12">
+                            <ul class="nav nav-tabs p-4" id="myTab" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" id="on-time-tab" data-toggle="tab" href="#on-time" role="tab" aria-controls="on-time" aria-selected="false">On Time({{ on_time_employee|length }})</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link " id="late-tab" data-toggle="tab" href="#late" role="tab" aria-controls="late" aria-selected="true">Late({{ late_employee|length }})</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="absent-tab" data-toggle="tab" href="#absent" role="tab" aria-controls="absent" aria-selected="false">Absent({{ absent_employee|length }})</a>
+                              </li>
+                            </ul>
+                            <div class="tab-content p-4" id="myTabContent">
+                              <div class="tab-pane fade show active" id="on-time" role="tabpanel" aria-labelledby="on-time-tab">
+                                  {% for ontime in on_time_employee %}
+                                      <p>{{ ontime.schedule_record.employee }} <span>{{ ontime.schedule_record.employee.employee_job_information.last.designation|default_if_none:'' }}</span></p>
+                                  {% endfor %}
+                              </div>
+                              <div class="tab-pane fade" id="late" role="tabpanel" aria-labelledby="late-tab">
+                                  {% for late in late_employee %}
+                                      <p>{{ late.schedule_record.employee }} <span>{{ late.schedule_record.employee.employee_job_information.last.designation|default_if_none:'' }}</span></p>
+                                  {% endfor %}
+                              </div>
+                              <div class="tab-pane fade" id="absent" role="tabpanel" aria-labelledby="absent-tab">
+                                  {% for absent in absent_employee %}
+                                      <p>{{ absent.schedule_record.employee }} <span>{{ absent.schedule_record.employee.employee_job_information.last.designation|default_if_none:'' }}</span></p>
+                                  {% endfor %}
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

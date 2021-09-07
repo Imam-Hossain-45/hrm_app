@@ -1,0 +1,50 @@
+/*
+Theme Name: Cimplux BeeHive Theme
+Theme URI: cimplux.com
+Author: Mehedi Chowdhury
+Author URI: https://www.mehedis.com/
+Description: This is a WordPress Starter theme
+version: 0.0.1 alpha
+License: GNU General Public License (GNU GPL or GPL) v3 or later
+Tags: Dark, Light, Responsive, Starter Template
+*/
+
+@charset "utf-8";
+// Import Bootstrap parts
+// @import "../../vendor/bootstrap/scss/bootstrap";
+@import "../../vendor/bootstrap/scss/functions";
+@import "../../vendor/bootstrap/scss/variables";
+@import "../../vendor/bootstrap/scss/mixins";
+// Import "include media"
+@import "../../vendor/include-media/dist/include-media";
+// Helpers
+@import "helpers/variables";
+@import "helpers/mixins";
+// Base
+@import "base/typography";
+@import "base/default";
+// Layout
+@import "layout/body";
+@import "layout/dashboard";
+@import "layout/error";
+@import "layout/footer";
+@import "layout/header";
+@import "layout/holiday";
+@import "layout/login";
+@import "layout/main";
+@import "layout/master";
+@import "layout/process";
+@import "layout/sidebar";
+@import "layout/search";
+@import "layout/self_panel";
+@import "layout/user-management";
+// Components
+@import "components/button";
+@import "components/large-media";
+@import "components/modal";
+@import "components/navbar";
+@import "components/breadcrumb";
+@import "components/card";
+@import "components/form";
+// Shame!
+@import "shame";

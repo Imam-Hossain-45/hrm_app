@@ -1,0 +1,45 @@
+{% extends 'layouts/master.html' %}
+
+{% block content %}
+    {% include 'layouts/event.html' %}
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                {% with employee_filter_form as form %}
+                {% include 'reporting/layout/partial/employee_filter.html' %}
+                {% endwith %}
+            </div>
+
+            <div class="col-md-9">
+                <div class="container justify-content-center">
+                    <div class="row" style="min-height: 200px">
+                        {# TODO: Default headers. #}
+                        <div class="col-md-4" style="border: 1px dashed #282828;">
+                        {% if report_view_from_date %}
+                            <div class="container">
+                                <div class="row align-items-md-center">
+                                    <div class="col-md-2 p-0">Date:</div>
+                                    <div class="col-md-8 p-0">{{ report_view_from_date }}–{{ report_view_to_date }}</div>
+                                    <div class="col-md-2 p-0"><a href="#"><i class="la la-edit"></i>Edit</a></div>  {# TODO: Edit link should bring up the filtering sidebar. #}
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-2 p-0">For:</div>
+                                    <div class="col-md-10 p-0">
+                                        {% if report_employee.profile_picture %}<img class="m--img-rounded img-fluid" src="{{ report_employee.profile_picture.url }}" alt="Employee's profile picture" style="max-width: 24px;"> {% endif %}{{ report_employee }}<br>
+                                        Employee ID: {{  }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
+                        <div class="col-md-4" style="border: 1px dashed #282828;"></div>
+                        <div class="col-md-4" style="border: 1px dashed #282828;"></div>
+                    </div>
+                </div>
+
+                {% block report-body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
